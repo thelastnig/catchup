@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C6379A6D2ABD5E75315AB34 /* Pods_catchup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A2CCAC20B990BF9DBC137C /* Pods_catchup.framework */; };
+		763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F4239E7E2800C93350 /* SWRevealViewController.m */; };
+		763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F7239E7FFD00C93350 /* MainVC.swift */; };
+		763C81FA239E812500C93350 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F9239E812500C93350 /* SideBarVC.swift */; };
 		76958A19239CDC3100770439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A18239CDC3100770439 /* AppDelegate.swift */; };
 		76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1A239CDC3100770439 /* SceneDelegate.swift */; };
 		76958A1D239CDC3100770439 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1C239CDC3100770439 /* ViewController.swift */; };
@@ -17,6 +21,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67A2CCAC20B990BF9DBC137C /* Pods_catchup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_catchup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "catchup-Bridging-Header.h"; sourceTree = "<group>"; };
+		763C81F4239E7E2800C93350 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		763C81F5239E7E2900C93350 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		763C81F7239E7FFD00C93350 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		763C81F9239E812500C93350 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
 		76958A15239CDC3100770439 /* catchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76958A18239CDC3100770439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76958A1A239CDC3100770439 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +36,8 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.release.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.release.xcconfig"; sourceTree = "<group>"; };
+		E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.debug.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +45,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6379A6D2ABD5E75315AB34 /* Pods_catchup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46F084CE78A13590423576D1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */,
+				B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		76958A0C239CDC3100770439 = {
 			isa = PBXGroup;
 			children = (
 				76958A17239CDC3100770439 /* catchup */,
 				76958A16239CDC3100770439 /* Products */,
+				46F084CE78A13590423576D1 /* Pods */,
+				EC1B415DD9C16785B3BD536F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +82,8 @@
 		76958A17239CDC3100770439 /* catchup */ = {
 			isa = PBXGroup;
 			children = (
+				763C81F5239E7E2900C93350 /* SWRevealViewController.h */,
+				763C81F4239E7E2800C93350 /* SWRevealViewController.m */,
 				76958A18239CDC3100770439 /* AppDelegate.swift */,
 				76958A1A239CDC3100770439 /* SceneDelegate.swift */,
 				76958A1C239CDC3100770439 /* ViewController.swift */,
@@ -66,8 +92,19 @@
 				76958A26239CDC3300770439 /* LaunchScreen.storyboard */,
 				76958A29239CDC3300770439 /* Info.plist */,
 				76958A21239CDC3100770439 /* catchup.xcdatamodeld */,
+				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
+				763C81F7239E7FFD00C93350 /* MainVC.swift */,
+				763C81F9239E812500C93350 /* SideBarVC.swift */,
 			);
 			path = catchup;
+			sourceTree = "<group>";
+		};
+		EC1B415DD9C16785B3BD536F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67A2CCAC20B990BF9DBC137C /* Pods_catchup.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +114,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76958A2C239CDC3300770439 /* Build configuration list for PBXNativeTarget "catchup" */;
 			buildPhases = (
+				4A88943EEB28D22A0755A847 /* [CP] Check Pods Manifest.lock */,
 				76958A11239CDC3100770439 /* Sources */,
 				76958A12239CDC3100770439 /* Frameworks */,
 				76958A13239CDC3100770439 /* Resources */,
+				488F7016483ABA16EFA05ED9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -102,6 +141,7 @@
 				TargetAttributes = {
 					76958A14239CDC3100770439 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -136,13 +176,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		488F7016483ABA16EFA05ED9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-catchup/Pods-catchup-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-catchup/Pods-catchup-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-catchup/Pods-catchup-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A88943EEB28D22A0755A847 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-catchup-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		76958A11239CDC3100770439 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
+				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
 				76958A1D239CDC3100770439 /* ViewController.swift in Sources */,
+				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,
+				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
 				76958A19239CDC3100770439 /* AppDelegate.swift in Sources */,
 				76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */,
 			);
@@ -286,8 +371,10 @@
 		};
 		76958A2D239CDC3300770439 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = catchup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -296,6 +383,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PJW.catchup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "catchup/catchup-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -303,8 +392,10 @@
 		};
 		76958A2E239CDC3300770439 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = catchup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -313,6 +404,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PJW.catchup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "catchup/catchup-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
