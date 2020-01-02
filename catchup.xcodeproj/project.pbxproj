@@ -11,6 +11,10 @@
 		763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F4239E7E2800C93350 /* SWRevealViewController.m */; };
 		763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F7239E7FFD00C93350 /* MainVC.swift */; };
 		763C81FA239E812500C93350 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F9239E812500C93350 /* SideBarVC.swift */; };
+		766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E07D923AB6CD30065948E /* ContentVC.swift */; };
+		768CB3FA23AF7D94001026C2 /* KeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768CB3F923AF7D94001026C2 /* KeywordCell.swift */; };
+		768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F840423A754AE00B0D363 /* WebScrapper.swift */; };
+		7693BD3A23ACB023000C5963 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693BD3923ACB023000C5963 /* utils.swift */; };
 		76958A19239CDC3100770439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A18239CDC3100770439 /* AppDelegate.swift */; };
 		76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1A239CDC3100770439 /* SceneDelegate.swift */; };
 		76958A1D239CDC3100770439 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1C239CDC3100770439 /* ViewController.swift */; };
@@ -18,6 +22,7 @@
 		76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76958A21239CDC3100770439 /* catchup.xcdatamodeld */; };
 		76958A25239CDC3300770439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76958A24239CDC3300770439 /* Assets.xcassets */; };
 		76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76958A26239CDC3300770439 /* LaunchScreen.storyboard */; };
+		76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B6FD1123B9AAFD008482E2 /* FirstVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +32,10 @@
 		763C81F5239E7E2900C93350 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		763C81F7239E7FFD00C93350 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		763C81F9239E812500C93350 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
+		766E07D923AB6CD30065948E /* ContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVC.swift; sourceTree = "<group>"; };
+		768CB3F923AF7D94001026C2 /* KeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordCell.swift; sourceTree = "<group>"; };
+		768F840423A754AE00B0D363 /* WebScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapper.swift; sourceTree = "<group>"; };
+		7693BD3923ACB023000C5963 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		76958A15239CDC3100770439 /* catchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76958A18239CDC3100770439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76958A1A239CDC3100770439 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +45,7 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76B6FD1123B9AAFD008482E2 /* FirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
 		B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.release.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.release.xcconfig"; sourceTree = "<group>"; };
 		E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.debug.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +105,11 @@
 				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
 				763C81F7239E7FFD00C93350 /* MainVC.swift */,
 				763C81F9239E812500C93350 /* SideBarVC.swift */,
+				768F840423A754AE00B0D363 /* WebScrapper.swift */,
+				766E07D923AB6CD30065948E /* ContentVC.swift */,
+				7693BD3923ACB023000C5963 /* utils.swift */,
+				768CB3F923AF7D94001026C2 /* KeywordCell.swift */,
+				76B6FD1123B9AAFD008482E2 /* FirstVC.swift */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -224,9 +239,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
+				76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */,
 				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
+				768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */,
 				76958A1D239CDC3100770439 /* ViewController.swift in Sources */,
+				768CB3FA23AF7D94001026C2 /* KeywordCell.swift in Sources */,
 				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,
+				7693BD3A23ACB023000C5963 /* utils.swift in Sources */,
+				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,
 				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
 				76958A19239CDC3100770439 /* AppDelegate.swift in Sources */,
 				76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */,
