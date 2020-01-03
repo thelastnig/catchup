@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		4C6379A6D2ABD5E75315AB34 /* Pods_catchup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A2CCAC20B990BF9DBC137C /* Pods_catchup.framework */; };
+		760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760EF81F23BDB4130092FE7A /* KeywordCell.swift */; };
 		763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F4239E7E2800C93350 /* SWRevealViewController.m */; };
 		763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F7239E7FFD00C93350 /* MainVC.swift */; };
 		763C81FA239E812500C93350 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F9239E812500C93350 /* SideBarVC.swift */; };
 		766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E07D923AB6CD30065948E /* ContentVC.swift */; };
-		768CB3FA23AF7D94001026C2 /* KeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768CB3F923AF7D94001026C2 /* KeywordCell.swift */; };
 		768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F840423A754AE00B0D363 /* WebScrapper.swift */; };
 		7693BD3A23ACB023000C5963 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693BD3923ACB023000C5963 /* utils.swift */; };
 		76958A19239CDC3100770439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A18239CDC3100770439 /* AppDelegate.swift */; };
@@ -27,13 +27,13 @@
 
 /* Begin PBXFileReference section */
 		67A2CCAC20B990BF9DBC137C /* Pods_catchup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_catchup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		760EF81F23BDB4130092FE7A /* KeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordCell.swift; sourceTree = "<group>"; };
 		763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "catchup-Bridging-Header.h"; sourceTree = "<group>"; };
 		763C81F4239E7E2800C93350 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		763C81F5239E7E2900C93350 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		763C81F7239E7FFD00C93350 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		763C81F9239E812500C93350 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
 		766E07D923AB6CD30065948E /* ContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVC.swift; sourceTree = "<group>"; };
-		768CB3F923AF7D94001026C2 /* KeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordCell.swift; sourceTree = "<group>"; };
 		768F840423A754AE00B0D363 /* WebScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapper.swift; sourceTree = "<group>"; };
 		7693BD3923ACB023000C5963 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		76958A15239CDC3100770439 /* catchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,8 +108,8 @@
 				768F840423A754AE00B0D363 /* WebScrapper.swift */,
 				766E07D923AB6CD30065948E /* ContentVC.swift */,
 				7693BD3923ACB023000C5963 /* utils.swift */,
-				768CB3F923AF7D94001026C2 /* KeywordCell.swift */,
 				76B6FD1123B9AAFD008482E2 /* FirstVC.swift */,
+				760EF81F23BDB4130092FE7A /* KeywordCell.swift */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -239,11 +239,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
+				760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */,
 				76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */,
 				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
 				768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */,
 				76958A1D239CDC3100770439 /* ViewController.swift in Sources */,
-				768CB3FA23AF7D94001026C2 /* KeywordCell.swift in Sources */,
 				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,
 				7693BD3A23ACB023000C5963 /* utils.swift in Sources */,
 				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,

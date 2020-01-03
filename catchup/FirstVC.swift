@@ -11,13 +11,13 @@ import Kanna
 import Alamofire
 import SnapKit
 
-class FirstVC: UIViewController {
+class FirstVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var btnSideBar: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var keywordHeaderView: UIView!
     @IBOutlet var keywordView: UIView!
+    @IBOutlet var keywordContentView: UIView!
     
-    var keywordContentView: UIView!
     
     lazy var naverKeyword: [String] = {
         var list = [String]()
@@ -52,22 +52,10 @@ class FirstVC: UIViewController {
         */
         
         // keywordHeaderView constraint 및 기타 설정
-        keywordHeaderView.backgroundColor = UIColor.red
+        self.keywordHeaderView.backgroundColor = self.mainColor
         
-        // keywordContentView 설정
-        self.keywordContentView = UIView()
-        
-        self.keywordContentView.backgroundColor = UIColor.white
-        
-        self.keywordView.addSubview(self.keywordContentView)
-        
-        self.keywordContentView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.keywordView).offset(10)
-            make.right.equalTo(self.keywordView).offset(-10)
-            make.top.equalTo(self.keywordView).offset(10)
-            make.height.equalTo(self.keywordView.frame.height - 40)
-            make.width.equalTo(self.keywordView.frame.width - 20)
-        }
+        // keywordView 설정
+        self.keywordView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.0)
         
         // keywordLabel(label들을 담기 위한 container view) 생성 및 설정
         let keywordLabel01 = UIView()
@@ -142,8 +130,13 @@ class FirstVC: UIViewController {
         let keywordLabel10Title = UILabel()
         self.setKeywordLabels(keywordLabel10, keywordLabel10Num, keywordLabel10Title)
         
+        // tableView Delegate 설정
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
         // API 받아오기
         self.getNaverKeyword {
+            
             keywordLabel01Num.text = String(keywordLabel01.tag)
             keywordLabel01Title.text = self.naverKeyword[keywordLabel01.tag - 1]
             keywordLabel02Num.text = String(keywordLabel02.tag)
@@ -164,34 +157,79 @@ class FirstVC: UIViewController {
             keywordLabel09Title.text = self.naverKeyword[keywordLabel09.tag - 1]
             keywordLabel10Num.text = String(keywordLabel10.tag)
             keywordLabel10Title.text = self.naverKeyword[keywordLabel10.tag - 1]
+            
         }
         self.getNaverMainNews()
         self.getNaverEnterNews()
         self.getNaverSportsNews()
         
     }
-    /*
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return self.naverMainNews.count
+        case 1:
+            return self.naverEnterNews.count
+        case 2:
+            return self.naverSportsNews.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell")
+        
+        if indexPath.section == 0  {
+            let data = self.naverMainNews[indexPath.row]
+            cell?.textLabel?.text = data.title
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            
+        } else if indexPath.section == 1 {
+            let data = self.naverEnterNews[indexPath.row]
+            cell?.textLabel?.text = data.title
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        } else {
+            let data = self.naverSportsNews[indexPath.row]
+            cell?.textLabel?.text = data.title
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        }
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        
+        let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
+        
+        switch indexPath.section {
+        case 0:
+            contentVC.url = self.naverMainNews[indexPath.row].url
+            self.navigationController?.pushViewController(contentVC, animated: true)
+        case 1:
+            contentVC.url = self.naverEnterNews[indexPath.row].url
+            print(self.naverEnterNews[indexPath.row].url)
+            self.navigationController?.pushViewController(contentVC, animated: true)
+        case 2:
+            contentVC.url = self.naverSportsNews[indexPath.row].url
+            print(self.naverSportsNews[indexPath.row].url)
+            self.navigationController?.pushViewController(contentVC, animated: true)
+        default:
+            ()
+        }
     }
-    */
+    
     
     // NAVER keyword view setting function
     func setKeywordView(view: UIView) {
-        let keywordViewHeight = (self.keywordView.frame.height - 40) / 5
-        let keywordViewWidth = (self.keywordView.frame.width - 20) / 2
+        let keywordViewHeight = self.keywordContentView.frame.height / 5
+        let keywordViewWidth = self.keywordContentView.frame.width / 2
+
         view.frame.size.width = keywordViewWidth
         view.frame.size.height = keywordViewHeight
         if view.tag < 6 {
@@ -201,8 +239,8 @@ class FirstVC: UIViewController {
             view.frame.origin.x = keywordViewWidth
             view.frame.origin.y = CGFloat(view.tag - 6) * keywordViewHeight
         }
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.blue.cgColor
+        //view.layer.borderWidth = 1
+        //view.layer.borderColor = UIColor.blue.cgColor
         self.keywordContentView.addSubview(view)
     }
     
@@ -218,13 +256,13 @@ class FirstVC: UIViewController {
         numLabel.textAlignment = .left
         numLabel.textColor = UIColor.brown
         numLabel.font = UIFont.boldSystemFont(ofSize: 12)
-        numLabel.layer.borderColor = UIColor.green.cgColor
-        numLabel.layer.borderWidth = 1
+        //numLabel.layer.borderColor = UIColor.green.cgColor
+        //numLabel.layer.borderWidth = 1
         
         titleLabel.textAlignment = .left
         titleLabel.font = UIFont.systemFont(ofSize: 12)
-        titleLabel.layer.borderColor = UIColor.red.cgColor
-        titleLabel.layer.borderWidth = 1
+        //titleLabel.layer.borderColor = UIColor.red.cgColor
+        //titleLabel.layer.borderWidth = 1
         
         superView.addSubview(numLabel)
         superView.addSubview(titleLabel)
@@ -237,7 +275,6 @@ class FirstVC: UIViewController {
         
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(numLabel.snp.right).offset(rightOffset)
-            make.right.equalTo(superView)
             make.height.equalTo(superView.frame.height)
         }
     }
