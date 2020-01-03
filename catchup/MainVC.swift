@@ -33,6 +33,27 @@ class MainVC: UITableViewController {
     var keywordLabel10Num: UILabel!
     var keywordLabel10Title: UILabel!
     
+    var keywordLabel01_2Num: UILabel!
+    var keywordLabel01_2Title: UILabel!
+    var keywordLabel02_2Num: UILabel!
+    var keywordLabel02_2Title: UILabel!
+    var keywordLabel03_2Num: UILabel!
+    var keywordLabel03_2Title: UILabel!
+    var keywordLabel04_2Num: UILabel!
+    var keywordLabel04_2Title: UILabel!
+    var keywordLabel05_2Num: UILabel!
+    var keywordLabel05_2Title: UILabel!
+    var keywordLabel06_2Num: UILabel!
+    var keywordLabel06_2Title: UILabel!
+    var keywordLabel07_2Num: UILabel!
+    var keywordLabel07_2Title: UILabel!
+    var keywordLabel08_2Num: UILabel!
+    var keywordLabel08_2Title: UILabel!
+    var keywordLabel09_2Num: UILabel!
+    var keywordLabel09_2Title: UILabel!
+    var keywordLabel10_2Num: UILabel!
+    var keywordLabel10_2Title: UILabel!
+    
     lazy var naverKeyword: [String] = {
         var list = [String]()
         return list
@@ -78,6 +99,27 @@ class MainVC: UITableViewController {
         self.keywordLabel10Num = UILabel()
         self.keywordLabel10Title = UILabel()
         
+        self.keywordLabel01_2Num = UILabel()
+        self.keywordLabel01_2Title = UILabel()
+        self.keywordLabel02_2Num = UILabel()
+        self.keywordLabel02_2Title = UILabel()
+        self.keywordLabel03_2Num = UILabel()
+        self.keywordLabel03_2Title = UILabel()
+        self.keywordLabel04_2Num = UILabel()
+        self.keywordLabel04_2Title = UILabel()
+        self.keywordLabel05_2Num = UILabel()
+        self.keywordLabel05_2Title = UILabel()
+        self.keywordLabel06_2Num = UILabel()
+        self.keywordLabel06_2Title = UILabel()
+        self.keywordLabel07_2Num = UILabel()
+        self.keywordLabel07_2Title = UILabel()
+        self.keywordLabel08_2Num = UILabel()
+        self.keywordLabel08_2Title = UILabel()
+        self.keywordLabel09_2Num = UILabel()
+        self.keywordLabel09_2Title = UILabel()
+        self.keywordLabel10_2Num = UILabel()
+        self.keywordLabel10_2Title = UILabel()
+        
         self.getNaverKeyword {
             self.keywordLabel01Title.text = self.naverKeyword[0]
             self.keywordLabel02Title.text = self.naverKeyword[1]
@@ -89,6 +131,16 @@ class MainVC: UITableViewController {
             self.keywordLabel08Title.text = self.naverKeyword[7]
             self.keywordLabel09Title.text = self.naverKeyword[8]
             self.keywordLabel10Title.text = self.naverKeyword[9]
+            self.keywordLabel01_2Title.text = self.naverKeyword[10]
+            self.keywordLabel02_2Title.text = self.naverKeyword[11]
+            self.keywordLabel03_2Title.text = self.naverKeyword[12]
+            self.keywordLabel04_2Title.text = self.naverKeyword[13]
+            self.keywordLabel05_2Title.text = self.naverKeyword[14]
+            self.keywordLabel06_2Title.text = self.naverKeyword[15]
+            self.keywordLabel07_2Title.text = self.naverKeyword[16]
+            self.keywordLabel08_2Title.text = self.naverKeyword[17]
+            self.keywordLabel09_2Title.text = self.naverKeyword[18]
+            self.keywordLabel10_2Title.text = self.naverKeyword[19]
         }
         self.getNaverMainNews()
         self.getNaverEnterNews()
@@ -130,57 +182,90 @@ class MainVC: UITableViewController {
             
             // keywordLabel 설정
             cell.keywordLabel01.tag = 1
-            cell.setKeywordView(view: cell.keywordLabel01)
+            cell.setKeywordView(view: cell.keywordLabel01, superView: cell.keywordContentView1)
             cell.keywordLabel02.tag = 2
-            cell.setKeywordView(view: cell.keywordLabel02)
+            cell.setKeywordView(view: cell.keywordLabel02, superView: cell.keywordContentView1)
             cell.keywordLabel03.tag = 3
-            cell.setKeywordView(view: cell.keywordLabel03)
+            cell.setKeywordView(view: cell.keywordLabel03, superView: cell.keywordContentView1)
             cell.keywordLabel04.tag = 4
-            cell.setKeywordView(view: cell.keywordLabel04)
+            cell.setKeywordView(view: cell.keywordLabel04, superView: cell.keywordContentView1)
             cell.keywordLabel05.tag = 5
-            cell.setKeywordView(view: cell.keywordLabel05)
+            cell.setKeywordView(view: cell.keywordLabel05, superView: cell.keywordContentView1)
             cell.keywordLabel06.tag = 6
-            cell.setKeywordView(view: cell.keywordLabel06)
+            cell.setKeywordView(view: cell.keywordLabel06, superView: cell.keywordContentView1)
             cell.keywordLabel07.tag = 7
-            cell.setKeywordView(view: cell.keywordLabel07)
+            cell.setKeywordView(view: cell.keywordLabel07, superView: cell.keywordContentView1)
             cell.keywordLabel08.tag = 8
-            cell.setKeywordView(view: cell.keywordLabel08)
+            cell.setKeywordView(view: cell.keywordLabel08, superView: cell.keywordContentView1)
             cell.keywordLabel09.tag = 9
-            cell.setKeywordView(view: cell.keywordLabel09)
+            cell.setKeywordView(view: cell.keywordLabel09, superView: cell.keywordContentView1)
             cell.keywordLabel10.tag = 10
-            cell.setKeywordView(view: cell.keywordLabel10)
+            cell.setKeywordView(view: cell.keywordLabel10, superView: cell.keywordContentView1)
+            
+            cell.keywordLabel01_2.tag = 1
+            cell.setKeywordView(view: cell.keywordLabel01_2, superView: cell.keywordContentView2)
+            cell.keywordLabel02_2.tag = 2
+            cell.setKeywordView(view: cell.keywordLabel02_2, superView: cell.keywordContentView2)
+            cell.keywordLabel03_2.tag = 3
+            cell.setKeywordView(view: cell.keywordLabel03_2, superView: cell.keywordContentView2)
+            cell.keywordLabel04_2.tag = 4
+            cell.setKeywordView(view: cell.keywordLabel04_2, superView: cell.keywordContentView2)
+            cell.keywordLabel05_2.tag = 5
+            cell.setKeywordView(view: cell.keywordLabel05_2, superView: cell.keywordContentView2)
+            cell.keywordLabel06_2.tag = 6
+            cell.setKeywordView(view: cell.keywordLabel06_2, superView: cell.keywordContentView2)
+            cell.keywordLabel07_2.tag = 7
+            cell.setKeywordView(view: cell.keywordLabel07_2, superView: cell.keywordContentView2)
+            cell.keywordLabel08_2.tag = 8
+            cell.setKeywordView(view: cell.keywordLabel08_2, superView: cell.keywordContentView2)
+            cell.keywordLabel09_2.tag = 9
+            cell.setKeywordView(view: cell.keywordLabel09_2, superView: cell.keywordContentView2)
+            cell.keywordLabel10_2.tag = 10
+            cell.setKeywordView(view: cell.keywordLabel10_2, superView: cell.keywordContentView2)
             
             // 순번 및 검색어를 위한 label 설정
             cell.setKeywordLabels(cell.keywordLabel01, self.keywordLabel01Num, self.keywordLabel01Title)
             self.keywordLabel01Num.text = String(cell.keywordLabel01.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel02, self.keywordLabel02Num, self.keywordLabel02Title)
             self.keywordLabel02Num.text = String(cell.keywordLabel02.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel03, self.keywordLabel03Num, self.keywordLabel03Title)
             self.keywordLabel03Num.text = String(cell.keywordLabel03.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel04, self.keywordLabel04Num, self.keywordLabel04Title)
             self.keywordLabel04Num.text = String(cell.keywordLabel04.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel05, self.keywordLabel05Num, self.keywordLabel05Title)
             self.keywordLabel05Num.text = String(cell.keywordLabel05.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel06, self.keywordLabel06Num, self.keywordLabel06Title)
             self.keywordLabel06Num.text = String(cell.keywordLabel06.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel07, self.keywordLabel07Num, self.keywordLabel07Title)
             self.keywordLabel07Num.text = String(cell.keywordLabel07.tag)
-        
             cell.setKeywordLabels(cell.keywordLabel08, self.keywordLabel08Num, self.keywordLabel08Title)
             self.keywordLabel08Num.text = String(cell.keywordLabel08.tag)
-            
             cell.setKeywordLabels(cell.keywordLabel09, self.keywordLabel09Num, self.keywordLabel09Title)
             self.keywordLabel09Num.text = String(cell.keywordLabel09.tag)
-
             cell.setKeywordLabels(cell.keywordLabel10, self.keywordLabel10Num, self.keywordLabel10Title)
             self.keywordLabel10Num.text = String(cell.keywordLabel10.tag)
-   
+
+            cell.setKeywordLabels(cell.keywordLabel01_2, self.keywordLabel01_2Num, self.keywordLabel01_2Title)
+            self.keywordLabel01_2Num.text = String(cell.keywordLabel01_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel02_2, self.keywordLabel02_2Num, self.keywordLabel02_2Title)
+            self.keywordLabel02_2Num.text = String(cell.keywordLabel02_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel03_2, self.keywordLabel03_2Num, self.keywordLabel03_2Title)
+            self.keywordLabel03_2Num.text = String(cell.keywordLabel03_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel04_2, self.keywordLabel04_2Num, self.keywordLabel04_2Title)
+            self.keywordLabel04_2Num.text = String(cell.keywordLabel04_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel05_2, self.keywordLabel05_2Num, self.keywordLabel05_2Title)
+            self.keywordLabel05_2Num.text = String(cell.keywordLabel05_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel06_2, self.keywordLabel06_2Num, self.keywordLabel06_2Title)
+            self.keywordLabel06_2Num.text = String(cell.keywordLabel06_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel07_2, self.keywordLabel07_2Num, self.keywordLabel07_2Title)
+            self.keywordLabel07_2Num.text = String(cell.keywordLabel07_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel08_2, self.keywordLabel08_2Num, self.keywordLabel08_2Title)
+            self.keywordLabel08_2Num.text = String(cell.keywordLabel08_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel09_2, self.keywordLabel09_2Num, self.keywordLabel09_2Title)
+            self.keywordLabel09_2Num.text = String(cell.keywordLabel09_2.tag + 10)
+            cell.setKeywordLabels(cell.keywordLabel10_2, self.keywordLabel10_2Num, self.keywordLabel10_2Title)
+            self.keywordLabel10_2Num.text = String(cell.keywordLabel10_2.tag + 10)
+            
             return cell
         } else if indexPath.section == 1  {
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell")
@@ -298,9 +383,6 @@ class MainVC: UITableViewController {
                 
                 var index = 0
                 for item in items {
-                    if index >= 10 {
-                        break
-                    }
                     if let title = item.at_xpath("div/span/span[@class='item_title']")?.text {
                         self.naverKeyword.append(title)
                     }

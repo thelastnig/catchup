@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Kanna
 
-class KeywordCell: UITableViewCell {
-    @IBOutlet var keywordContentView: UIView!
+class KeywordCell: UITableViewCell, UIScrollViewDelegate {
+    let pageSize = 2
+    
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var pageControll: UIPageControl!
+    @IBOutlet var keywordContentView1: UIView!
+    @IBOutlet var keywordContentView2: UIView!
     
     @IBOutlet var keywordLabel01: UIView!
     @IBOutlet var keywordLabel02: UIView!
@@ -22,32 +28,50 @@ class KeywordCell: UITableViewCell {
     @IBOutlet var keywordLabel09: UIView!
     @IBOutlet var keywordLabel10: UIView!
     
+    @IBOutlet var keywordLabel01_2: UIView!
+    @IBOutlet var keywordLabel02_2: UIView!
+    @IBOutlet var keywordLabel03_2: UIView!
+    @IBOutlet var keywordLabel04_2: UIView!
+    @IBOutlet var keywordLabel05_2: UIView!
+    @IBOutlet var keywordLabel06_2: UIView!
+    @IBOutlet var keywordLabel07_2: UIView!
+    @IBOutlet var keywordLabel08_2: UIView!
+    @IBOutlet var keywordLabel09_2: UIView!
+    @IBOutlet var keywordLabel10_2: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.backgroundColor = UIColor(red:0.97, green:0.98, blue:0.98, alpha:1.0)
-        /*
-        // keywordLabel 설정
-        self.keywordLabel01.tag = 1
-        self.setKeywordView(view: self.keywordLabel01)
-        self.keywordLabel02.tag = 2
-        self.setKeywordView(view: self.keywordLabel02)
-        self.keywordLabel03.tag = 3
-        self.setKeywordView(view: self.keywordLabel03)
-        self.keywordLabel04.tag = 4
-        self.setKeywordView(view: self.keywordLabel04)
-        self.keywordLabel05.tag = 5
-        self.setKeywordView(view: self.keywordLabel05)
-        self.keywordLabel06.tag = 6
-        self.setKeywordView(view: self.keywordLabel06)
-        self.keywordLabel07.tag = 7
-        self.setKeywordView(view: self.keywordLabel07)
-        self.keywordLabel08.tag = 8
-        self.setKeywordView(view: self.keywordLabel08)
-        self.keywordLabel09.tag = 9
-        self.setKeywordView(view: self.keywordLabel09)
-        self.keywordLabel10.tag = 10
-        self.setKeywordView(view: self.keywordLabel10)
-        */
+        
+        // scrollView 설정
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.scrollView.showsVerticalScrollIndicator = false
+        
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.delegate = self
+        self.scrollView.contentSize = CGSize(width: CGFloat(self.pageSize) * self.contentView.frame.maxX, height: 0)
+        
+        // pageControll 설정
+        self.pageControll.snp.makeConstraints{ (make) in
+            make.bottom.equalTo(self.scrollView).offset(-5)
+        }
+        self.pageControll.numberOfPages = 2
+        self.pageControll.currentPage = 0
+        self.pageControll.isUserInteractionEnabled = false
+        self.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
+        self.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
+        
+        // keywordContentView 설정
+        let pageWidth = self.contentView.frame.maxX
+        let pageHeight = self.contentView.frame.maxY - 40
+        
+        self.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+        self.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
+        
+        self.scrollView.addSubview(self.keywordContentView1)
+        self.scrollView.addSubview(self.keywordContentView2)
+        self.contentView.addSubview(self.pageControll)
+
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,9 +81,9 @@ class KeywordCell: UITableViewCell {
     }
     
     // NAVER keyword view setting function
-   func setKeywordView(view: UIView) {
-       let keywordViewHeight = self.keywordContentView.frame.height / 5
-       let keywordViewWidth = self.keywordContentView.frame.width / 2
+    func setKeywordView(view: UIView, superView: UIView) {
+       let keywordViewHeight = superView.frame.height / 5
+       let keywordViewWidth = superView.frame.width / 2
 
        view.frame.size.width = keywordViewWidth
        view.frame.size.height = keywordViewHeight
@@ -73,7 +97,7 @@ class KeywordCell: UITableViewCell {
        //view.layer.borderWidth = 1
        //view.layer.borderColor = UIColor.blue.cgColor
        view.backgroundColor = UIColor.white
-       self.keywordContentView.addSubview(view)
+       superView.addSubview(view)
    }
    
    func setKeywordLabels(_ superView: UIView, _ numLabel: UILabel, _ titleLabel: UILabel) {
@@ -110,5 +134,11 @@ class KeywordCell: UITableViewCell {
            make.height.equalTo(superView.frame.height)
        }
    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if fmod(scrollView.contentOffset.x, scrollView.frame.maxX) == 0 {
+            self.pageControll.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.maxX)
+        }
+    }
 
 }
