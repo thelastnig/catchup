@@ -288,13 +288,43 @@
                                     <outlet property="scrollView" destination="Ujh-l9-8qz" id="z8v-a9-EzD"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="article_cell" id="RP9-0c-CkF">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="article_cell" id="RP9-0c-CkF" customClass="ArticleCell" customModule="catchup" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="255.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RP9-0c-CkF" id="d2I-8h-WQy">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6U6-z3-sfW">
+                                            <rect key="frame" x="20" y="11" width="30" height="21.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="Kf4-fL-4UP"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R90-TV-R5q">
+                                            <rect key="frame" x="55" y="11" width="320" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="6U6-z3-sfW" secondAttribute="bottom" id="6ui-0E-BYC"/>
+                                        <constraint firstItem="6U6-z3-sfW" firstAttribute="leading" secondItem="d2I-8h-WQy" secondAttribute="leadingMargin" id="GZa-MH-G09"/>
+                                        <constraint firstItem="R90-TV-R5q" firstAttribute="top" secondItem="d2I-8h-WQy" secondAttribute="topMargin" id="LK4-GE-1LI"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="R90-TV-R5q" secondAttribute="bottom" id="RA7-uo-HQi"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="R90-TV-R5q" secondAttribute="trailing" id="XiO-ms-hoI"/>
+                                        <constraint firstItem="R90-TV-R5q" firstAttribute="leading" secondItem="6U6-z3-sfW" secondAttribute="trailing" constant="5" id="Yrv-3d-fnJ"/>
+                                        <constraint firstItem="6U6-z3-sfW" firstAttribute="top" secondItem="d2I-8h-WQy" secondAttribute="topMargin" id="w4U-2M-CJ0"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelNum" destination="6U6-z3-sfW" id="ejH-yD-FEs"/>
+                                    <outlet property="labelText" destination="R90-TV-R5q" id="jfw-mL-fqI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -48,7 +48,7 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         
         self.scrollView.isPagingEnabled = true
         self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width: CGFloat(self.pageSize) * self.contentView.frame.maxX, height: 0)
+        self.scrollView.contentSize = CGSize(width: CGFloat(self.pageSize) * self.contentView.frame.width, height: 0)
         
         // pageControll 설정
         self.pageControll.snp.makeConstraints{ (make) in
@@ -59,13 +59,19 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         self.pageControll.isUserInteractionEnabled = false
         self.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
         self.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
+        self.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         
         // keywordContentView 설정
-        let pageWidth = self.contentView.frame.maxX
-        let pageHeight = self.contentView.frame.maxY - 40
+        let pageWidth = self.contentView.frame.width
+        let pageHeight = self.contentView.frame.height - 40
         
         self.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+        self.keywordContentView1.layer.borderColor = UIColor.green.cgColor
+        self.keywordContentView1.layer.borderWidth = 1
+        
         self.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
+        self.keywordContentView2.layer.borderColor = UIColor.green.cgColor
+        self.keywordContentView2.layer.borderWidth = 1
         
         self.scrollView.addSubview(self.keywordContentView1)
         self.scrollView.addSubview(self.keywordContentView2)
@@ -84,7 +90,7 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
     func setKeywordView(view: UIView, superView: UIView) {
        let keywordViewHeight = superView.frame.height / 5
        let keywordViewWidth = superView.frame.width / 2
-
+        
        view.frame.size.width = keywordViewWidth
        view.frame.size.height = keywordViewHeight
        if view.tag < 6 {
@@ -94,8 +100,8 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
            view.frame.origin.x = keywordViewWidth
            view.frame.origin.y = CGFloat(view.tag - 6) * keywordViewHeight
        }
-       //view.layer.borderWidth = 1
-       //view.layer.borderColor = UIColor.blue.cgColor
+       view.layer.borderWidth = 1
+       view.layer.borderColor = UIColor.blue.cgColor
        view.backgroundColor = UIColor.white
        superView.addSubview(view)
    }

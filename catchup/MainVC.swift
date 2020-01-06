@@ -76,7 +76,7 @@ class MainVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
         self.keywordLabel01Title = UILabel()
@@ -267,24 +267,31 @@ class MainVC: UITableViewController {
             self.keywordLabel10_2Num.text = String(cell.keywordLabel10_2.tag + 10)
             
             return cell
-        } else if indexPath.section == 1  {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell")
-            let data = self.naverMainNews[indexPath.row]
-            cell?.textLabel?.text = data.title
-            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            return cell!
-        } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell")
-            let data = self.naverEnterNews[indexPath.row]
-            cell?.textLabel?.text = data.title
-            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            return cell!
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell")
-            let data = self.naverSportsNews[indexPath.row]
-            cell?.textLabel?.text = data.title
-            cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            return cell!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
+            cell.labelNum.font = UIFont.boldSystemFont(ofSize: 14)
+            cell.labelNum.textColor = UIColor.brown
+            cell.labelText.font = UIFont.systemFont(ofSize: 14)
+            
+            switch indexPath.section {
+            case 1:
+                let data = self.naverMainNews[indexPath.row]
+                cell.labelNum.text = String(indexPath.row + 1)
+                cell.labelText.text = data.title
+            case 2:
+                let data = self.naverEnterNews[indexPath.row]
+                cell.labelNum.text = String(indexPath.row + 1)
+                cell.labelText.text = data.title
+            case 3:
+                let data = self.naverSportsNews[indexPath.row]
+                cell.labelNum.text = String(indexPath.row + 1)
+                cell.labelText.text = data.title
+            default:
+                ()
+            }
+            
+            
+            return cell
         }
     }
     
@@ -373,7 +380,7 @@ class MainVC: UITableViewController {
     // functions regarding API
     func getNaverKeyword(completion: (() -> Void)? = nil) {
         
-        let url = "https://datalab.naver.com/keyword/realtimeList.naver?where=main"
+        /*
         let call = Alamofire.request(url)
         
         call.responseString { response in
@@ -387,6 +394,25 @@ class MainVC: UITableViewController {
                         self.naverKeyword.append(title)
                     }
                     index = index + 1
+                }
+                completion?()
+            }
+        }
+        */
+        
+        let url = "http://catchup.cafe24app.com/korean/naverKeyword"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    self.naverKeyword.append(title as! String)
                 }
                 completion?()
             }
@@ -424,7 +450,7 @@ class MainVC: UITableViewController {
                 let items = doc.xpath("//div[@class='rank_lst']/ul/li")
                 
                 for item in items {
-                    let title = item.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let title = item.at_xpath("a")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
                     let url = item.at_xpath("a")?["href"]!
                     self.naverEnterNews.append((title!, "https://m.entertain.naver.com" + url!))
                 }
@@ -435,6 +461,7 @@ class MainVC: UITableViewController {
     
     func getNaverSportsNews() {
         
+        /*
         let url = "https://sports.news.naver.com/index.nhn"
         let call = Alamofire.request(url)
         
@@ -449,6 +476,25 @@ class MainVC: UITableViewController {
                     self.naverSportsNews.append((title!, "https://sports.news.naver.com" + url!))
                 }
                 self.tableView.reloadData()
+            }
+        }
+         */
+        
+        let url = "http://catchup.cafe24app.com/korean/naverSportsNews"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.naverSportsNews.append((title as! String, "https://sports.news.naver.com" + (url as! String)))
+                }
             }
         }
     }
