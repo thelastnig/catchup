@@ -120,7 +120,10 @@ class MainVC: UITableViewController {
         self.keywordLabel10_2Num = UILabel()
         self.keywordLabel10_2Title = UILabel()
         
-        self.getNaverKeyword {
+        let webContentManager = MainContentManager()
+        
+        webContentManager.getNaverKeyword {
+            self.naverKeyword = webContentManager.naverKeyword
             self.keywordLabel01Title.text = self.naverKeyword[0]
             self.keywordLabel02Title.text = self.naverKeyword[1]
             self.keywordLabel03Title.text = self.naverKeyword[2]
@@ -144,7 +147,10 @@ class MainVC: UITableViewController {
         }
         self.getNaverMainNews()
         self.getNaverEnterNews()
-        self.getNaverSportsNews()
+        webContentManager.getNaverSportsNew {
+            self.naverSportsNews = webContentManager.naverSportsNews
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -289,8 +295,6 @@ class MainVC: UITableViewController {
             default:
                 ()
             }
-            
-            
             return cell
         }
     }
@@ -317,7 +321,6 @@ class MainVC: UITableViewController {
             ()
         }
     }
-    
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -358,8 +361,6 @@ class MainVC: UITableViewController {
         return CGFloat.leastNormalMagnitude
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 200
@@ -378,47 +379,6 @@ class MainVC: UITableViewController {
     
    
     // functions regarding API
-    func getNaverKeyword(completion: (() -> Void)? = nil) {
-        
-        /*
-        let call = Alamofire.request(url)
-        
-        call.responseString { response in
-            guard let html = response.result.value else { return }
-            if let doc = try? Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                let items = doc.xpath("//div[@class='ranking_box']/ul/li")
-                
-                var index = 0
-                for item in items {
-                    if let title = item.at_xpath("div/span/span[@class='item_title']")?.text {
-                        self.naverKeyword.append(title)
-                    }
-                    index = index + 1
-                }
-                completion?()
-            }
-        }
-        */
-        
-        let url = "http://catchup.cafe24app.com/korean/naverKeyword"
-        let call = Alamofire.request(url)
-        
-        call.responseJSON { response in
-            guard let html = response.result.value as? NSDictionary else { return }
-            let status = html["status"] as! String
-            if status == "success" {
-                let items = html["data"] as! NSArray
-
-                for item in items {
-                    let data = item as! NSDictionary
-                    let title = data["title"]
-                    self.naverKeyword.append(title as! String)
-                }
-                completion?()
-            }
-        }
-    }
-    
     func getNaverMainNews() {
         
         let url = "https://news.naver.com/main/ranking/popularDay.nhn"
@@ -458,46 +418,5 @@ class MainVC: UITableViewController {
             }
         }
     }
-    
-    func getNaverSportsNews() {
-        
-        /*
-        let url = "https://sports.news.naver.com/index.nhn"
-        let call = Alamofire.request(url)
-        
-        call.responseString { response in
-            guard let html = response.result.value else { return }
-            if let doc = try? Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                let items = doc.xpath("//ul[@id='mostViewedNewsList']/li")
-                
-                for item in items {
-                    let title = item.at_xpath("a")?["title"]!
-                    let url = item.at_xpath("a")?["href"]!
-                    self.naverSportsNews.append((title!, "https://sports.news.naver.com" + url!))
-                }
-                self.tableView.reloadData()
-            }
-        }
-         */
-        
-        let url = "http://catchup.cafe24app.com/korean/naverSportsNews"
-        let call = Alamofire.request(url)
-        
-        call.responseJSON { response in
-            guard let html = response.result.value as? NSDictionary else { return }
-            let status = html["status"] as! String
-            if status == "success" {
-                let items = html["data"] as! NSArray
-
-                for item in items {
-                    let data = item as! NSDictionary
-                    let title = data["title"]
-                    let url = data["link"]
-                    self.naverSportsNews.append((title as! String, "https://sports.news.naver.com" + (url as! String)))
-                }
-            }
-        }
-    }
-    
     
 }
