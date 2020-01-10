@@ -17,8 +17,9 @@
 		763C81FA239E812500C93350 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C81F9239E812500C93350 /* SideBarVC.swift */; };
 		766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E07D923AB6CD30065948E /* ContentVC.swift */; };
 		76859B5423C2C0E10066B5CF /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76859B5323C2C0E10066B5CF /* ArticleCell.swift */; };
-		768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768F840423A754AE00B0D363 /* WebScrapper.swift */; };
 		7693BD3A23ACB023000C5963 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693BD3923ACB023000C5963 /* utils.swift */; };
+		76948D2423C83055009C0F67 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76948D2323C83055009C0F67 /* SettingCell.swift */; };
+		76948D2623C83076009C0F67 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76948D2523C83076009C0F67 /* SettingVC.swift */; };
 		76958A19239CDC3100770439 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A18239CDC3100770439 /* AppDelegate.swift */; };
 		76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1A239CDC3100770439 /* SceneDelegate.swift */; };
 		76958A1D239CDC3100770439 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76958A1C239CDC3100770439 /* ViewController.swift */; };
@@ -42,8 +43,9 @@
 		763C81F9239E812500C93350 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
 		766E07D923AB6CD30065948E /* ContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVC.swift; sourceTree = "<group>"; };
 		76859B5323C2C0E10066B5CF /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
-		768F840423A754AE00B0D363 /* WebScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapper.swift; sourceTree = "<group>"; };
 		7693BD3923ACB023000C5963 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
+		76948D2323C83055009C0F67 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		76948D2523C83076009C0F67 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		76958A15239CDC3100770439 /* catchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76958A18239CDC3100770439 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76958A1A239CDC3100770439 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,7 +115,6 @@
 				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
 				763C81F7239E7FFD00C93350 /* MainVC.swift */,
 				763C81F9239E812500C93350 /* SideBarVC.swift */,
-				768F840423A754AE00B0D363 /* WebScrapper.swift */,
 				766E07D923AB6CD30065948E /* ContentVC.swift */,
 				7693BD3923ACB023000C5963 /* utils.swift */,
 				76B6FD1123B9AAFD008482E2 /* FirstVC.swift */,
@@ -122,6 +123,8 @@
 				7604609723C6DD170022A062 /* MainContentManager.swift */,
 				7604609923C6E1E90022A062 /* CommunityContentManager.swift */,
 				7604609D23C6E5880022A062 /* CommunityVC.swift */,
+				76948D2323C83055009C0F67 /* SettingCell.swift */,
+				76948D2523C83076009C0F67 /* SettingVC.swift */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -250,11 +253,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76948D2423C83055009C0F67 /* SettingCell.swift in Sources */,
+				76948D2623C83076009C0F67 /* SettingVC.swift in Sources */,
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
 				760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */,
 				76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */,
 				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
-				768F840523A754AE00B0D363 /* WebScrapper.swift in Sources */,
 				7604609A23C6E1E90022A062 /* CommunityContentManager.swift in Sources */,
 				76958A1D239CDC3100770439 /* ViewController.swift in Sources */,
 				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,

@@ -8,13 +8,14 @@
 
 import UIKit
 
-enum CommunityType: Int {
+public enum CommunityType: Int {
     case cook
     case ilbe
     case instiz
     case ruliweb
     case clien
     case namu
+    case ppomppu
     // enum의 count를 위한 case - 항상 제일 마지막에 위치해야 함
     case count
     
@@ -32,6 +33,29 @@ enum CommunityType: Int {
             return "Clien"
         case .namu:
             return "Namu"
+        case .ppomppu:
+            return "Ppomppu"
+        case .count:
+            return ""
+        }
+    }
+    
+    func getCommunityKeyName() -> String {
+        switch self {
+        case .cook:
+            return "cook"
+        case .ilbe:
+            return "ilbe"
+        case .instiz:
+            return "instiz"
+        case .ruliweb:
+            return "ruliweb"
+        case .clien:
+            return "clien"
+        case .namu:
+            return "namu"
+        case .ppomppu:
+            return "ppomppu"
         case .count:
             return ""
         }
@@ -74,6 +98,11 @@ class CommunityVC: UITableViewController {
         var list = [(String, String)]()
         return list
     }()
+    
+    lazy var ppomppuContents: [(title: String, url: String)] = {
+        var list = [(String, String)]()
+        return list
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,9 +138,16 @@ class CommunityVC: UITableViewController {
             self.namuContents = webContentManager.namuContents
             self.tableView.reloadData()
         }
-        
+        webContentManager.getPpomppuContents {
+            self.ppomppuContents = webContentManager.ppomppuContents
+            self.tableView.reloadData()
+        }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -120,19 +156,86 @@ class CommunityVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        let ud = UserDefaults.standard
+        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         switch section {
         case CommunityType.cook.rawValue:
-            return self.cookContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.cookContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.cookContents.count
+            }
         case CommunityType.ilbe.rawValue:
-            return self.ilbeContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.ilbeContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.ilbeContents.count
+            }
         case CommunityType.instiz.rawValue:
-            return self.instizContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.instizContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.instizContents.count
+            }
         case CommunityType.ruliweb.rawValue:
-            return self.ruliwebContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.ruliwebContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.ruliwebContents.count
+            }
         case CommunityType.clien.rawValue:
-            return self.clienContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.clienContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.clienContents.count
+            }
         case CommunityType.namu.rawValue:
-            return self.namuContents.count
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.namuContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.namuContents.count
+            }
+        case CommunityType.ppomppu.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.ppomppuContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.ppomppuContents.count
+            }
         default:
             return 0
         }
@@ -170,6 +273,10 @@ class CommunityVC: UITableViewController {
             let data = self.namuContents[indexPath.row]
             cell.labelNum.text = String(indexPath.row + 1)
             cell.labelText.text = data.title
+        case CommunityType.ppomppu.rawValue:
+            let data = self.ppomppuContents[indexPath.row]
+            cell.labelNum.text = String(indexPath.row + 1)
+            cell.labelText.text = data.title
         default:
             ()
         }
@@ -198,6 +305,8 @@ class CommunityVC: UITableViewController {
             title.text = CommunityType.getCommunityName(.clien)()
         case CommunityType.namu.rawValue:
             title.text = CommunityType.getCommunityName(.namu)()
+        case CommunityType.ppomppu.rawValue:
+            title.text = CommunityType.getCommunityName(.ppomppu)()
         default:
             ()
         }
@@ -212,7 +321,90 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 55
+        let sectionHeight: CGFloat = 55
+        let ud = UserDefaults.standard
+        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
+        switch section {
+        case CommunityType.cook.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ilbe.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.instiz.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ruliweb.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.clien.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.namu.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ppomppu.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        default:
+            return sectionHeight
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -246,7 +438,10 @@ class CommunityVC: UITableViewController {
             self.navigationController?.pushViewController(contentVC, animated: true)
         case CommunityType.namu.rawValue:
             contentVC.url = self.namuContents[indexPath.row].url
-            print(self.namuContents[indexPath.row].url)
+            self.navigationController?.pushViewController(contentVC, animated: true)
+        case CommunityType.ppomppu.rawValue:
+            contentVC.url = self.ppomppuContents[indexPath.row].url
+            print(self.ppomppuContents[indexPath.row].url)
             self.navigationController?.pushViewController(contentVC, animated: true)
         default:
             ()

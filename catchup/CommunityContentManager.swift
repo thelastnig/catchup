@@ -46,6 +46,11 @@ class CommunityContentManager {
         return list
     }()
     
+    lazy var ppomppuContents: [(title: String, url: String)] = {
+        var list = [(String, String)]()
+        return list
+    }()
+    
     let url_prefix = "https://scorpii.shop/korean/"
     
     // functions regarding API
@@ -65,7 +70,7 @@ class CommunityContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.cookContents.append((title as! String, "https://www.82cook.com" + (url as! String)))
+                    self.cookContents.append((title as! String, url as! String))
                 }
                 completion?()
             }
@@ -111,7 +116,7 @@ class CommunityContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.ilbeContents.append((title as! String, "https://www.ilbe.com" + (url as! String)))
+                    self.ilbeContents.append((title as! String, url as! String))
                 }
                 completion?()
             }
@@ -134,7 +139,7 @@ class CommunityContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.instizContents.append((title as! String, "https://www.instiz.net/" + (url as! String)))
+                    self.instizContents.append((title as! String, url as! String))
                 }
                 completion?()
             }
@@ -180,7 +185,7 @@ class CommunityContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.clienContents.append((title as! String, "https://www.clien.net" + (url as! String)))
+                    self.clienContents.append((title as! String, url as! String))
                 }
                 completion?()
             }
@@ -203,7 +208,30 @@ class CommunityContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.namuContents.append((title as! String, "https://www.namu.live" + (url as! String)))
+                    self.namuContents.append((title as! String, url as! String))
+                }
+                completion?()
+            }
+        }
+    }
+    
+    // ppomppu 인기 게시물 호출 함수
+    func getPpomppuContents(completion: (() -> Void)? = nil) {
+        
+        let url = url_prefix + "ppomppu"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.ppomppuContents.append((title as! String, url as! String))
                 }
                 completion?()
             }

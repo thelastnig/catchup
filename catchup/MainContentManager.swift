@@ -56,8 +56,31 @@ class MainContentManager {
         }
     }
     
+    // 네이버 메인 뉴스 호츨 함수
+    func getNaverMainNews(completion: (() -> Void)? = nil) {
+        
+        let url = url_prefix + "naverMainNews"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.naverMainNews.append((title as! String, url as! String))
+                }
+                completion?()
+            }
+        }
+    }
+    
     // 네이버 스포츠 뉴스 호츨 함수
-    func getNaverSportsNew(completion: (() -> Void)? = nil) {
+    func getNaverSportsNews(completion: (() -> Void)? = nil) {
         
         let url = url_prefix + "naverSportsNews"
         let call = Alamofire.request(url)
@@ -72,7 +95,7 @@ class MainContentManager {
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.naverSportsNews.append((title as! String, "https://sports.news.naver.com" + (url as! String)))
+                    self.naverSportsNews.append((title as! String, url as! String))
                 }
                 completion?()
             }

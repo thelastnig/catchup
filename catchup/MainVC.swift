@@ -10,6 +10,30 @@ import UIKit
 import Kanna
 import Alamofire
 
+public enum NaverType: Int {
+    case naverKeyword
+    case naverMainNews
+    case naverEnterNews
+    case naverSportNews
+    // enum의 count를 위한 case - 항상 제일 마지막에 위치해야 함
+    case count
+    
+    func getNaverName() -> String {
+        switch self {
+        case .naverKeyword:
+            return "네이버 실시간 검색어"
+        case .naverMainNews:
+            return "주요 뉴스"
+        case .naverEnterNews:
+            return "연예 뉴스"
+        case .naverSportNews:
+            return "스포츠 뉴스"
+        case .count:
+            return ""
+        }
+    }
+}
+
 class MainVC: UITableViewController {
     
     var keywordLabel01Num: UILabel!
@@ -145,9 +169,11 @@ class MainVC: UITableViewController {
             self.keywordLabel09_2Title.text = self.naverKeyword[18]
             self.keywordLabel10_2Title.text = self.naverKeyword[19]
         }
-        self.getNaverMainNews()
+        webContentManager.getNaverMainNews {
+            self.naverMainNews = webContentManager.naverMainNews
+            self.tableView.reloadData()}
         self.getNaverEnterNews()
-        webContentManager.getNaverSportsNew {
+        webContentManager.getNaverSportsNews {
             self.naverSportsNews = webContentManager.naverSportsNews
             self.tableView.reloadData()
         }
@@ -168,13 +194,13 @@ class MainVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         switch section {
-        case 0:
+        case NaverType.naverKeyword.rawValue:
             return 1
-        case 1:
+        case NaverType.naverMainNews.rawValue:
             return self.naverMainNews.count
-        case 2:
+        case NaverType.naverEnterNews.rawValue:
             return self.naverEnterNews.count
-        case 3:
+        case NaverType.naverSportNews.rawValue:
             return self.naverSportsNews.count
         default:
             return 0
@@ -183,7 +209,7 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        if indexPath.section == NaverType.naverKeyword.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
             // keywordLabel 설정
@@ -280,15 +306,15 @@ class MainVC: UITableViewController {
             cell.labelText.font = UIFont.systemFont(ofSize: 14)
             
             switch indexPath.section {
-            case 1:
+            case NaverType.naverMainNews.rawValue:
                 let data = self.naverMainNews[indexPath.row]
                 cell.labelNum.text = String(indexPath.row + 1)
                 cell.labelText.text = data.title
-            case 2:
+            case NaverType.naverEnterNews.rawValue:
                 let data = self.naverEnterNews[indexPath.row]
                 cell.labelNum.text = String(indexPath.row + 1)
                 cell.labelText.text = data.title
-            case 3:
+            case NaverType.naverSportNews.rawValue:
                 let data = self.naverSportsNews[indexPath.row]
                 cell.labelNum.text = String(indexPath.row + 1)
                 cell.labelText.text = data.title
@@ -304,18 +330,17 @@ class MainVC: UITableViewController {
         let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
         
         switch indexPath.section {
-        case 0:
+        case NaverType.naverKeyword.rawValue:
             return
-        case 1:
+        case NaverType.naverMainNews.rawValue:
             contentVC.url = self.naverMainNews[indexPath.row].url
             self.navigationController?.pushViewController(contentVC, animated: true)
-        case 2:
+        case NaverType.naverEnterNews.rawValue:
             contentVC.url = self.naverEnterNews[indexPath.row].url
             print(self.naverEnterNews[indexPath.row].url)
             self.navigationController?.pushViewController(contentVC, animated: true)
-        case 3:
+        case NaverType.naverSportNews.rawValue:
             contentVC.url = self.naverSportsNews[indexPath.row].url
-            print(self.naverSportsNews[indexPath.row].url)
             self.navigationController?.pushViewController(contentVC, animated: true)
         default:
             ()
@@ -332,14 +357,14 @@ class MainVC: UITableViewController {
         title.textAlignment = .left
         
         switch section {
-        case 0:
-            title.text = "네이버 실시간 검색어"
-        case 1:
-            title.text = "주요 뉴스"
-        case 2:
-            title.text = "연예 뉴스"
-        case 3:
-            title.text = "스포츠 뉴스"
+        case NaverType.naverKeyword.rawValue:
+            title.text = NaverType.getNaverName(.naverKeyword)()
+        case NaverType.naverMainNews.rawValue:
+            title.text = NaverType.getNaverName(.naverMainNews)()
+        case NaverType.naverEnterNews.rawValue:
+            title.text = NaverType.getNaverName(.naverEnterNews)()
+        case NaverType.naverSportNews.rawValue:
+            title.text = NaverType.getNaverName(.naverSportNews)()
         default:
             ()
         }
@@ -379,26 +404,6 @@ class MainVC: UITableViewController {
     
    
     // functions regarding API
-    func getNaverMainNews() {
-        
-        let url = "https://news.naver.com/main/ranking/popularDay.nhn"
-        let call = Alamofire.request(url)
-        
-        call.responseString { response in
-            guard let html = response.result.value else { return }
-            if let doc = try? Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                let items = doc.xpath("//ul[@class='list_txt']/li")
-                
-                for item in items {
-                    let title = item.at_xpath("a")?["title"]!
-                    let url = item.at_xpath("a")?["href"]!
-                    self.naverMainNews.append((title!, url!))
-                }
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
     func getNaverEnterNews() {
         
         let url = "https://entertain.naver.com/home"
