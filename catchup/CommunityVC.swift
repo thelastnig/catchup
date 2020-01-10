@@ -284,6 +284,9 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let ud = UserDefaults.standard
+        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
+        
         let headerView = UIView()
         headerView.backgroundColor = self.mainColor
         
