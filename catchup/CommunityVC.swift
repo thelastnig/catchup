@@ -158,6 +158,7 @@ class CommunityVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         let ud = UserDefaults.standard
         let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
+        
         switch section {
         case CommunityType.cook.rawValue:
             if let switchValue = ud.value(forKey: key) {
@@ -297,19 +298,82 @@ class CommunityVC: UITableViewController {
         
         switch section {
         case CommunityType.cook.rawValue:
-            title.text = CommunityType.getCommunityName(.cook)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.cook)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.cook)()
+            }
         case CommunityType.ilbe.rawValue:
-            title.text = CommunityType.getCommunityName(.ilbe)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.ilbe)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.ilbe)()
+            }
         case CommunityType.instiz.rawValue:
-            title.text = CommunityType.getCommunityName(.instiz)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.instiz)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.instiz)()
+            }
         case CommunityType.ruliweb.rawValue:
-            title.text = CommunityType.getCommunityName(.ruliweb)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.ruliweb)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.ruliweb)()
+            }
         case CommunityType.clien.rawValue:
-            title.text = CommunityType.getCommunityName(.clien)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.clien)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.clien)()
+            }
         case CommunityType.namu.rawValue:
-            title.text = CommunityType.getCommunityName(.namu)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.namu)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.namu)()
+            }
         case CommunityType.ppomppu.rawValue:
-            title.text = CommunityType.getCommunityName(.ppomppu)()
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.ppomppu)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.ppomppu)()
+            }
         default:
             ()
         }
@@ -450,5 +514,7 @@ class CommunityVC: UITableViewController {
             ()
         }
     }
+    
+
 
 }

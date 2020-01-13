@@ -27,6 +27,9 @@
 		76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76958A21239CDC3100770439 /* catchup.xcdatamodeld */; };
 		76958A25239CDC3300770439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76958A24239CDC3300770439 /* Assets.xcassets */; };
 		76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76958A26239CDC3300770439 /* LaunchScreen.storyboard */; };
+		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
+		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
+		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
 		76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B6FD1123B9AAFD008482E2 /* FirstVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +58,9 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
+		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
+		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
 		76B6FD1123B9AAFD008482E2 /* FirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
 		B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.release.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.release.xcconfig"; sourceTree = "<group>"; };
 		E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.debug.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +131,9 @@
 				7604609D23C6E5880022A062 /* CommunityVC.swift */,
 				76948D2323C83055009C0F67 /* SettingCell.swift */,
 				76948D2523C83076009C0F67 /* SettingVC.swift */,
+				76A94BD923CC306C00BB6937 /* BoonVC.swift */,
+				76A94BDB23CC316800BB6937 /* BoonCell.swift */,
+				76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -256,6 +265,7 @@
 				76948D2423C83055009C0F67 /* SettingCell.swift in Sources */,
 				76948D2623C83076009C0F67 /* SettingVC.swift in Sources */,
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
+				76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */,
 				760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */,
 				76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */,
 				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
@@ -263,11 +273,13 @@
 				76958A1D239CDC3100770439 /* ViewController.swift in Sources */,
 				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,
 				76859B5423C2C0E10066B5CF /* ArticleCell.swift in Sources */,
+				76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */,
 				7604609823C6DD170022A062 /* MainContentManager.swift in Sources */,
 				7604609E23C6E5880022A062 /* CommunityVC.swift in Sources */,
 				7693BD3A23ACB023000C5963 /* utils.swift in Sources */,
 				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,
 				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
+				76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */,
 				76958A19239CDC3100770439 /* AppDelegate.swift in Sources */,
 				76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */,
 			);
