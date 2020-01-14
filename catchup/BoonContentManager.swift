@@ -11,8 +11,8 @@ import Alamofire
 
 class BoonContentManager {
     
-    lazy var boonContents: [(title: String, url: String, imgUrl: String)] = {
-        var list = [(String, String, String)]()
+    lazy var boonContents: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
+        var list = [(String, String, String, Int)]()
         return list
     }()
     
@@ -36,7 +36,8 @@ class BoonContentManager {
                     let title = data["title"]
                     let url = data["link"]
                     let imgUrl = data["imageLink"]
-                    self.boonContents.append((title as! String, url as! String, imgUrl as! String))
+                    let imgHeight = data["imageHeight"]
+                    self.boonContents.append((title as! String, url as! String, imgUrl as! String, imgHeight as! Int))
                 }
                 completion?()
             }

@@ -7,24 +7,25 @@
 //
 
 import UIKit
-
-private let reuseIdentifier = "Cell"
+import AVFoundation
 
 class BoonVC: UICollectionViewController {
     
-    lazy var boonContents: [(title: String, url: String, imgUrl: String)] = {
-        var list = [(String, String, String)]()
+    lazy var boonContents: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
+        var list = [(String, String, String, Int)]()
         return list
     }()
+    
+    var boonImages: Array<UIImage> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        let layout = self.collectionView.collectionViewLayout as! PinterestLayout
+        layout.delegate = self
+        
+        // collectionView 환경 설정
+        self.collectionView.backgroundColor = .white
+        self.collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
 
         let webContentManager = BoonContentManager()
         webContentManager.getBoonContents {
@@ -32,7 +33,20 @@ class BoonVC: UICollectionViewController {
             self.collectionView.reloadData()
         }
     }
+    
+    func getRandomColor()-> UIColor? {
+        let color1 = UIColor(red:0.39, green:0.90, blue:0.70, alpha:1.0)
+        let color2 = UIColor(red:0.55, green:0.91, blue:0.60, alpha:1.0)
+        let color3 = UIColor(red:0.75, green:0.92, blue:0.46, alpha:1.0)
+        let color4 = UIColor(red:0.13, green:0.79, blue:0.59, alpha:1.0)
+        let color5 = UIColor(red:0.32, green:0.81, blue:0.40, alpha:1.0)
+        let color6 = UIColor(red:0.58, green:0.85, blue:0.18, alpha:1.0)
+        let colors = [color1, color2, color3, color4, color5, color6]
+        
+        return colors.randomElement()!
+    }
 
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -52,11 +66,12 @@ class BoonVC: UICollectionViewController {
         let data = self.boonContents[indexPath.row]
         
         cell.labelTitle.text = data.title
-        cell.labelTitle.textColor = UIColor.white
+        cell.labelTitle.textColor = UIColor.black
         cell.labelTitle.font = UIFont.systemFont(ofSize: 13)
         
-        // 이미지 다운로드 및 설정
+        cell.containerView.backgroundColor = self.getRandomColor()
         
+        // 이미지 다운로드 및 배열에 저장
         let path = data.imgUrl
         
         let task = URLSession.shared.dataTask(with: URL(string: path)!) {
@@ -67,15 +82,13 @@ class BoonVC: UICollectionViewController {
                 cell.imageView.image = UIImage(data: imageData)
             }
         }
-        
         task.resume()
-         
+        
+        //cell.imageView.image = self.boonImages[indexPath.row]
         return cell
     }
     
- 
     
-
     // MARK: UICollectionViewDelegate
 
     /*
@@ -92,6 +105,8 @@ class BoonVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = self.boonContents[indexPath.row]
         let url = data.url
+        
+        print(url)
         
         let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
         
@@ -118,25 +133,19 @@ class BoonVC: UICollectionViewController {
 
 // collectionView Item의 크기를 설정하는 추가 함수들
 extension BoonVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 1) / 2
-        let height: CGFloat = 200
-        
-        return CGSize(width: width, height: height)
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout
-        collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemSize = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + 10)) / 2
+      return CGSize(width: itemSize, height: itemSize)
     }
 }
+
+extension BoonVC: PinterestLayoutDelegate {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+    let height = self.boonContents[indexPath.item].imgHeight
+    return CGFloat(height) + 200
+  }
+}
+

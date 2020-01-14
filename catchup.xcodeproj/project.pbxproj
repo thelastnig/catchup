@@ -27,6 +27,7 @@
 		76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76958A21239CDC3100770439 /* catchup.xcdatamodeld */; };
 		76958A25239CDC3300770439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76958A24239CDC3300770439 /* Assets.xcassets */; };
 		76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76958A26239CDC3300770439 /* LaunchScreen.storyboard */; };
+		76A82A8F23CD7DBF002BC687 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */; };
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
@@ -58,6 +59,7 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
@@ -108,34 +110,75 @@
 		76958A17239CDC3100770439 /* catchup */ = {
 			isa = PBXGroup;
 			children = (
+				76A82A9623CD8EDA002BC687 /* ViewController */,
+				76A82A9523CD8EC1002BC687 /* ContentManager */,
+				76A82A9223CD8E91002BC687 /* Util */,
+				76A82A9123CD8E68002BC687 /* Cell */,
+				76A82A9023CD8E4F002BC687 /* Layout */,
 				763C81F5239E7E2900C93350 /* SWRevealViewController.h */,
-				763C81F4239E7E2800C93350 /* SWRevealViewController.m */,
 				76958A18239CDC3100770439 /* AppDelegate.swift */,
 				76958A1A239CDC3100770439 /* SceneDelegate.swift */,
-				76958A1C239CDC3100770439 /* ViewController.swift */,
 				76958A1E239CDC3100770439 /* Main.storyboard */,
+				763C81F4239E7E2800C93350 /* SWRevealViewController.m */,
 				76958A24239CDC3300770439 /* Assets.xcassets */,
 				76958A26239CDC3300770439 /* LaunchScreen.storyboard */,
 				76958A29239CDC3300770439 /* Info.plist */,
 				76958A21239CDC3100770439 /* catchup.xcdatamodeld */,
 				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
+			);
+			path = catchup;
+			sourceTree = "<group>";
+		};
+		76A82A9023CD8E4F002BC687 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
+		76A82A9123CD8E68002BC687 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				760EF81F23BDB4130092FE7A /* KeywordCell.swift */,
+				76859B5323C2C0E10066B5CF /* ArticleCell.swift */,
+				76948D2323C83055009C0F67 /* SettingCell.swift */,
+				76A94BDB23CC316800BB6937 /* BoonCell.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		76A82A9223CD8E91002BC687 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				7693BD3923ACB023000C5963 /* utils.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		76A82A9523CD8EC1002BC687 /* ContentManager */ = {
+			isa = PBXGroup;
+			children = (
+				7604609723C6DD170022A062 /* MainContentManager.swift */,
+				7604609923C6E1E90022A062 /* CommunityContentManager.swift */,
+				76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */,
+			);
+			name = ContentManager;
+			sourceTree = "<group>";
+		};
+		76A82A9623CD8EDA002BC687 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76958A1C239CDC3100770439 /* ViewController.swift */,
 				763C81F7239E7FFD00C93350 /* MainVC.swift */,
 				763C81F9239E812500C93350 /* SideBarVC.swift */,
 				766E07D923AB6CD30065948E /* ContentVC.swift */,
-				7693BD3923ACB023000C5963 /* utils.swift */,
 				76B6FD1123B9AAFD008482E2 /* FirstVC.swift */,
-				760EF81F23BDB4130092FE7A /* KeywordCell.swift */,
-				76859B5323C2C0E10066B5CF /* ArticleCell.swift */,
-				7604609723C6DD170022A062 /* MainContentManager.swift */,
-				7604609923C6E1E90022A062 /* CommunityContentManager.swift */,
 				7604609D23C6E5880022A062 /* CommunityVC.swift */,
-				76948D2323C83055009C0F67 /* SettingCell.swift */,
 				76948D2523C83076009C0F67 /* SettingVC.swift */,
 				76A94BD923CC306C00BB6937 /* BoonVC.swift */,
-				76A94BDB23CC316800BB6937 /* BoonCell.swift */,
-				76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */,
 			);
-			path = catchup;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		EC1B415DD9C16785B3BD536F /* Frameworks */ = {
@@ -265,6 +308,7 @@
 				76948D2423C83055009C0F67 /* SettingCell.swift in Sources */,
 				76948D2623C83076009C0F67 /* SettingVC.swift in Sources */,
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
+				76A82A8F23CD7DBF002BC687 /* PinterestLayout.swift in Sources */,
 				76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */,
 				760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */,
 				76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */,
