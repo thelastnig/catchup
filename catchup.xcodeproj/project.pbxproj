@@ -32,6 +32,8 @@
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
 		76B6FD1223B9AAFD008482E2 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B6FD1123B9AAFD008482E2 /* FirstVC.swift */; };
+		76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */; };
+		76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
 		76B6FD1123B9AAFD008482E2 /* FirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
+		76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.release.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.release.xcconfig"; sourceTree = "<group>"; };
 		E7A55A972EC5786BAB089C8B /* Pods-catchup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.debug.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +129,8 @@
 				76958A29239CDC3300770439 /* Info.plist */,
 				76958A21239CDC3100770439 /* catchup.xcdatamodeld */,
 				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
+				76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */,
+				76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -251,6 +257,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */,
+				76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */,
+				76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */,
 				76958A25239CDC3300770439 /* Assets.xcassets in Resources */,
 				76958A20239CDC3100770439 /* Main.storyboard in Resources */,
 			);

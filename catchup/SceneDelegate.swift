@@ -7,17 +7,45 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //var backendAPI: String!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Firebase RemoteConfig 설정
+        /*let remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(0)) { (status, error) -> Void in
+            if status == .success {
+                print("Config fetched!")
+                remoteConfig.activate(completionHandler: { (error) in
+                    // ...
+                })
+            } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+            
+            self.backendAPI = remoteConfig["backendAPI"].stringValue!
+            let vc = self.storyboard.instantiateViewController(identifier: "SWRevealViewController")
+            self.window = UIWindow(windowScene: windowScene)
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        }
+        */
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

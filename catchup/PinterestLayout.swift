@@ -92,7 +92,10 @@ class PinterestLayout: UICollectionViewLayout {
       let rawWidth: CGFloat = 600
       let ratio = columnWidth / rawWidth
       let newHeight = photoHeight * ratio
-      let height = cellPadding * 2 + newHeight
+        
+      let labelHeight: CGFloat = 50
+      let labelMargin: CGFloat = 10
+      let height = cellPadding * 2 + newHeight + labelHeight + labelMargin * 2
         
       let frame = CGRect(x: xOffset[column],
                          y: yOffset[column],

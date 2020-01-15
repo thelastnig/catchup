@@ -63,7 +63,7 @@ class BoonVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boon_cell", for: indexPath) as! BoonCell
         
-        let data = self.boonContents[indexPath.row]
+        let data = self.boonContents[indexPath.item]
         
         cell.labelTitle.text = data.title
         cell.labelTitle.textColor = UIColor.black
@@ -84,7 +84,6 @@ class BoonVC: UICollectionViewController {
         }
         task.resume()
         
-        //cell.imageView.image = self.boonImages[indexPath.row]
         return cell
     }
     
@@ -103,7 +102,7 @@ class BoonVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = self.boonContents[indexPath.row]
+        let data = self.boonContents[indexPath.item]
         let url = data.url
         
         print(url)
@@ -145,7 +144,11 @@ extension BoonVC: PinterestLayoutDelegate {
     _ collectionView: UICollectionView,
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
     let height = self.boonContents[indexPath.item].imgHeight
-    return CGFloat(height) + 200
+    
+    let randomHeights: Array<CGFloat> = [0, 25, 50, 75]
+    return CGFloat(height) + randomHeights.randomElement()!
   }
+    
+  
 }
 

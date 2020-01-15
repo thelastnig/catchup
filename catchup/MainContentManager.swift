@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Firebase
 
 class MainContentManager {
     
@@ -30,6 +31,8 @@ class MainContentManager {
         var list = [(String, String)]()
         return list
     }()
+    
+    var remoteConfig: RemoteConfig!
     
     let url_prefix = "https://scorpii.shop/korean/"
     
@@ -101,6 +104,5 @@ class MainContentManager {
             }
         }
     }
-    
     
 }

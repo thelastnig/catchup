@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>580833184904-bcb5hfbv8k13jfml32urhq4g5c7sl18u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.580833184904-bcb5hfbv8k13jfml32urhq4g5c7sl18u</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAPtgEjl5cSKGcW2Tpqa1JbR8C599RlaZU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>580833184904</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>PJW.catchup</string>
+	<key>PROJECT_ID</key>
+	<string>catchup-f6b08</string>
+	<key>STORAGE_BUCKET</key>
+	<string>catchup-f6b08.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:580833184904:ios:debcd4ba5979a03d4a633d</string>
+	<key>DATABASE_URL</key>
+	<string>https://catchup-f6b08.firebaseio.com</string>
+</dict>
+</plist>
