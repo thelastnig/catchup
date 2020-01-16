@@ -52,6 +52,11 @@ class CommunityContentManager {
         return list
     }()
     
+    lazy var nateContents: [(title: String, url: String)] = {
+        var list = [(String, String)]()
+        return list
+    }()
+    
     let url_prefix = "https://scorpii.shop/korean/"
     
     // functions regarding API
@@ -233,6 +238,29 @@ class CommunityContentManager {
                     let title = data["title"]
                     let url = data["link"]
                     self.ppomppuContents.append((title as! String, url as! String))
+                }
+                completion?()
+            }
+        }
+    }
+    
+    // nate pann 인기 게시물 호출 함수
+    func getNateContents(completion: (() -> Void)? = nil) {
+        
+        let url = url_prefix + "nate"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.nateContents.append((title as! String, url as! String))
                 }
                 completion?()
             }

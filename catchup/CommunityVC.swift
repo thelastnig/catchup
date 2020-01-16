@@ -16,6 +16,7 @@ public enum CommunityType: Int {
     case clien
     case namu
     case ppomppu
+    case nate
     // enum의 count를 위한 case - 항상 제일 마지막에 위치해야 함
     case count
     
@@ -35,6 +36,8 @@ public enum CommunityType: Int {
             return "Namu"
         case .ppomppu:
             return "Ppomppu"
+        case .nate:
+            return "Nate"
         case .count:
             return ""
         }
@@ -56,6 +59,8 @@ public enum CommunityType: Int {
             return "namu"
         case .ppomppu:
             return "ppomppu"
+        case .nate:
+            return "nate"
         case .count:
             return ""
         }
@@ -103,6 +108,11 @@ class CommunityVC: UITableViewController {
         var list = [(String, String)]()
         return list
     }()
+    
+    lazy var nateContents: [(title: String, url: String)] = {
+        var list = [(String, String)]()
+        return list
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +150,10 @@ class CommunityVC: UITableViewController {
         }
         webContentManager.getPpomppuContents {
             self.ppomppuContents = webContentManager.ppomppuContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getNateContents {
+            self.nateContents = webContentManager.nateContents
             self.tableView.reloadData()
         }
     }
@@ -237,6 +251,17 @@ class CommunityVC: UITableViewController {
             } else {
                 return self.ppomppuContents.count
             }
+        case CommunityType.nate.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.nateContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.nateContents.count
+            }
         default:
             return 0
         }
@@ -276,6 +301,10 @@ class CommunityVC: UITableViewController {
             cell.labelText.text = data.title
         case CommunityType.ppomppu.rawValue:
             let data = self.ppomppuContents[indexPath.row]
+            cell.labelNum.text = String(indexPath.row + 1)
+            cell.labelText.text = data.title
+        case CommunityType.nate.rawValue:
+            let data = self.nateContents[indexPath.row]
             cell.labelNum.text = String(indexPath.row + 1)
             cell.labelText.text = data.title
         default:
@@ -374,6 +403,17 @@ class CommunityVC: UITableViewController {
             } else {
                 title.text = CommunityType.getCommunityName(.ppomppu)()
             }
+        case CommunityType.nate.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.nate)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.nate)()
+            }
         default:
             ()
         }
@@ -469,6 +509,17 @@ class CommunityVC: UITableViewController {
             } else {
                 return sectionHeight
             }
+        case CommunityType.nate.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
         default:
             return sectionHeight
         }
@@ -509,6 +560,10 @@ class CommunityVC: UITableViewController {
         case CommunityType.ppomppu.rawValue:
             contentVC.url = self.ppomppuContents[indexPath.row].url
             print(self.ppomppuContents[indexPath.row].url)
+            self.navigationController?.pushViewController(contentVC, animated: true)
+        case CommunityType.nate.rawValue:
+            contentVC.url = self.nateContents[indexPath.row].url
+            print(self.nateContents[indexPath.row].url)
             self.navigationController?.pushViewController(contentVC, animated: true)
         default:
             ()
