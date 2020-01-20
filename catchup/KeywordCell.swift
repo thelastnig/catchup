@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kanna
+import SnapKit
 
 class KeywordCell: UITableViewCell, UIScrollViewDelegate {
     let pageSize = 2
@@ -39,17 +39,21 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet var keywordLabel09_2: UIView!
     @IBOutlet var keywordLabel10_2: UIView!
     
+    var cellKeywordViews: Array<UIView> = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         // scrollView 설정
         self.scrollView.showsHorizontalScrollIndicator = false
         self.scrollView.showsVerticalScrollIndicator = false
-        
+
         self.scrollView.isPagingEnabled = true
         self.scrollView.delegate = self
         self.scrollView.contentSize = CGSize(width: CGFloat(self.pageSize) * self.contentView.frame.width, height: 0)
-        
+
+        //self.scrollView.contentInsetAdjustmentBehavior = .never
+       
         // pageControll 설정
         self.pageControll.snp.makeConstraints{ (make) in
             make.bottom.equalTo(self.scrollView).offset(-5)
@@ -60,24 +64,36 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         self.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
         self.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
         self.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        
+
         // keywordContentView 설정
-        let pageWidth = self.contentView.frame.width
+        let pageWidth = self.frame.width
         let pageHeight = self.contentView.frame.height - 40
-        
+
         self.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
         self.keywordContentView1.layer.borderColor = UIColor.green.cgColor
         self.keywordContentView1.layer.borderWidth = 1
-        
+
         self.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
-        self.keywordContentView2.layer.borderColor = UIColor.green.cgColor
+        self.keywordContentView2.layer.borderColor = UIColor.red.cgColor
         self.keywordContentView2.layer.borderWidth = 1
-        
+
         self.scrollView.addSubview(self.keywordContentView1)
         self.scrollView.addSubview(self.keywordContentView2)
         self.contentView.addSubview(self.pageControll)
 
-        
+        // 각 view를 배열에 담기
+        self.cellKeywordViews = [
+            self.keywordLabel01, self.keywordLabel02,
+            self.keywordLabel03, self.keywordLabel04,
+            self.keywordLabel05, self.keywordLabel06,
+            self.keywordLabel07, self.keywordLabel08,
+            self.keywordLabel09, self.keywordLabel10,
+            self.keywordLabel01_2, self.keywordLabel02_2,
+            self.keywordLabel03_2, self.keywordLabel04_2,
+            self.keywordLabel05_2, self.keywordLabel06_2,
+            self.keywordLabel07_2, self.keywordLabel08_2,
+            self.keywordLabel09_2, self.keywordLabel10_2
+        ]
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -88,57 +104,62 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
     
     // NAVER keyword view setting function
     func setKeywordView(view: UIView, superView: UIView) {
-       let keywordViewHeight = superView.frame.height / 5
-       let keywordViewWidth = superView.frame.width / 2
-        
-       view.frame.size.width = keywordViewWidth
-       view.frame.size.height = keywordViewHeight
-       if view.tag < 6 {
+        let keywordViewHeight = superView.frame.height / 5
+        let keywordViewWidth = superView.frame.width / 2
+
+        print("keywordViewWidth : \(keywordViewWidth)")
+        print("contentView / 2 : \(self.contentView.frame.width / 2)")
+        print("contentView : \(self.contentView.frame.width)")
+
+        view.frame.size.width = keywordViewWidth
+        view.frame.size.height = keywordViewHeight
+        if view.tag < 6 {
            view.frame.origin.x = 0
            view.frame.origin.y = CGFloat(view.tag - 1) * keywordViewHeight
-       } else {
+        } else {
            view.frame.origin.x = keywordViewWidth
            view.frame.origin.y = CGFloat(view.tag - 6) * keywordViewHeight
-       }
-       view.layer.borderWidth = 1
-       view.layer.borderColor = UIColor.blue.cgColor
-       view.backgroundColor = UIColor.white
-       superView.addSubview(view)
+        }
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.blue.cgColor
+        view.backgroundColor = UIColor.white
+        superView.addSubview(view)
    }
    
    func setKeywordLabels(_ superView: UIView, _ numLabel: UILabel, _ titleLabel: UILabel) {
-       
-       let leftOffset: CGFloat = 10
-       let rightOffset: CGFloat = 10
-       let numLabelWidth: CGFloat = 20
-       
-       /*
-       numLabel.frame = CGRect(x: 0, y: 0, width: numLabelWidth, height: superView.frame.height)
-       */
-       numLabel.textAlignment = .left
-       numLabel.textColor = UIColor.brown
-       numLabel.font = UIFont.boldSystemFont(ofSize: 12)
-       //numLabel.layer.borderColor = UIColor.green.cgColor
-       //numLabel.layer.borderWidth = 1
-       
-       titleLabel.textAlignment = .left
-       titleLabel.font = UIFont.systemFont(ofSize: 12)
-       //titleLabel.layer.borderColor = UIColor.red.cgColor
-       //titleLabel.layer.borderWidth = 1
-       
-       superView.addSubview(numLabel)
-       superView.addSubview(titleLabel)
-       
-       numLabel.snp.makeConstraints { (make) in
+
+        let leftOffset: CGFloat = 10
+        let rightOffset: CGFloat = 10
+        let numLabelWidth: CGFloat = 20
+
+        /*
+        numLabel.frame = CGRect(x: 0, y: 0, width: numLabelWidth, height: superView.frame.height)
+        */
+        numLabel.textAlignment = .left
+        numLabel.textColor = UIColor.brown
+        numLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        //numLabel.layer.borderColor = UIColor.green.cgColor
+        //numLabel.layer.borderWidth = 1
+
+        titleLabel.textAlignment = .left
+        titleLabel.font = UIFont.systemFont(ofSize: 12)
+        //titleLabel.layer.borderColor = UIColor.red.cgColor
+        //titleLabel.layer.borderWidth = 1
+
+        superView.addSubview(numLabel)
+        superView.addSubview(titleLabel)
+
+        numLabel.snp.makeConstraints { (make) in
            make.left.equalTo(superView).offset(leftOffset)
            make.height.equalTo(superView.frame.height)
            make.width.equalTo(numLabelWidth)
-       }
-       
-       titleLabel.snp.makeConstraints { (make) in
+        }
+
+        titleLabel.snp.makeConstraints { (make) in
            make.left.equalTo(numLabel.snp.right).offset(rightOffset)
            make.height.equalTo(superView.frame.height)
-       }
+        }
+       
    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

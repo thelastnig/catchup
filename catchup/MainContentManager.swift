@@ -82,6 +82,29 @@ class MainContentManager {
         }
     }
     
+    // 네이버 연예 뉴스 호츨 함수
+    func getNaverEnterNews(completion: (() -> Void)? = nil) {
+        
+        let url = url_prefix + "naverEnterNews"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                for item in items {
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.naverEnterNews.append((title as! String, url as! String))
+                }
+                completion?()
+            }
+        }
+    }
+    
     // 네이버 스포츠 뉴스 호츨 함수
     func getNaverSportsNews(completion: (() -> Void)? = nil) {
         

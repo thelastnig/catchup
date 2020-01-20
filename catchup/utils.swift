@@ -30,5 +30,10 @@ extension UIView {
          mask.path = path.cgPath
          self.layer.mask = mask
     }
+}
 
+class Constants {
+    public static let cellHeight: CGFloat = 38
+    public static let sectionHeight: CGFloat = 50
+    public static let keywordAreaHeight: CGFloat = 200
 }

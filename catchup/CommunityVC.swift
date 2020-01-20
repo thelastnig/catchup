@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import Kanna
+import SafariServices
 
 public enum CommunityType: Int {
-    case cook
-    case ilbe
-    case instiz
     case ruliweb
-    case clien
-    case namu
-    case ppomppu
     case nate
+    case ilbe
+    case ppomppu
+    case clien
+    case instiz
+    case cook
+    case namu
     // enum의 count를 위한 case - 항상 제일 마지막에 위치해야 함
     case count
     
@@ -160,6 +162,7 @@ class CommunityVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - Table view data source
@@ -428,7 +431,7 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let sectionHeight: CGFloat = 55
+        let sectionHeight: CGFloat = Constants.sectionHeight
         let ud = UserDefaults.standard
         let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         switch section {
@@ -530,44 +533,41 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return Constants.cellHeight
     }
     
     // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
+        var url = "https://www.google.com"
         
         switch indexPath.section {
         case CommunityType.cook.rawValue:
-            contentVC.url = self.cookContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.cookContents[indexPath.row].url
         case CommunityType.ilbe.rawValue:
-            contentVC.url = self.ilbeContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.ilbeContents[indexPath.row].url
         case CommunityType.instiz.rawValue:
-            contentVC.url = self.instizContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.instizContents[indexPath.row].url
         case CommunityType.ruliweb.rawValue:
-            contentVC.url = self.ruliwebContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.ruliwebContents[indexPath.row].url
         case CommunityType.clien.rawValue:
-            contentVC.url = self.clienContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.clienContents[indexPath.row].url
         case CommunityType.namu.rawValue:
-            contentVC.url = self.namuContents[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.namuContents[indexPath.row].url
         case CommunityType.ppomppu.rawValue:
-            contentVC.url = self.ppomppuContents[indexPath.row].url
-            print(self.ppomppuContents[indexPath.row].url)
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.ppomppuContents[indexPath.row].url
         case CommunityType.nate.rawValue:
-            contentVC.url = self.nateContents[indexPath.row].url
-            print(self.nateContents[indexPath.row].url)
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.nateContents[indexPath.row].url
         default:
             ()
         }
+        // safariViewController 생성 및 설정
+        let config = SFSafariViewController.Configuration()
+        config.barCollapsingEnabled = false
+        let safariViewController = SFSafariViewController(url: URL(string: url)!, configuration: config)
+        safariViewController.dismissButtonStyle = .close
+        
+        self.navigationController?.present(safariViewController, animated: true, completion: nil)
     }
     
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SafariServices
 
 class BoonVC: UICollectionViewController {
     
@@ -25,13 +26,17 @@ class BoonVC: UICollectionViewController {
         
         // collectionView 환경 설정
         self.collectionView.backgroundColor = .white
-        self.collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
+        self.collectionView.contentInset = UIEdgeInsets(top: 23, left: 8, bottom: 10, right: 8)
 
         let webContentManager = BoonContentManager()
         webContentManager.getBoonContents {
             self.boonContents = webContentManager.boonContents
             self.collectionView.reloadData()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     func getRandomColor()-> UIColor? {
@@ -105,12 +110,13 @@ class BoonVC: UICollectionViewController {
         let data = self.boonContents[indexPath.item]
         let url = data.url
         
-        print(url)
+        // safariViewController 생성 및 설정
+        let config = SFSafariViewController.Configuration()
+        config.barCollapsingEnabled = false
+        let safariViewController = SFSafariViewController(url: URL(string: url)!, configuration: config)
+        safariViewController.dismissButtonStyle = .close
         
-        let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
-        
-        contentVC.url = url
-        self.navigationController?.pushViewController(contentVC, animated: true)
+        self.navigationController?.present(safariViewController, animated: true, completion: nil)
     }
 
     /*
@@ -149,6 +155,5 @@ extension BoonVC: PinterestLayoutDelegate {
     return CGFloat(height) + randomHeights.randomElement()!
   }
     
-  
 }
 

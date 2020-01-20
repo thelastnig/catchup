@@ -120,14 +120,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="article_cell" id="1KD-kn-Z7U" customClass="ArticleCell" customModule="catchup" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1KD-kn-Z7U" id="eNT-uU-tvm">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtW-8T-rFN">
-                                            <rect key="frame" x="20" y="11" width="30" height="21"/>
+                                            <rect key="frame" x="20" y="11" width="30" height="21.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="ikk-ec-1D5"/>
                                             </constraints>
@@ -136,7 +136,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6C4-Xa-y9f">
-                                            <rect key="frame" x="55" y="11" width="320" height="21"/>
+                                            <rect key="frame" x="55" y="11" width="320" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -188,8 +188,9 @@
                                         <pageControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-DQ-lHI">
                                             <rect key="frame" x="187.5" y="81.5" width="39" height="37"/>
                                         </pageControl>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-l9-8qz">
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-l9-8qz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="208"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ess-5O-YXv">
                                                     <rect key="frame" x="212" y="8" width="202" height="180"/>
@@ -311,11 +312,7 @@
                                         </scrollView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Ujh-l9-8qz" firstAttribute="top" secondItem="FUk-v3-ZET" secondAttribute="top" id="bSC-O1-Lge"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ujh-l9-8qz" secondAttribute="trailing" id="hH6-K0-pKl"/>
                                         <constraint firstItem="2I3-DQ-lHI" firstAttribute="centerX" secondItem="FUk-v3-ZET" secondAttribute="centerX" id="kvU-fQ-ogr"/>
-                                        <constraint firstAttribute="bottom" secondItem="Ujh-l9-8qz" secondAttribute="bottom" id="reA-VY-4mY"/>
-                                        <constraint firstItem="Ujh-l9-8qz" firstAttribute="leading" secondItem="FUk-v3-ZET" secondAttribute="leading" id="z1s-Uk-oy6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

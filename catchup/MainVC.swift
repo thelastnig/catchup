@@ -9,6 +9,9 @@
 import UIKit
 import Kanna
 import Alamofire
+import SnapKit
+import Firebase
+import SafariServices
 
 public enum NaverType: Int {
     case naverKeyword
@@ -78,6 +81,9 @@ class MainVC: UITableViewController {
     var keywordLabel10_2Num: UILabel!
     var keywordLabel10_2Title: UILabel!
     
+    var keywordLabelsTitle: Array<UILabel> = []
+    var keywordLabelsNum: Array<UILabel> = []
+    
     lazy var naverKeyword: [String] = {
         var list = [String]()
         return list
@@ -100,6 +106,9 @@ class MainVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.tableView.cellLayoutMarginsFollowReadableWidth = false
+        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -144,35 +153,49 @@ class MainVC: UITableViewController {
         self.keywordLabel10_2Num = UILabel()
         self.keywordLabel10_2Title = UILabel()
         
+        self.keywordLabelsTitle = [
+            self.keywordLabel01Title, self.keywordLabel02Title,
+            self.keywordLabel03Title, self.keywordLabel04Title,
+            self.keywordLabel05Title, self.keywordLabel06Title,
+            self.keywordLabel07Title, self.keywordLabel08Title,
+            self.keywordLabel09Title, self.keywordLabel10Title,
+            self.keywordLabel01_2Title, self.keywordLabel02_2Title,
+            self.keywordLabel03_2Title, self.keywordLabel04_2Title,
+            self.keywordLabel05_2Title, self.keywordLabel06_2Title,
+            self.keywordLabel07_2Title, self.keywordLabel08_2Title,
+            self.keywordLabel09_2Title, self.keywordLabel10_2Title,
+        ]
+        
+        self.keywordLabelsNum = [
+            self.keywordLabel01Num, self.keywordLabel02Num,
+            self.keywordLabel03Num, self.keywordLabel04Num,
+            self.keywordLabel05Num, self.keywordLabel06Num,
+            self.keywordLabel07Num, self.keywordLabel08Num,
+            self.keywordLabel09Num, self.keywordLabel10Num,
+            self.keywordLabel01_2Num, self.keywordLabel02_2Num,
+            self.keywordLabel03_2Num, self.keywordLabel04_2Num,
+            self.keywordLabel05_2Num, self.keywordLabel06_2Num,
+            self.keywordLabel07_2Num, self.keywordLabel08_2Num,
+            self.keywordLabel09_2Num, self.keywordLabel10_2Num,
+        ]
+        
         let webContentManager = MainContentManager()
         
         webContentManager.getNaverKeyword {
             self.naverKeyword = webContentManager.naverKeyword
-            self.keywordLabel01Title.text = self.naverKeyword[0]
-            self.keywordLabel02Title.text = self.naverKeyword[1]
-            self.keywordLabel03Title.text = self.naverKeyword[2]
-            self.keywordLabel04Title.text = self.naverKeyword[3]
-            self.keywordLabel05Title.text = self.naverKeyword[4]
-            self.keywordLabel06Title.text = self.naverKeyword[5]
-            self.keywordLabel07Title.text = self.naverKeyword[6]
-            self.keywordLabel08Title.text = self.naverKeyword[7]
-            self.keywordLabel09Title.text = self.naverKeyword[8]
-            self.keywordLabel10Title.text = self.naverKeyword[9]
-            self.keywordLabel01_2Title.text = self.naverKeyword[10]
-            self.keywordLabel02_2Title.text = self.naverKeyword[11]
-            self.keywordLabel03_2Title.text = self.naverKeyword[12]
-            self.keywordLabel04_2Title.text = self.naverKeyword[13]
-            self.keywordLabel05_2Title.text = self.naverKeyword[14]
-            self.keywordLabel06_2Title.text = self.naverKeyword[15]
-            self.keywordLabel07_2Title.text = self.naverKeyword[16]
-            self.keywordLabel08_2Title.text = self.naverKeyword[17]
-            self.keywordLabel09_2Title.text = self.naverKeyword[18]
-            self.keywordLabel10_2Title.text = self.naverKeyword[19]
+            
+            for idx in 0...19 {
+                self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
+            }
         }
         webContentManager.getNaverMainNews {
             self.naverMainNews = webContentManager.naverMainNews
-            self.tableView.reloadData()}
-        self.getNaverEnterNews()
+            self.tableView.reloadData()
+        }
+        webContentManager.getNaverEnterNews {
+            self.naverEnterNews = webContentManager.naverEnterNews
+            self.tableView.reloadData()
+        }
         webContentManager.getNaverSportsNews {
             self.naverSportsNews = webContentManager.naverSportsNews
             self.tableView.reloadData()
@@ -181,6 +204,7 @@ class MainVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        self.tabBarController?.tabBar.isHidden = false
     }
 
     // MARK: - Table view data source
@@ -213,90 +237,23 @@ class MainVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
             // keywordLabel 설정
-            cell.keywordLabel01.tag = 1
-            cell.setKeywordView(view: cell.keywordLabel01, superView: cell.keywordContentView1)
-            cell.keywordLabel02.tag = 2
-            cell.setKeywordView(view: cell.keywordLabel02, superView: cell.keywordContentView1)
-            cell.keywordLabel03.tag = 3
-            cell.setKeywordView(view: cell.keywordLabel03, superView: cell.keywordContentView1)
-            cell.keywordLabel04.tag = 4
-            cell.setKeywordView(view: cell.keywordLabel04, superView: cell.keywordContentView1)
-            cell.keywordLabel05.tag = 5
-            cell.setKeywordView(view: cell.keywordLabel05, superView: cell.keywordContentView1)
-            cell.keywordLabel06.tag = 6
-            cell.setKeywordView(view: cell.keywordLabel06, superView: cell.keywordContentView1)
-            cell.keywordLabel07.tag = 7
-            cell.setKeywordView(view: cell.keywordLabel07, superView: cell.keywordContentView1)
-            cell.keywordLabel08.tag = 8
-            cell.setKeywordView(view: cell.keywordLabel08, superView: cell.keywordContentView1)
-            cell.keywordLabel09.tag = 9
-            cell.setKeywordView(view: cell.keywordLabel09, superView: cell.keywordContentView1)
-            cell.keywordLabel10.tag = 10
-            cell.setKeywordView(view: cell.keywordLabel10, superView: cell.keywordContentView1)
-            
-            cell.keywordLabel01_2.tag = 1
-            cell.setKeywordView(view: cell.keywordLabel01_2, superView: cell.keywordContentView2)
-            cell.keywordLabel02_2.tag = 2
-            cell.setKeywordView(view: cell.keywordLabel02_2, superView: cell.keywordContentView2)
-            cell.keywordLabel03_2.tag = 3
-            cell.setKeywordView(view: cell.keywordLabel03_2, superView: cell.keywordContentView2)
-            cell.keywordLabel04_2.tag = 4
-            cell.setKeywordView(view: cell.keywordLabel04_2, superView: cell.keywordContentView2)
-            cell.keywordLabel05_2.tag = 5
-            cell.setKeywordView(view: cell.keywordLabel05_2, superView: cell.keywordContentView2)
-            cell.keywordLabel06_2.tag = 6
-            cell.setKeywordView(view: cell.keywordLabel06_2, superView: cell.keywordContentView2)
-            cell.keywordLabel07_2.tag = 7
-            cell.setKeywordView(view: cell.keywordLabel07_2, superView: cell.keywordContentView2)
-            cell.keywordLabel08_2.tag = 8
-            cell.setKeywordView(view: cell.keywordLabel08_2, superView: cell.keywordContentView2)
-            cell.keywordLabel09_2.tag = 9
-            cell.setKeywordView(view: cell.keywordLabel09_2, superView: cell.keywordContentView2)
-            cell.keywordLabel10_2.tag = 10
-            cell.setKeywordView(view: cell.keywordLabel10_2, superView: cell.keywordContentView2)
+            for idx in 0...19 {
+                let tag = idx < 10 ? idx + 1 : idx - 9
+                let superView = (idx < 10 ? cell.keywordContentView1 : cell.keywordContentView2)!
+                
+                cell.cellKeywordViews[idx].tag = tag
+                cell.setKeywordView(view: cell.cellKeywordViews[idx], superView: superView)
+                print("==========\(idx)=================")
+            }
             
             // 순번 및 검색어를 위한 label 설정
-            cell.setKeywordLabels(cell.keywordLabel01, self.keywordLabel01Num, self.keywordLabel01Title)
-            self.keywordLabel01Num.text = String(cell.keywordLabel01.tag)
-            cell.setKeywordLabels(cell.keywordLabel02, self.keywordLabel02Num, self.keywordLabel02Title)
-            self.keywordLabel02Num.text = String(cell.keywordLabel02.tag)
-            cell.setKeywordLabels(cell.keywordLabel03, self.keywordLabel03Num, self.keywordLabel03Title)
-            self.keywordLabel03Num.text = String(cell.keywordLabel03.tag)
-            cell.setKeywordLabels(cell.keywordLabel04, self.keywordLabel04Num, self.keywordLabel04Title)
-            self.keywordLabel04Num.text = String(cell.keywordLabel04.tag)
-            cell.setKeywordLabels(cell.keywordLabel05, self.keywordLabel05Num, self.keywordLabel05Title)
-            self.keywordLabel05Num.text = String(cell.keywordLabel05.tag)
-            cell.setKeywordLabels(cell.keywordLabel06, self.keywordLabel06Num, self.keywordLabel06Title)
-            self.keywordLabel06Num.text = String(cell.keywordLabel06.tag)
-            cell.setKeywordLabels(cell.keywordLabel07, self.keywordLabel07Num, self.keywordLabel07Title)
-            self.keywordLabel07Num.text = String(cell.keywordLabel07.tag)
-            cell.setKeywordLabels(cell.keywordLabel08, self.keywordLabel08Num, self.keywordLabel08Title)
-            self.keywordLabel08Num.text = String(cell.keywordLabel08.tag)
-            cell.setKeywordLabels(cell.keywordLabel09, self.keywordLabel09Num, self.keywordLabel09Title)
-            self.keywordLabel09Num.text = String(cell.keywordLabel09.tag)
-            cell.setKeywordLabels(cell.keywordLabel10, self.keywordLabel10Num, self.keywordLabel10Title)
-            self.keywordLabel10Num.text = String(cell.keywordLabel10.tag)
-
-            cell.setKeywordLabels(cell.keywordLabel01_2, self.keywordLabel01_2Num, self.keywordLabel01_2Title)
-            self.keywordLabel01_2Num.text = String(cell.keywordLabel01_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel02_2, self.keywordLabel02_2Num, self.keywordLabel02_2Title)
-            self.keywordLabel02_2Num.text = String(cell.keywordLabel02_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel03_2, self.keywordLabel03_2Num, self.keywordLabel03_2Title)
-            self.keywordLabel03_2Num.text = String(cell.keywordLabel03_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel04_2, self.keywordLabel04_2Num, self.keywordLabel04_2Title)
-            self.keywordLabel04_2Num.text = String(cell.keywordLabel04_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel05_2, self.keywordLabel05_2Num, self.keywordLabel05_2Title)
-            self.keywordLabel05_2Num.text = String(cell.keywordLabel05_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel06_2, self.keywordLabel06_2Num, self.keywordLabel06_2Title)
-            self.keywordLabel06_2Num.text = String(cell.keywordLabel06_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel07_2, self.keywordLabel07_2Num, self.keywordLabel07_2Title)
-            self.keywordLabel07_2Num.text = String(cell.keywordLabel07_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel08_2, self.keywordLabel08_2Num, self.keywordLabel08_2Title)
-            self.keywordLabel08_2Num.text = String(cell.keywordLabel08_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel09_2, self.keywordLabel09_2Num, self.keywordLabel09_2Title)
-            self.keywordLabel09_2Num.text = String(cell.keywordLabel09_2.tag + 10)
-            cell.setKeywordLabels(cell.keywordLabel10_2, self.keywordLabel10_2Num, self.keywordLabel10_2Title)
-            self.keywordLabel10_2Num.text = String(cell.keywordLabel10_2.tag + 10)
+            for idx in 0...19 {
+                let labelNum = self.keywordLabelsNum[idx]
+                let labelTitle = self.keywordLabelsTitle[idx]
+                let tag = idx < 10 ? cell.cellKeywordViews[idx].tag : cell.cellKeywordViews[idx].tag + 10
+                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
+                labelNum.text = String(tag)
+            }
             
             return cell
         } else {
@@ -327,24 +284,33 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let contentVC = self.storyboard?.instantiateViewController(identifier: "contentVC") as! ContentVC
+        var log = ""
+        var url = "https://www.google.com"
         
         switch indexPath.section {
         case NaverType.naverKeyword.rawValue:
             return
         case NaverType.naverMainNews.rawValue:
-            contentVC.url = self.naverMainNews[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.naverMainNews[indexPath.row].url
+            log = NaverType.getNaverName(.naverMainNews)()
         case NaverType.naverEnterNews.rawValue:
-            contentVC.url = self.naverEnterNews[indexPath.row].url
-            print(self.naverEnterNews[indexPath.row].url)
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.naverEnterNews[indexPath.row].url
+            log = NaverType.getNaverName(.naverEnterNews)()
         case NaverType.naverSportNews.rawValue:
-            contentVC.url = self.naverSportsNews[indexPath.row].url
-            self.navigationController?.pushViewController(contentVC, animated: true)
+            url = self.naverSportsNews[indexPath.row].url
+            log = NaverType.getNaverName(.naverSportNews)()
         default:
             ()
         }
+        // safariViewController 생성 및 설정
+        let config = SFSafariViewController.Configuration()
+        config.barCollapsingEnabled = false
+        let safariViewController = SFSafariViewController(url: URL(string: url)!, configuration: config)
+        safariViewController.dismissButtonStyle = .close
+        
+        self.navigationController?.present(safariViewController, animated: true, completion: nil)
+        
+        Analytics.logEvent("article_click", parameters: ["section" : log])
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -379,7 +345,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 55
+        return Constants.sectionHeight
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -388,9 +354,9 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 200
+            return Constants.keywordAreaHeight
         } else {
-            return 50
+            return Constants.cellHeight
         }
     }
     
@@ -401,27 +367,5 @@ class MainVC: UITableViewController {
         return head
     }
     */
-    
-   
-    // functions regarding API
-    func getNaverEnterNews() {
-        
-        let url = "https://entertain.naver.com/home"
-        let call = Alamofire.request(url)
-        
-        call.responseString { response in
-            guard let html = response.result.value else { return }
-            if let doc = try? Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                let items = doc.xpath("//div[@class='rank_lst']/ul/li")
-                
-                for item in items {
-                    let title = item.at_xpath("a")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let url = item.at_xpath("a")?["href"]!
-                    self.naverEnterNews.append((title!, "https://m.entertain.naver.com" + url!))
-                }
-                self.tableView.reloadData()
-            }
-        }
-    }
     
 }
