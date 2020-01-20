@@ -29,9 +29,25 @@ class SettingCell: UITableViewCell {
         if tagValue < 20 {
             return
         }
+        
+        let numberOfOff = ud.integer(forKey: "numberOfOff")
+        
+        if sender.isOn == false && numberOfOff == 3 {
+            print("cannot over three!")
+            sender.isOn = true
+            return
+        }
+        
         key = CommunityType.getCommunityKeyName(CommunityType(rawValue: (tagValue - 20))!)()
         
         ud.set(sender.isOn, forKey: key)
+        
+        if sender.isOn == false {
+            ud.set(numberOfOff + 1, forKey: "numberOfOff")
+        } else {
+            ud.set(numberOfOff - 1, forKey: "numberOfOff")
+        }
+        
         ud.synchronize()
     }
 }

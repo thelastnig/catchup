@@ -32,6 +32,7 @@ extension UIView {
     }
 }
 
+
 class Constants {
     public static let cellHeight: CGFloat = 38
     public static let sectionHeight: CGFloat = 50

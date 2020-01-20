@@ -12,6 +12,10 @@ class SettingVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let ud = UserDefaults.standard
+        let num = ud.integer(forKey: "numberOfOff")
+        print("number of off : \(num)")
 
     }
 
