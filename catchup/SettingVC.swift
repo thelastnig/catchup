@@ -61,6 +61,7 @@ class SettingVC: UITableViewController {
                 cell.switchOnOff.isOn = true
             }
         }
+        cell.delegate = self
         return cell
     }
 

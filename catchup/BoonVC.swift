@@ -151,7 +151,7 @@ extension BoonVC: PinterestLayoutDelegate {
     heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
     let height = self.boonContents[indexPath.item].imgHeight
     
-    let randomHeights: Array<CGFloat> = [0, 25, 50, 75]
+    let randomHeights: Array<CGFloat> = [25, 50, 75]
     return CGFloat(height) + randomHeights.randomElement()!
   }
     

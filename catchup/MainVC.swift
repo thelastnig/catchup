@@ -236,6 +236,37 @@ class MainVC: UITableViewController {
         if indexPath.section == NaverType.naverKeyword.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
+            // scrollview 설정
+            cell.scrollView.showsHorizontalScrollIndicator = false
+            cell.scrollView.showsVerticalScrollIndicator = false
+            
+            cell.scrollView.isPagingEnabled = true
+            cell.scrollView.frame.size.width = self.tableView.frame.width
+            cell.scrollView.contentSize = CGSize(width: CGFloat(cell.pageSize) * self.tableView.frame.width, height: 0)
+            
+            // pageControll 설정
+            cell.pageControll.snp.makeConstraints{ (make) in
+                make.bottom.equalTo(cell.scrollView).offset(-5)
+            }
+            cell.pageControll.numberOfPages = 2
+            cell.pageControll.currentPage = 0
+            cell.pageControll.isUserInteractionEnabled = false
+            cell.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
+            cell.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
+            cell.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            
+            // keywordContentView 설정
+            let pageWidth = self.tableView.frame.width
+            let pageHeight = cell.contentView.frame.height - 40
+
+            cell.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+
+            cell.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
+
+            cell.scrollView.addSubview(cell.keywordContentView1)
+            cell.scrollView.addSubview(cell.keywordContentView2)
+            cell.contentView.addSubview(cell.pageControll)
+            
             // keywordLabel 설정
             for idx in 0...19 {
                 let tag = idx < 10 ? idx + 1 : idx - 9
@@ -243,7 +274,6 @@ class MainVC: UITableViewController {
                 
                 cell.cellKeywordViews[idx].tag = tag
                 cell.setKeywordView(view: cell.cellKeywordViews[idx], superView: superView)
-                print("==========\(idx)=================")
             }
             
             // 순번 및 검색어를 위한 label 설정

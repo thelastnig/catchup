@@ -45,41 +45,7 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         super.awakeFromNib()
         
         // scrollView 설정
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.scrollView.showsVerticalScrollIndicator = false
-
-        self.scrollView.isPagingEnabled = true
         self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width: CGFloat(self.pageSize) * self.contentView.frame.width, height: 0)
-
-        //self.scrollView.contentInsetAdjustmentBehavior = .never
-       
-        // pageControll 설정
-        self.pageControll.snp.makeConstraints{ (make) in
-            make.bottom.equalTo(self.scrollView).offset(-5)
-        }
-        self.pageControll.numberOfPages = 2
-        self.pageControll.currentPage = 0
-        self.pageControll.isUserInteractionEnabled = false
-        self.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
-        self.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
-        self.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-
-        // keywordContentView 설정
-        let pageWidth = self.frame.width
-        let pageHeight = self.contentView.frame.height - 40
-
-        self.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
-        self.keywordContentView1.layer.borderColor = UIColor.green.cgColor
-        self.keywordContentView1.layer.borderWidth = 1
-
-        self.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
-        self.keywordContentView2.layer.borderColor = UIColor.red.cgColor
-        self.keywordContentView2.layer.borderWidth = 1
-
-        self.scrollView.addSubview(self.keywordContentView1)
-        self.scrollView.addSubview(self.keywordContentView2)
-        self.contentView.addSubview(self.pageControll)
 
         // 각 view를 배열에 담기
         self.cellKeywordViews = [
@@ -107,10 +73,6 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         let keywordViewHeight = superView.frame.height / 5
         let keywordViewWidth = superView.frame.width / 2
 
-        print("keywordViewWidth : \(keywordViewWidth)")
-        print("contentView / 2 : \(self.contentView.frame.width / 2)")
-        print("contentView : \(self.contentView.frame.width)")
-
         view.frame.size.width = keywordViewWidth
         view.frame.size.height = keywordViewHeight
         if view.tag < 6 {
@@ -120,8 +82,6 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
            view.frame.origin.x = keywordViewWidth
            view.frame.origin.y = CGFloat(view.tag - 6) * keywordViewHeight
         }
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.blue.cgColor
         view.backgroundColor = UIColor.white
         superView.addSubview(view)
    }
@@ -138,13 +98,10 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         numLabel.textAlignment = .left
         numLabel.textColor = UIColor.brown
         numLabel.font = UIFont.boldSystemFont(ofSize: 12)
-        //numLabel.layer.borderColor = UIColor.green.cgColor
-        //numLabel.layer.borderWidth = 1
 
         titleLabel.textAlignment = .left
         titleLabel.font = UIFont.systemFont(ofSize: 12)
-        //titleLabel.layer.borderColor = UIColor.red.cgColor
-        //titleLabel.layer.borderWidth = 1
+        titleLabel.lineBreakMode = .byTruncatingTail
 
         superView.addSubview(numLabel)
         superView.addSubview(titleLabel)
@@ -157,14 +114,15 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
 
         titleLabel.snp.makeConstraints { (make) in
            make.left.equalTo(numLabel.snp.right).offset(rightOffset)
+           make.right.equalTo(superView).offset(-rightOffset)
            make.height.equalTo(superView.frame.height)
         }
        
    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if fmod(scrollView.contentOffset.x, scrollView.frame.maxX) == 0 {
-            self.pageControll.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.maxX)
+        if fmod(scrollView.contentOffset.x, scrollView.frame.width) == 0 {
+            self.pageControll.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
         }
     }
 

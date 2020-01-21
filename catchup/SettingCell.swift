@@ -12,6 +12,8 @@ class SettingCell: UITableViewCell {
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var switchOnOff: UISwitch!
     
+    var delegate: SettingVC?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -33,8 +35,8 @@ class SettingCell: UITableViewCell {
         let numberOfOff = ud.integer(forKey: "numberOfOff")
         
         if sender.isOn == false && numberOfOff == 3 {
-            print("cannot over three!")
             sender.isOn = true
+            self.delegate?.alert("커뮤니티 비활성화는 3개까지만 가능합니다.")
             return
         }
         
