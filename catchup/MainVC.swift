@@ -107,8 +107,15 @@ class MainVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.tableView.cellLayoutMarginsFollowReadableWidth = false
-        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        // 폰트 이름 찾기 위한 임시 프로세스
+        /*
+        for familyName in UIFont.familyNames {
+            print("========\(familyName)===========")
+            for fontName in UIFont.fontNames(forFamilyName: familyName) {
+                 print(fontName)
+            }
+        }
+        */
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -200,6 +207,7 @@ class MainVC: UITableViewController {
             self.naverSportsNews = webContentManager.naverSportsNews
             self.tableView.reloadData()
         }
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -348,7 +356,9 @@ class MainVC: UITableViewController {
         headerView.backgroundColor = self.mainColor
         
         let title = UILabel()
-        title.font = UIFont.boldSystemFont(ofSize: 17)
+        let fontDec = UIFontDescriptor(name: "TTIGothicR", size: 18)
+        fontDec.withSymbolicTraits(.traitBold)
+        title.font = UIFont(descriptor: fontDec, size: 18)
         title.textColor = UIColor.white
         title.textAlignment = .left
         

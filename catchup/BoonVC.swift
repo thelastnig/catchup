@@ -146,14 +146,13 @@ extension BoonVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension BoonVC: PinterestLayoutDelegate {
-  func collectionView(
-    _ collectionView: UICollectionView,
-    heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    let height = self.boonContents[indexPath.item].imgHeight
-    
-    let randomHeights: Array<CGFloat> = [25, 50, 75]
-    return CGFloat(height) + randomHeights.randomElement()!
-  }
-    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        let height = self.boonContents[indexPath.item].imgHeight
+
+        let randomHeights: Array<CGFloat> = [25, 50, 75]
+        return CGFloat(height) + randomHeights.randomElement()!
+    }
 }
 

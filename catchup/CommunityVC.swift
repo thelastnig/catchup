@@ -118,7 +118,9 @@ class CommunityVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.reloadData()
         
+        /*
         let webContentManager = CommunityContentManager()
         webContentManager.getCookContents {
             self.cookContents = webContentManager.cookContents
@@ -158,6 +160,7 @@ class CommunityVC: UITableViewController {
             self.nateContents = webContentManager.nateContents
             self.tableView.reloadData()
         }
+         */
     }
     
     override func viewWillAppear(_ animated: Bool) {

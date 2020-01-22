@@ -31,6 +31,9 @@
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
+		76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B7339D23D8149700789B42 /* ON I고딕.ttf */; };
+		76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */; };
+		76B733A423D8302700789B42 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B733A323D8302700789B42 /* TabbarVC.swift */; };
 		76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */; };
 		76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */; };
 /* End PBXBuildFile section */
@@ -64,6 +67,9 @@
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
+		76B7339D23D8149700789B42 /* ON I고딕.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ON I고딕.ttf"; sourceTree = "<group>"; };
+		76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Danjunghae.ttf; sourceTree = "<group>"; };
+		76B733A323D8302700789B42 /* TabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
 		76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		B4E0547AC9DCD8B6726FE69E /* Pods-catchup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catchup.release.xcconfig"; path = "Target Support Files/Pods-catchup/Pods-catchup.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +118,7 @@
 		76958A17239CDC3100770439 /* catchup */ = {
 			isa = PBXGroup;
 			children = (
+				76B7339C23D8148800789B42 /* Sources */,
 				76A82A9623CD8EDA002BC687 /* ViewController */,
 				76A82A9523CD8EC1002BC687 /* ContentManager */,
 				76A82A9223CD8E91002BC687 /* Util */,
@@ -129,6 +136,7 @@
 				763C81F3239E7E2800C93350 /* catchup-Bridging-Header.h */,
 				76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */,
 				76F11B7223CECC8F004E9ADA /* RemoteConfigDefaults.plist */,
+				76B733A323D8302700789B42 /* TabbarVC.swift */,
 			);
 			path = catchup;
 			sourceTree = "<group>";
@@ -182,6 +190,15 @@
 				76A94BD923CC306C00BB6937 /* BoonVC.swift */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		76B7339C23D8148800789B42 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				76B7339D23D8149700789B42 /* ON I고딕.ttf */,
+				76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		EC1B415DD9C16785B3BD536F /* Frameworks */ = {
@@ -255,6 +272,8 @@
 			files = (
 				76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */,
 				76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */,
+				76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */,
+				76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */,
 				76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */,
 				76958A25239CDC3300770439 /* Assets.xcassets in Resources */,
 				76958A20239CDC3100770439 /* Main.storyboard in Resources */,
@@ -312,6 +331,7 @@
 			files = (
 				76948D2423C83055009C0F67 /* SettingCell.swift in Sources */,
 				76948D2623C83076009C0F67 /* SettingVC.swift in Sources */,
+				76B733A423D8302700789B42 /* TabbarVC.swift in Sources */,
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
 				76A82A8F23CD7DBF002BC687 /* PinterestLayout.swift in Sources */,
 				76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */,
@@ -476,7 +496,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -497,7 +519,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -108,7 +108,7 @@ class CommunityContentManager {
     
     // ilbe 인기 게시물 호출 함수
     func getIlbeContents(completion: (() -> Void)? = nil) {
-        
+
         let url = url_prefix + "ilbe"
         let call = Alamofire.request(url)
         
@@ -246,7 +246,7 @@ class CommunityContentManager {
     
     // nate pann 인기 게시물 호출 함수
     func getNateContents(completion: (() -> Void)? = nil) {
-        
+
         let url = url_prefix + "nate"
         let call = Alamofire.request(url)
         

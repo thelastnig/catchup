@@ -539,10 +539,10 @@
             </objects>
             <point key="canvasLocation" x="1994" y="-40"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--TabbarVC-->
         <scene sceneID="SJr-iG-ODK">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="emv-3C-qdS" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="emv-3C-qdS" customClass="TabbarVC" customModule="catchup" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KsL-fT-Xho">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -550,10 +550,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="YHe-Ke-0x1" kind="relationship" relationship="viewControllers" id="rai-lS-Xri"/>
-                        <segue destination="ZAQ-TV-PHT" kind="relationship" relationship="viewControllers" id="Qul-B7-Lbh"/>
-                        <segue destination="Tbg-VA-KNL" kind="relationship" relationship="viewControllers" id="qAx-eZ-5Wc"/>
-                        <segue destination="Eji-fP-V1w" kind="relationship" relationship="viewControllers" id="pB5-RH-CpV"/>
+                        <segue destination="YHe-Ke-0x1" kind="relationship" relationship="viewControllers" destinationCreationSelector="main" id="rai-lS-Xri"/>
+                        <segue destination="ZAQ-TV-PHT" kind="relationship" relationship="viewControllers" destinationCreationSelector="community" id="Qul-B7-Lbh"/>
+                        <segue destination="Tbg-VA-KNL" kind="relationship" relationship="viewControllers" destinationCreationSelector="boon" id="qAx-eZ-5Wc"/>
+                        <segue destination="Eji-fP-V1w" kind="relationship" relationship="viewControllers" destinationCreationSelector="settings" id="pB5-RH-CpV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HyC-n8-1ul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
