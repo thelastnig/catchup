@@ -186,33 +186,25 @@ class MainVC: UITableViewController {
             self.keywordLabel09_2Num, self.keywordLabel10_2Num,
         ]
         
-        let webContentManager = MainContentManager()
+        self.getContents()
         
-        webContentManager.getNaverKeyword {
-            self.naverKeyword = webContentManager.naverKeyword
-            
-            for idx in 0...19 {
-                self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
-            }
-        }
-        webContentManager.getNaverMainNews {
-            self.naverMainNews = webContentManager.naverMainNews
-            self.tableView.reloadData()
-        }
-        webContentManager.getNaverEnterNews {
-            self.naverEnterNews = webContentManager.naverEnterNews
-            self.tableView.reloadData()
-        }
-        webContentManager.getNaverSportsNews {
-            self.naverSportsNews = webContentManager.naverSportsNews
-            self.tableView.reloadData()
-        }
-     
+        // 당겨서 새로고침
+        self.refreshControl = UIRefreshControl()
+        //self.refreshControl?.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
+    // 앱이 foreground에 왔을 때 실행할 코드 입력
+    override func viewWillAppear(_ animated: Bool){ NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
+        , object: nil)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc func willEnterForeground() {
+        print("###############")
+        print("main")
+        print("###############")
+        
     }
 
     // MARK: - Table view data source
@@ -407,5 +399,36 @@ class MainVC: UITableViewController {
         return head
     }
     */
+    
+    func getContents() {
+        let webContentManager = MainContentManager()
+        
+        webContentManager.getNaverKeyword {
+            self.naverKeyword = webContentManager.naverKeyword
+            
+            for idx in 0...19 {
+                self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
+            }
+        }
+        webContentManager.getNaverMainNews {
+            self.naverMainNews = webContentManager.naverMainNews
+            self.tableView.reloadData()
+        }
+        webContentManager.getNaverEnterNews {
+            self.naverEnterNews = webContentManager.naverEnterNews
+            self.tableView.reloadData()
+        }
+        webContentManager.getNaverSportsNews {
+            self.naverSportsNews = webContentManager.naverSportsNews
+            self.tableView.reloadData()
+        }
+    }
+    
+    @objc func pullToRefresh(_ sender: Any) {
+        self.getContents()
+        
+        // 당겨서 새로고침 종료
+        self.refreshControl?.endRefreshing()
+    }
     
 }

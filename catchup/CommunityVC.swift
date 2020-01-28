@@ -120,51 +120,13 @@ class CommunityVC: UITableViewController {
         super.viewDidLoad()
         self.tableView.reloadData()
         
-        /*
-        let webContentManager = CommunityContentManager()
-        webContentManager.getCookContents {
-            self.cookContents = webContentManager.cookContents
-            self.tableView.reloadData()
-        }
-        /*
-        webContentManager.getBullpenContents {
-            self.bullpenContents = webContentManager.bullpenContents
-            self.tableView.reloadData()
-        }
-        */
-        webContentManager.getIlbeContents {
-            self.ilbeContents = webContentManager.ilbeContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getInstizContents {
-            self.instizContents = webContentManager.instizContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getRuliwebContents {
-            self.ruliwebContents = webContentManager.ruliwebContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getClienContents {
-            self.clienContents = webContentManager.clienContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getNamuContents {
-            self.namuContents = webContentManager.namuContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getPpomppuContents {
-            self.ppomppuContents = webContentManager.ppomppuContents
-            self.tableView.reloadData()
-        }
-        webContentManager.getNateContents {
-            self.nateContents = webContentManager.nateContents
-            self.tableView.reloadData()
-        }
-         */
+        // 당겨서 새로고침
+        self.refreshControl = UIRefreshControl()
+        //self.refreshControl?.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -573,6 +535,54 @@ class CommunityVC: UITableViewController {
         self.navigationController?.present(safariViewController, animated: true, completion: nil)
     }
     
-
+    func getContents(){
+        
+        let webContentManager = CommunityContentManager()
+        webContentManager.getCookContents {
+            self.cookContents = webContentManager.cookContents
+            self.tableView.reloadData()
+        }
+        /*
+        webContentManager.getBullpenContents {
+            self.bullpenContents = webContentManager.bullpenContents
+            self.tableView.reloadData()
+        }
+        */
+        webContentManager.getIlbeContents {
+            self.ilbeContents = webContentManager.ilbeContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getInstizContents {
+            self.instizContents = webContentManager.instizContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getRuliwebContents {
+            self.ruliwebContents = webContentManager.ruliwebContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getClienContents {
+            self.clienContents = webContentManager.clienContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getNamuContents {
+            self.namuContents = webContentManager.namuContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getPpomppuContents {
+            self.ppomppuContents = webContentManager.ppomppuContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getNateContents {
+            self.nateContents = webContentManager.nateContents
+            self.tableView.reloadData()
+        }
+    }
+    
+    @objc func pullToRefresh(_ sender: Any) {
+        self.getContents()
+        
+        // 당겨서 새로고침 종료
+        self.refreshControl?.endRefreshing()
+    }
 
 }
