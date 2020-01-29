@@ -190,7 +190,11 @@ class MainVC: UITableViewController {
         
         // 당겨서 새로고침
         self.refreshControl = UIRefreshControl()
-        //self.refreshControl?.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        self.refreshControl?.tintColor = mainColor
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: mainColor]
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "페이지 새로고침 중", attributes: attributes)
+        
         self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
     }
     

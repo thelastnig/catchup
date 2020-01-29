@@ -73,6 +73,9 @@ class BoonVC: UICollectionViewController {
         cell.labelTitle.text = data.title
         cell.labelTitle.textColor = UIColor.black
         cell.labelTitle.font = UIFont.systemFont(ofSize: 13)
+        //cell.labelTitle.frame.size.height = Constants.boonLabelHeight
+        cell.labelTitle.layer.borderWidth = 1
+        cell.labelTitle.layer.borderColor = UIColor.red.cgColor
         
         cell.containerView.backgroundColor = self.getRandomColor()
         

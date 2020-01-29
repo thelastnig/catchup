@@ -37,6 +37,6 @@ class Constants {
     public static let cellHeight: CGFloat = 38
     public static let sectionHeight: CGFloat = 50
     public static let keywordAreaHeight: CGFloat = 200
-    public static let boonLabelHeight: CGFloat = 40
-    public static let boonLabelMargin: CGFloat = 5
+    public static let boonLabelHeight: CGFloat = 20
+    public static let boonLabelMargin: CGFloat = 2
 }
