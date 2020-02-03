@@ -69,11 +69,17 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.getCommunityContents()
     }
     
-    override func viewWillAppear(_ animated: Bool){ NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
+    override func viewWillAppear(_ animated: Bool){
+        // 네트워크 연결 체크
+        self.checkNetwork()
+        
+        // app이 foreground로 왔을 때 설정
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
     }
     
     @objc func willEnterForeground() {
+        self.checkNetwork()
         self.getCommunityContents()
         print("ForeGround!!!")
     }

@@ -1,4 +1,11 @@
+
+
 extension UIViewController {
+    
+    // 네트워크 연결 확인을 위한 변수 설정
+    var network: NetworkManager {
+       return NetworkManager.sharedInstance
+    }
     
     var mainColor: UIColor {
         return UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
@@ -21,6 +28,16 @@ extension UIViewController {
             self.present(alert, animated: false)
         }
     }
+    
+    func checkNetwork() {
+        NetworkManager.isUnreachable { _ in
+            self.alert("네트워크가 연결되지 않았습니다. 네트워크 연결을 확인해 주세요") {
+                // NetworkManager.stopNotifier()
+                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            }
+        }
+    }
+    
 }
 extension UIView {
 

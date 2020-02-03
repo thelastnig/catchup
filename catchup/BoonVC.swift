@@ -36,6 +36,9 @@ class BoonVC: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // 네트워크 연결 체크
+        self.checkNetwork()
+        
         self.tabBarController?.tabBar.isHidden = false
     }
     

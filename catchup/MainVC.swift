@@ -199,7 +199,11 @@ class MainVC: UITableViewController {
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
-    override func viewWillAppear(_ animated: Bool){ NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
+    override func viewWillAppear(_ animated: Bool){
+        // 네트워크 연결 체크
+        self.checkNetwork()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
         self.tabBarController?.tabBar.isHidden = false
     }
@@ -208,7 +212,6 @@ class MainVC: UITableViewController {
         print("###############")
         print("main")
         print("###############")
-        
     }
 
     // MARK: - Table view data source
