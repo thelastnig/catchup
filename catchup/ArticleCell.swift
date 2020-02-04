@@ -12,6 +12,7 @@ import Kanna
 class ArticleCell: UITableViewCell {
     @IBOutlet var labelNum: UILabel!
     @IBOutlet var labelText: UILabel!
+    @IBOutlet var containerView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

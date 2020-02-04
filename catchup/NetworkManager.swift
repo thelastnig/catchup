@@ -21,7 +21,6 @@ class NetworkManager: NSObject {
         
         reachability = try! Reachability()
         NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged(_:)), name: .reachabilityChanged, object: reachability)
-        
         do {
             try reachability.startNotifier()
         } catch {

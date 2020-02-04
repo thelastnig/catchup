@@ -12,48 +12,48 @@ import Firebase
 
 class CommunityContentManager {
     
-    lazy var cookContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var cookContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var bullpenContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var bullpenContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ilbeContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ilbeContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var instizContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var instizContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ruliwebContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ruliwebContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var clienContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var clienContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var namuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var namuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ppomppuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ppomppuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var nateContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var nateContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
@@ -72,11 +72,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.cookContents.append((title as! String, url as! String))
+                    self.cookContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -95,11 +97,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.bullpenContents.append((title as! String, url as! String))
+                    self.bullpenContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -118,11 +122,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.ilbeContents.append((title as! String, url as! String))
+                    self.ilbeContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -141,11 +147,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.instizContents.append((title as! String, url as! String))
+                    self.instizContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -164,11 +172,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.ruliwebContents.append((title as! String, url as! String))
+                    self.ruliwebContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -187,11 +197,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.clienContents.append((title as! String, url as! String))
+                    self.clienContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -210,11 +222,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.namuContents.append((title as! String, url as! String))
+                    self.namuContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -233,11 +247,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.ppomppuContents.append((title as! String, url as! String))
+                    self.ppomppuContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -256,11 +272,13 @@ class CommunityContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.nateContents.append((title as! String, url as! String))
+                    self.nateContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }

@@ -14,53 +14,56 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     
     
     // 커뮤니티 탭을 위한 변수 설정
-    lazy var cookContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var cookContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var bullpenContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var bullpenContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ilbeContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ilbeContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var instizContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var instizContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ruliwebContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ruliwebContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var clienContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var clienContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var namuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var namuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ppomppuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ppomppuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var nateContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var nateContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 네트워크 연결 확인
+        self.checkNetwork()
         
         self.delegate = self
         // background에서 메인 페이지 관련 API를 호출하여 로딩 지연 방지
@@ -70,8 +73,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool){
-        // 네트워크 연결 체크
-        self.checkNetwork()
         
         // app이 foreground로 왔을 때 설정
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification

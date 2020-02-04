@@ -71,53 +71,59 @@ public enum CommunityType: Int {
 
 class CommunityVC: UITableViewController {
     
-    lazy var cookContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var cookContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var bullpenContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var bullpenContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ilbeContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ilbeContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var instizContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var instizContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ruliwebContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ruliwebContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var clienContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var clienContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var namuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var namuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var ppomppuContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var ppomppuContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var nateContents: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var nateContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 네트워크 연결 확인
+        network.reachability.whenUnreachable = { reachability in
+            self.checkNetwork()
+        }
+        
         self.tableView.reloadData()
         
         // 당겨서 새로고침
@@ -128,12 +134,13 @@ class CommunityVC: UITableViewController {
         self.refreshControl?.attributedTitle = NSAttributedString(string: "페이지 새로고침 중", attributes: attributes)
         
         self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        
+        // 테이블뷰의 셀 별 라인 제거
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        // self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 네트워크 연결 체크
-        self.checkNetwork()
-        
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -243,48 +250,54 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var data: (title: String, url: String, idx: Int)!
+        
+        switch indexPath.section {
+        case CommunityType.cook.rawValue:
+            data = self.cookContents[indexPath.row]
+        case CommunityType.ilbe.rawValue:
+            data = self.ilbeContents[indexPath.row]
+        case CommunityType.instiz.rawValue:
+            data = self.instizContents[indexPath.row]
+        case CommunityType.ruliweb.rawValue:
+            data = self.ruliwebContents[indexPath.row]
+        case CommunityType.clien.rawValue:
+            data = self.clienContents[indexPath.row]
+        case CommunityType.namu.rawValue:
+            data = self.namuContents[indexPath.row]
+        case CommunityType.ppomppu.rawValue:
+            data = self.ppomppuContents[indexPath.row]
+        case CommunityType.nate.rawValue:
+            data = self.nateContents[indexPath.row]
+        default:
+            ()
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
         cell.labelNum.font = UIFont.boldSystemFont(ofSize: 14)
         cell.labelNum.textColor = UIColor.brown
         cell.labelText.font = UIFont.systemFont(ofSize: 14)
         
-        switch indexPath.section {
-        case CommunityType.cook.rawValue:
-            let data = self.cookContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.ilbe.rawValue:
-            let data = self.ilbeContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.instiz.rawValue:
-            let data = self.instizContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.ruliweb.rawValue:
-            let data = self.ruliwebContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.clien.rawValue:
-            let data = self.clienContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.namu.rawValue:
-            let data = self.namuContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.ppomppu.rawValue:
-            let data = self.ppomppuContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        case CommunityType.nate.rawValue:
-            let data = self.nateContents[indexPath.row]
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-        default:
-            ()
-        }
+        cell.contentView.backgroundColor = self.grayColor1
+        
+        cell.labelNum.text = String(indexPath.row + 1)
+        cell.labelText.text = data.title
+        print("cell view: \(cell.contentView.frame.width)")
+        
+//        if data.idx != 1 {
+//            let border = CALayer()
+//            border.frame = CGRect.init(x: 15, y: 0, width: cell.contentView.frame.width - (100), height: 1)
+//
+//            border.backgroundColor = self.grayColor2.cgColor
+//            cell.containerView.layer.addSublayer(border)
+//        } else {
+//            let border = CALayer()
+//            border.frame = CGRect.init(x: 15, y: 0, width: cell.contentView.frame.width - (100), height: 1)
+//
+//            border.backgroundColor = UIColor.white.cgColor
+//            cell.containerView.layer.addSublayer(border)
+//        }
+        
         return cell
     }
     
@@ -292,8 +305,13 @@ class CommunityVC: UITableViewController {
         let ud = UserDefaults.standard
         let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         
-        let headerView = UIView()
-        headerView.backgroundColor = self.mainColor
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
+        
+        headerView.backgroundColor = self.grayColor1
+
+        let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
+        
+        headerUpperView.backgroundColor = self.mainColor
         
         let title = UILabel()
         title.font = UIFont.boldSystemFont(ofSize: 17)
@@ -392,14 +410,23 @@ class CommunityVC: UITableViewController {
         default:
             ()
         }
-        headerView.addSubview(title)
+        headerUpperView.addSubview(title)
         
         title.snp.makeConstraints { (make) in
-            make.left.equalTo(headerView).offset(20)
-            make.bottom.equalTo(headerView).offset(-10)
+            make.left.equalTo(headerUpperView).offset(20)
+            make.bottom.equalTo(headerUpperView).offset(-10)
         }
         
+        headerView.addSubview(headerUpperView)
+        
         return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        footer.backgroundColor = self.grayColor1
+        
+        return footer
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -501,7 +528,101 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.leastNormalMagnitude
+        let sectionHeight: CGFloat = Constants.sectionMargin
+        let ud = UserDefaults.standard
+        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
+        switch section {
+        case CommunityType.cook.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ilbe.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.instiz.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ruliweb.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.clien.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.namu.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.ppomppu.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        case CommunityType.nate.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
+        default:
+            return sectionHeight
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

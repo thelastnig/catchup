@@ -21,6 +21,12 @@ class BoonVC: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 네트워크 연결 확인
+        network.reachability.whenUnreachable = { reachability in
+            self.checkNetwork()
+        }
+        
         let layout = self.collectionView.collectionViewLayout as! PinterestLayout
         layout.delegate = self
         
@@ -36,9 +42,6 @@ class BoonVC: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 네트워크 연결 체크
-        self.checkNetwork()
-        
         self.tabBarController?.tabBar.isHidden = false
     }
     

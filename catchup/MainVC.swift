@@ -107,6 +107,11 @@ class MainVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 네트워크 연결 확인
+        network.reachability.whenUnreachable = { reachability in
+            self.checkNetwork()
+        }
+        
         // 폰트 이름 찾기 위한 임시 프로세스
         /*
         for familyName in UIFont.familyNames {
@@ -200,8 +205,6 @@ class MainVC: UITableViewController {
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
     override func viewWillAppear(_ animated: Bool){
-        // 네트워크 연결 체크
-        self.checkNetwork()
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
@@ -209,9 +212,6 @@ class MainVC: UITableViewController {
     }
     
     @objc func willEnterForeground() {
-        print("###############")
-        print("main")
-        print("###############")
     }
 
     // MARK: - Table view data source
