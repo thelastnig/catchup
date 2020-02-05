@@ -17,18 +17,18 @@ class MainContentManager {
         return list
     }()
     
-    lazy var naverMainNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverMainNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var naverEnterNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverEnterNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var naverSportsNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverSportsNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
@@ -71,11 +71,13 @@ class MainContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.naverMainNews.append((title as! String, url as! String))
+                    self.naverMainNews.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -94,11 +96,13 @@ class MainContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.naverEnterNews.append((title as! String, url as! String))
+                    self.naverEnterNews.append((title as! String, url as! String, i))
                 }
                 completion?()
             }
@@ -117,11 +121,13 @@ class MainContentManager {
             if status == "success" {
                 let items = html["data"] as! NSArray
 
+                var i: Int = 0
                 for item in items {
+                    i = i + 1
                     let data = item as! NSDictionary
                     let title = data["title"]
                     let url = data["link"]
-                    self.naverSportsNews.append((title as! String, url as! String))
+                    self.naverSportsNews.append((title as! String, url as! String, i))
                 }
                 completion?()
             }

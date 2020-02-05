@@ -282,21 +282,22 @@ class CommunityVC: UITableViewController {
         
         cell.labelNum.text = String(indexPath.row + 1)
         cell.labelText.text = data.title
-        print("cell view: \(cell.contentView.frame.width)")
         
-//        if data.idx != 1 {
-//            let border = CALayer()
-//            border.frame = CGRect.init(x: 15, y: 0, width: cell.contentView.frame.width - (100), height: 1)
-//
-//            border.backgroundColor = self.grayColor2.cgColor
-//            cell.containerView.layer.addSublayer(border)
-//        } else {
-//            let border = CALayer()
-//            border.frame = CGRect.init(x: 15, y: 0, width: cell.contentView.frame.width - (100), height: 1)
-//
-//            border.backgroundColor = UIColor.white.cgColor
-//            cell.containerView.layer.addSublayer(border)
-//        }
+        let lineView = UIView()
+        lineView.backgroundColor = self.grayColor2
+        cell.containerView.addSubview(lineView)
+        lineView.snp.makeConstraints { (make) in
+            make.left.equalTo(cell.containerView).offset(15)
+            make.right.equalTo(cell.containerView).offset(-15)
+            make.top.equalTo(cell.containerView)
+            make.height.equalTo(1)
+        }
+
+        if data.idx != 1 {
+            lineView.backgroundColor = self.grayColor2
+        } else {
+            lineView.backgroundColor = UIColor.white
+        }
         
         return cell
     }

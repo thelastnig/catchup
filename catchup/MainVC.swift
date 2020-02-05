@@ -89,18 +89,18 @@ class MainVC: UITableViewController {
         return list
     }()
     
-    lazy var naverMainNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverMainNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var naverEnterNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverEnterNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
-    lazy var naverSportsNews: [(title: String, url: String)] = {
-        var list = [(String, String)]()
+    lazy var naverSportsNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
         return list
     }()
     
@@ -201,6 +201,9 @@ class MainVC: UITableViewController {
         self.refreshControl?.attributedTitle = NSAttributedString(string: "페이지 새로고침 중", attributes: attributes)
         
         self.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        
+        // 테이블뷰의 셀 별 라인 제거
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
@@ -294,27 +297,44 @@ class MainVC: UITableViewController {
             
             return cell
         } else {
+            var data: (title: String, url: String, idx: Int)!
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
             cell.labelNum.font = UIFont.boldSystemFont(ofSize: 14)
             cell.labelNum.textColor = UIColor.brown
             cell.labelText.font = UIFont.systemFont(ofSize: 14)
+            cell.contentView.backgroundColor = self.grayColor1
             
             switch indexPath.section {
             case NaverType.naverMainNews.rawValue:
-                let data = self.naverMainNews[indexPath.row]
-                cell.labelNum.text = String(indexPath.row + 1)
-                cell.labelText.text = data.title
+                data = self.naverMainNews[indexPath.row]
             case NaverType.naverEnterNews.rawValue:
-                let data = self.naverEnterNews[indexPath.row]
-                cell.labelNum.text = String(indexPath.row + 1)
-                cell.labelText.text = data.title
+                data = self.naverEnterNews[indexPath.row]
             case NaverType.naverSportNews.rawValue:
-                let data = self.naverSportsNews[indexPath.row]
-                cell.labelNum.text = String(indexPath.row + 1)
-                cell.labelText.text = data.title
+                data = self.naverSportsNews[indexPath.row]
             default:
                 ()
             }
+        
+            cell.labelNum.text = String(indexPath.row + 1)
+            cell.labelText.text = data.title
+            
+            let lineView = UIView()
+            lineView.backgroundColor = self.grayColor2
+            cell.containerView.addSubview(lineView)
+            lineView.snp.makeConstraints { (make) in
+                make.left.equalTo(cell.containerView).offset(15)
+                make.right.equalTo(cell.containerView).offset(-15)
+                make.top.equalTo(cell.containerView)
+                make.height.equalTo(1)
+            }
+
+            if data.idx != 1 {
+                lineView.backgroundColor = self.grayColor2
+            } else {
+                lineView.backgroundColor = UIColor.white
+            }
+            
             return cell
         }
     }
@@ -351,8 +371,13 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = self.mainColor
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
+        
+        headerView.backgroundColor = self.grayColor1
+
+        let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
+        
+        headerUpperView.backgroundColor = self.mainColor
         
         let title = UILabel()
         let fontDec = UIFontDescriptor(name: "TTIGothicR", size: 18)
@@ -373,14 +398,23 @@ class MainVC: UITableViewController {
         default:
             ()
         }
-        headerView.addSubview(title)
+        headerUpperView.addSubview(title)
         
         title.snp.makeConstraints { (make) in
-            make.left.equalTo(headerView).offset(20)
-            make.bottom.equalTo(headerView).offset(-10)
+            make.left.equalTo(headerUpperView).offset(20)
+            make.bottom.equalTo(headerUpperView).offset(-10)
         }
         
+        headerView.addSubview(headerUpperView)
+        
         return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        footer.backgroundColor = self.grayColor1
+        
+        return footer
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -388,7 +422,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.leastNormalMagnitude
+        return Constants.sectionMargin
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
