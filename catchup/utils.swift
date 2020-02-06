@@ -51,6 +51,11 @@ extension UIViewController {
         }
     }
     
+    // delay 실행을 위한 함수
+    func dispatchDelay(delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: closure)
+    }
+    
 }
 extension UIView {
 
@@ -115,4 +120,5 @@ class Constants {
     public static let keywordAreaHeight: CGFloat = 200
     public static let boonLabelHeight: CGFloat = 20
     public static let boonLabelMargin: CGFloat = 2
+    public static let delayTime: Double = 2
 }

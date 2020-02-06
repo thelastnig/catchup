@@ -467,9 +467,16 @@ class MainVC: UITableViewController {
     
     @objc func pullToRefresh(_ sender: Any) {
         self.getContents()
-        
-        // 당겨서 새로고침 종료
-        self.refreshControl?.endRefreshing()
+        self.dispatchDelay(delay: Constants.delayTime) {
+            // 당겨서 새로고침 종료
+           self.refreshControl?.endRefreshing()
+        }
     }
     
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        guard let refresh = self.refreshControl else { return }
+//        if scrollView.contentOffset.y < -90 && !refresh.isRefreshing {
+//            refresh.beginRefreshing()
+//        }
+//    }
 }
