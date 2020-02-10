@@ -56,6 +56,19 @@ extension UIViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: closure)
     }
     
+    // 랜덤 색상을 리턴하는 함수
+    func getRandomColor()-> UIColor? {
+        let color1 = UIColor(red:0.39, green:0.90, blue:0.70, alpha:1.0)
+        let color2 = UIColor(red:0.55, green:0.91, blue:0.60, alpha:1.0)
+        let color3 = UIColor(red:0.75, green:0.92, blue:0.46, alpha:1.0)
+        let color4 = UIColor(red:0.13, green:0.79, blue:0.59, alpha:1.0)
+        let color5 = UIColor(red:0.32, green:0.81, blue:0.40, alpha:1.0)
+        let color6 = UIColor(red:0.58, green:0.85, blue:0.18, alpha:1.0)
+        let colors = [color1, color2, color3, color4, color5, color6]
+        
+        return colors.randomElement()!
+    }
+    
 }
 extension UIView {
 
@@ -118,7 +131,16 @@ class Constants {
     public static let sectionHeight: CGFloat = 60
     public static let sectionMargin: CGFloat = 10
     public static let keywordAreaHeight: CGFloat = 200
-    public static let boonLabelHeight: CGFloat = 20
-    public static let boonLabelMargin: CGFloat = 2
+    
     public static let delayTime: Double = 2
+    
+    public static let boonWidthRatio: CGFloat = 4
+    public static let boonHeightRatio: CGFloat = 5
+    public static let boonImageHeightRatio: CGFloat = 2.7
+    public static let boonLabelVerticalMarginS: CGFloat = 8
+    public static let boonLabelVerticalMargin: CGFloat = 10
+    public static let boonLabelHorizontalMargin: CGFloat = 7
+    public static let boonItemDistance: CGFloat = 10
+    
+    
 }

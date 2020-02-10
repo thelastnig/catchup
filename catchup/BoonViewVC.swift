@@ -11,17 +11,14 @@ import AVFoundation
 import SafariServices
 import SnapKit
 
-class BoonVC: UICollectionViewController {
+class BoonViewVC: UICollectionViewController {
     
-    lazy var boonContents: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
+    lazy var boonContentsView: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
         var list = [(String, String, String, Int)]()
         return list
     }()
     
     var boonImages: Array<UIImage> = []
-    
-    // refreshcontroll 설정
-    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,22 +33,10 @@ class BoonVC: UICollectionViewController {
         self.collectionView.contentInset = UIEdgeInsets(top: 23, left: 10, bottom: 10, right: 10)
 
         let webContentManager = BoonContentManager()
-        webContentManager.getBoonContents {
-            self.boonContents = webContentManager.boonContents
+        webContentManager.getBoonContentsView {
+            self.boonContentsView = webContentManager.boonContentsView
             self.collectionView.reloadData()
         }
-        
-        // 당겨서 새로고침
-        self.refreshControl.tintColor = mainColor
-        self.refreshControl.center.x = self.collectionView.center.x
-        
-        let attributes = [NSAttributedString.Key.foregroundColor: mainColor]
-        self.refreshControl.attributedTitle = NSAttributedString(string: "페이지 새로고침 중", attributes: attributes)
-        
-        self.refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.refreshControl = self.refreshControl
         
         // 아이템 간격을 0으로 초기화
         let flow = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -73,13 +58,13 @@ class BoonVC: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return self.boonContents.count
+        return self.boonContentsView.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boon_cell", for: indexPath) as! BoonCell
         
-        let data = self.boonContents[indexPath.item]
+        let data = self.boonContentsView[indexPath.item]
         
         // contentView 설정 (외곽선)
         cell.contentView.layer.borderWidth = 1
@@ -116,7 +101,7 @@ class BoonVC: UICollectionViewController {
         line.frame.origin = CGPoint(x: Constants.boonLabelHorizontalMargin, y: cell.labelTitle.frame.height +  (verticalMargin * 2))
         
         // lableSource 설정
-        cell.labelSource.text = "실시간 인기 게시물 \(indexPath.row + 1)"
+        cell.labelSource.text = "많이 본 게시물 \(indexPath.row + 1)"
         cell.labelSource.textColor = UIColor.lightGray
         cell.labelSource.font = UIFont.boldSystemFont(ofSize: 12)
         
@@ -155,7 +140,7 @@ class BoonVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = self.boonContents[indexPath.item]
+        let data = self.boonContentsView[indexPath.item]
         let url = data.url
         
         // safariViewController 생성 및 설정
@@ -165,19 +150,6 @@ class BoonVC: UICollectionViewController {
         safariViewController.dismissButtonStyle = .close
         
         self.navigationController?.present(safariViewController, animated: true, completion: nil)
-    }
-    
-    @objc func pullToRefresh(_ sender: Any) {
-        let webContentManager = BoonContentManager()
-        webContentManager.getBoonContents {
-            self.boonContents = webContentManager.boonContents
-            self.collectionView.reloadData()
-        }
-        
-        self.dispatchDelay(delay: Constants.delayTime) {
-            // 당겨서 새로고침 종료
-           self.refreshControl.endRefreshing()
-        }
     }
 
     /*
@@ -198,10 +170,10 @@ class BoonVC: UICollectionViewController {
 }
 
 // collectionView Item의 크기를 설정하는 추가 함수들
-extension BoonVC: UICollectionViewDelegateFlowLayout {
+extension BoonViewVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + Constants.boonItemDistance)) / 2
+        let itemWidth = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + 10)) / 2
         let itemHeight = itemWidth * Constants.boonHeightRatio / Constants.boonWidthRatio
       return CGSize(width: itemWidth, height: itemHeight)
     }

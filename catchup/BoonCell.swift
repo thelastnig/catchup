@@ -11,13 +11,11 @@ import UIKit
 class BoonCell: UICollectionViewCell {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var labelTitle: UILabel!
+    @IBOutlet var labelSource: UILabel!
     @IBOutlet var containerView: UIView!
-    
-    override func awakeFromNib() {
+    override func
+        awakeFromNib() {
       super.awakeFromNib()
-      self.containerView.layer.cornerRadius = 6
-      self.containerView.layer.masksToBounds = true
-      self.containerView.backgroundColor = .lightGray
     }
     
 }

@@ -27,10 +27,10 @@
 		76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76958A21239CDC3100770439 /* catchup.xcdatamodeld */; };
 		76958A25239CDC3300770439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76958A24239CDC3300770439 /* Assets.xcassets */; };
 		76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76958A26239CDC3300770439 /* LaunchScreen.storyboard */; };
-		76A82A8F23CD7DBF002BC687 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */; };
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
+		76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABE30523F139D300CD5847 /* BoonViewVC.swift */; };
 		76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B7339D23D8149700789B42 /* ON I고딕.ttf */; };
 		76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */; };
 		76B733A423D8302700789B42 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B733A323D8302700789B42 /* TabbarVC.swift */; };
@@ -64,10 +64,10 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
+		76ABE30523F139D300CD5847 /* BoonViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonViewVC.swift; sourceTree = "<group>"; };
 		76B7339D23D8149700789B42 /* ON I고딕.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ON I고딕.ttf"; sourceTree = "<group>"; };
 		76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Danjunghae.ttf; sourceTree = "<group>"; };
 		76B733A323D8302700789B42 /* TabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
@@ -154,7 +154,6 @@
 		76A82A9023CD8E4F002BC687 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				76A82A8E23CD7DBF002BC687 /* PinterestLayout.swift */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -199,6 +198,7 @@
 				7604609D23C6E5880022A062 /* CommunityVC.swift */,
 				76948D2523C83076009C0F67 /* SettingVC.swift */,
 				76A94BD923CC306C00BB6937 /* BoonVC.swift */,
+				76ABE30523F139D300CD5847 /* BoonViewVC.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -345,7 +345,6 @@
 				76B733A423D8302700789B42 /* TabbarVC.swift in Sources */,
 				76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */,
 				76C7A05C23E80AF0003B20BF /* NetworkManager.swift in Sources */,
-				76A82A8F23CD7DBF002BC687 /* PinterestLayout.swift in Sources */,
 				76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */,
 				760EF82023BDB4130092FE7A /* KeywordCell.swift in Sources */,
 				763C81F8239E7FFD00C93350 /* MainVC.swift in Sources */,
@@ -362,6 +361,7 @@
 				76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */,
 				76958A19239CDC3100770439 /* AppDelegate.swift in Sources */,
 				76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */,
+				76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -533,7 +533,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
