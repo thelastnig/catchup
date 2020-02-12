@@ -16,6 +16,7 @@ public enum CommunityType: Int {
     case ilbe
     case ppomppu
     case clien
+    case fm
     case instiz
     case cook
     case namu
@@ -40,6 +41,8 @@ public enum CommunityType: Int {
             return "Ppomppu"
         case .nate:
             return "Nate"
+        case .fm:
+            return "FM Korea"
         case .count:
             return ""
         }
@@ -63,6 +66,8 @@ public enum CommunityType: Int {
             return "ppomppu"
         case .nate:
             return "nate"
+        case .fm:
+            return "fm"
         case .count:
             return ""
         }
@@ -115,6 +120,11 @@ class CommunityVC: UITableViewController {
         var list = [(String, String, Int)]()
         return list
     }()
+    
+    lazy var fmContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,11 +147,17 @@ class CommunityVC: UITableViewController {
         
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+ 
         // self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        // custom header, tabbar의 높이만큼 rootview 위치 조정
+        self.view.frame.origin.y = Constants.csHeaderHeight + Constants.csTabbarHeight - (self.navigationController?.navigationBar.frame.height)!
     }
     
     // MARK: - Table view data source
@@ -244,6 +260,17 @@ class CommunityVC: UITableViewController {
             } else {
                 return self.nateContents.count
             }
+        case CommunityType.fm.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return self.fmContents.count
+                } else {
+                    return 0
+                }
+            } else {
+                return self.fmContents.count
+            }
         default:
             return 0
         }
@@ -269,6 +296,8 @@ class CommunityVC: UITableViewController {
             data = self.ppomppuContents[indexPath.row]
         case CommunityType.nate.rawValue:
             data = self.nateContents[indexPath.row]
+        case CommunityType.fm.rawValue:
+            data = self.fmContents[indexPath.row]
         default:
             ()
         }
@@ -408,6 +437,17 @@ class CommunityVC: UITableViewController {
             } else {
                 title.text = CommunityType.getCommunityName(.nate)()
             }
+        case CommunityType.fm.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    title.text = CommunityType.getCommunityName(.fm)()
+                } else {
+                    title.text = ""
+                }
+            } else {
+                title.text = CommunityType.getCommunityName(.fm)()
+            }
         default:
             ()
         }
@@ -523,6 +563,17 @@ class CommunityVC: UITableViewController {
             } else {
                 return sectionHeight
             }
+        case CommunityType.fm.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
         default:
             return sectionHeight
         }
@@ -621,6 +672,17 @@ class CommunityVC: UITableViewController {
             } else {
                 return sectionHeight
             }
+        case CommunityType.fm.rawValue:
+            if let switchValue = ud.value(forKey: key) {
+                let value = switchValue as! Bool
+                if value {
+                    return sectionHeight
+                } else {
+                    return CGFloat.leastNormalMagnitude
+                }
+            } else {
+                return sectionHeight
+            }
         default:
             return sectionHeight
         }
@@ -652,6 +714,8 @@ class CommunityVC: UITableViewController {
             url = self.ppomppuContents[indexPath.row].url
         case CommunityType.nate.rawValue:
             url = self.nateContents[indexPath.row].url
+        case CommunityType.fm.rawValue:
+            url = self.fmContents[indexPath.row].url
         default:
             ()
         }
@@ -703,6 +767,10 @@ class CommunityVC: UITableViewController {
         }
         webContentManager.getNateContents {
             self.nateContents = webContentManager.nateContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getFmContents {
+            self.fmContents = webContentManager.fmContents
             self.tableView.reloadData()
         }
     }

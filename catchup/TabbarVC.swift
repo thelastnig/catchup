@@ -10,6 +10,15 @@ import UIKit
 
 class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     
+    // Tabbar Custom
+    let csHeader = UIView()
+    let csTabbar = UIView()
+    
+    let tabMain = UIButton(type: .system)
+    let tabCommunity = UIButton(type: .system)
+    let tabBoon = UIButton(type: .system)
+    let tabCount: CGFloat = 3
+    
     // 메인 페이지를 위한 변수 설정
     
     
@@ -58,9 +67,45 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         var list = [(String, String, Int)]()
         return list
     }()
+    
+    lazy var fmContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 기존 tabbar 숨기기
+        self.tabBar.isHidden = true
+        
+        // tabbar custom
+        let width = self.view.frame.width
+        let height_header: CGFloat = Constants.csHeaderHeight
+        let height_tabbar: CGFloat = Constants.csTabbarHeight
+        let x: CGFloat = 0
+        let y_tabbar: CGFloat = height_header
+        
+        self.csHeader.frame = CGRect(x: x, y: 0, width: width, height: height_header)
+        self.csTabbar.frame = CGRect(x: x, y: y_tabbar, width: width, height: height_tabbar)
+        
+        self.csHeader.backgroundColor = self.mainColor
+        self.csTabbar.backgroundColor = self.grayColor2
+        
+        self.view.addSubview(self.csHeader)
+        self.view.addSubview(self.csTabbar)
+        
+        // tabbar button 설정
+        let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
+        let tabBtnHeight = self.csTabbar.frame.height
+        
+        self.tabMain.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        self.tabCommunity.frame = CGRect(x: tabBtnWidth, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        self.tabBoon.frame = CGRect(x: tabBtnWidth * 2, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        
+        self.addTabBarBtn(btn: self.tabMain, title: "Main", tag: 0)
+        self.addTabBarBtn(btn: self.tabCommunity, title: "Community", tag: 1)
+        self.addTabBarBtn(btn: self.tabBoon, title: "Boon", tag: 2)
         
         // 네트워크 연결 확인
         self.checkNetwork()
@@ -85,10 +130,31 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         print("ForeGround!!!")
     }
     
-
+    func addTabBarBtn(btn: UIButton, title:String, tag:Int) {
+        btn.setTitle(title, for: .normal)
+        btn.tag = tag
+        
+        btn.setTitleColor(UIColor.blue, for: .normal)
+        btn.setTitleColor(UIColor.black, for: .selected)
+        
+        btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)
+        
+        self.csTabbar.addSubview(btn)
+    }
+    
+    @objc func onTabBarItemClick(_ sender: UIButton) {
+        self.tabMain.isSelected = false
+        self.tabCommunity.isSelected = false
+        self.tabBoon.isSelected = false
+        
+        sender.isSelected = true
+        self.selectedIndex = sender.tag
+    }
+    
     // MARK: - Navigation
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print(tabBarController.selectedIndex)
         if tabBarController.selectedIndex == 1 {
             let naviVC = viewController as! UINavigationController
             let communityVC = naviVC.viewControllers.first as! CommunityVC
@@ -100,6 +166,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             communityVC.namuContents = self.namuContents
             communityVC.ppomppuContents = self.ppomppuContents
             communityVC.nateContents = self.nateContents
+            communityVC.fmContents = self.fmContents
         }
     }
     
@@ -129,6 +196,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             }
             communityWebContentManager.getInstizContents {
                 self.instizContents = communityWebContentManager.instizContents
+            }
+            communityWebContentManager.getFmContents {
+                self.fmContents = communityWebContentManager.fmContents
             }
         }
     }

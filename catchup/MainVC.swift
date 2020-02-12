@@ -211,7 +211,11 @@ class MainVC: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
-        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillLayoutSubviews() {
+        // custom header, tabbar의 높이만큼 rootview 위치 조정
+        self.view.frame.origin.y = Constants.csHeaderHeight + Constants.csTabbarHeight - (self.navigationController?.navigationBar.frame.height)!
     }
     
     @objc func willEnterForeground() {
