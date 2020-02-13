@@ -147,7 +147,10 @@ class Constants {
     
     // TabbarVC의 custom 관련 설정
     public static let csHeaderHeight: CGFloat = 90
-    public static let csTabbarHeight: CGFloat = 50
+    public static let csTabbarHeight: CGFloat = 40
+    
+    // TabbarBoonVC의 custom 관련 설정
+    public static let csBoonTabbarHeight: CGFloat = 40
     
     
 }

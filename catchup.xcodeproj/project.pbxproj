@@ -31,6 +31,7 @@
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
 		76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABE30523F139D300CD5847 /* BoonViewVC.swift */; };
+		76AC1AE423F52B2E009F5C5D /* TabbarBoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */; };
 		76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B7339D23D8149700789B42 /* ON I고딕.ttf */; };
 		76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */; };
 		76B733A423D8302700789B42 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B733A323D8302700789B42 /* TabbarVC.swift */; };
@@ -68,6 +69,7 @@
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
 		76ABE30523F139D300CD5847 /* BoonViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonViewVC.swift; sourceTree = "<group>"; };
+		76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarBoonVC.swift; sourceTree = "<group>"; };
 		76B7339D23D8149700789B42 /* ON I고딕.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ON I고딕.ttf"; sourceTree = "<group>"; };
 		76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Danjunghae.ttf; sourceTree = "<group>"; };
 		76B733A323D8302700789B42 /* TabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				76B733A323D8302700789B42 /* TabbarVC.swift */,
+				76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */,
 				76958A1C239CDC3100770439 /* ViewController.swift */,
 				763C81F7239E7FFD00C93350 /* MainVC.swift */,
 				763C81F9239E812500C93350 /* SideBarVC.swift */,
@@ -359,6 +362,7 @@
 				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,
 				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
 				76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */,
+				76AC1AE423F52B2E009F5C5D /* TabbarBoonVC.swift in Sources */,
 				76958A19239CDC3100770439 /* AppDelegate.swift in Sources */,
 				76958A1B239CDC3100770439 /* SceneDelegate.swift in Sources */,
 				76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */,
@@ -510,7 +514,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -533,7 +537,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

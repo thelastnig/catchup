@@ -156,8 +156,11 @@ class CommunityVC: UITableViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        // custom header, tabbar의 높이만큼 rootview 위치 조정
-        self.view.frame.origin.y = Constants.csHeaderHeight + Constants.csTabbarHeight - (self.navigationController?.navigationBar.frame.height)!
+        // custom header, tabbar의 높이만큼 rootview 위치 및 높이 조정
+        let screen = UIScreen.main.bounds
+        let margin = Constants.csHeaderHeight + Constants.csTabbarHeight
+        self.view.frame.origin.y = margin
+        self.view.frame.size.height = screen.size.height - margin
     }
     
     // MARK: - Table view data source

@@ -44,7 +44,15 @@ class BoonViewVC: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillLayoutSubviews() {
+        // custom header, tabbar의 높이만큼 rootview 위치 및 높이 조정
+        let screen = UIScreen.main.bounds
+        let margin = Constants.csBoonTabbarHeight
+        let marginHeight = Constants.csBoonTabbarHeight + Constants.csHeaderHeight + Constants.csTabbarHeight
+        self.view.frame.origin.y = margin
+        self.view.frame.size.height = screen.size.height - marginHeight
     }
 
     
@@ -173,7 +181,7 @@ class BoonViewVC: UICollectionViewController {
 extension BoonViewVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + 10)) / 2
+        let itemWidth = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + Constants.boonItemDistance)) / 2
         let itemHeight = itemWidth * Constants.boonHeightRatio / Constants.boonWidthRatio
       return CGSize(width: itemWidth, height: itemHeight)
     }

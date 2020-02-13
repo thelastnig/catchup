@@ -72,6 +72,11 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         var list = [(String, String, Int)]()
         return list
     }()
+    
+    // community 선택 시 데이터 전송을 위한 코드
+
+    // handle new selection
+     func tabChangedTo(selectedIndex: Int) {}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +111,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.addTabBarBtn(btn: self.tabMain, title: "Main", tag: 0)
         self.addTabBarBtn(btn: self.tabCommunity, title: "Community", tag: 1)
         self.addTabBarBtn(btn: self.tabBoon, title: "Boon", tag: 2)
+        
+        // main 선택
+        self.onTabBarItemClick(self.tabMain)
         
         // 네트워크 연결 확인
         self.checkNetwork()
@@ -149,12 +157,24 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         
         sender.isSelected = true
         self.selectedIndex = sender.tag
+        if sender.tag == 1 {
+            let naviVC = self.selectedViewController as! UINavigationController
+            let communityVC = naviVC.viewControllers.first as! CommunityVC
+            communityVC.cookContents = self.cookContents
+            communityVC.ilbeContents = self.ilbeContents
+            communityVC.instizContents = self.instizContents
+            communityVC.ruliwebContents = self.ruliwebContents
+            communityVC.clienContents = self.clienContents
+            communityVC.namuContents = self.namuContents
+            communityVC.ppomppuContents = self.ppomppuContents
+            communityVC.nateContents = self.nateContents
+            communityVC.fmContents = self.fmContents
+        }
     }
     
     // MARK: - Navigation
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print(tabBarController.selectedIndex)
         if tabBarController.selectedIndex == 1 {
             let naviVC = viewController as! UINavigationController
             let communityVC = naviVC.viewControllers.first as! CommunityVC
