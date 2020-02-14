@@ -204,6 +204,8 @@ class MainVC: UITableViewController {
         
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        print("main height did load: \(self.view.frame.size.height)")
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
@@ -211,12 +213,13 @@ class MainVC: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
+        print("main height will appear: \(self.view.frame.size.height)")
     }
     
     override func viewWillLayoutSubviews() {
         // custom header, tabbar의 높이만큼 rootview 위치 및 높이 조정
         let screen = UIScreen.main.bounds
-        let margin = Constants.csHeaderHeight + Constants.csTabbarHeight 
+        let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
     }

@@ -16,7 +16,6 @@ class SettingVC: UITableViewController {
         let ud = UserDefaults.standard
         let num = ud.integer(forKey: "numberOfOff")
         print("number of off : \(num)")
-
     }
 
     // MARK: - Table view data source
@@ -65,6 +64,11 @@ class SettingVC: UITableViewController {
         return cell
     }
 
-
+    @IBAction func toggleSidebar(_ sender: UIBarButtonItem) {
+        if let revealVC = self.revealViewController() {
+            revealVC.revealToggle(sender)
+        }
+    }
+    
 
 }

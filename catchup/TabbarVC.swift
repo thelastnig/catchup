@@ -86,7 +86,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         
         // tabbar custom
         let width = self.view.frame.width
-        let height_header: CGFloat = Constants.csHeaderHeight
+        let height_header: CGFloat = self.upperHeight
         let height_tabbar: CGFloat = Constants.csTabbarHeight
         let x: CGFloat = 0
         let y_tabbar: CGFloat = height_header
@@ -99,6 +99,18 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         
         self.view.addSubview(self.csHeader)
         self.view.addSubview(self.csTabbar)
+        
+        // header에 sidebar를 위한 toggle 버튼 달기
+        let sideBtn = UIButton(type: .system)
+        sideBtn.frame = CGRect(x: 10, y: self.statusHeight + 5, width: 30, height: 30)
+        sideBtn.setTitle("BTN", for: .normal)
+        
+        if let revealVC = self.revealViewController() {
+            sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
+            revealVC.rearViewRevealWidth = self.view.frame.size.width
+            revealVC.rearViewRevealOverdraw = 0
+        }
+        csHeader.addSubview(sideBtn)
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
@@ -119,6 +131,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.checkNetwork()
         
         self.delegate = self
+        
         // background에서 메인 페이지 관련 API를 호출하여 로딩 지연 방지
         
         // background에서 커뮤니티 관련 API를 호출하여 카뮤니티 탭으로 이동 시 로딩 지연 방지

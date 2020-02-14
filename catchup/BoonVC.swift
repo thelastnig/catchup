@@ -66,7 +66,7 @@ class BoonVC: UICollectionViewController {
         // custom header, tabbar의 높이만큼 rootview 위치 및 높이 조정
         let screen = UIScreen.main.bounds
         let margin = Constants.csBoonTabbarHeight
-        let marginHeight = Constants.csBoonTabbarHeight + Constants.csHeaderHeight + Constants.csTabbarHeight
+        let marginHeight = Constants.csBoonTabbarHeight + Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - marginHeight
     }

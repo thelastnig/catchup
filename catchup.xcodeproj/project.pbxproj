@@ -131,16 +131,15 @@
 			isa = PBXGroup;
 			children = (
 				7609586C23E93EC700C8D9D0 /* Story Board */,
+				76B7F3E823F673B400A1584D /* SideBar */,
 				76B7339C23D8148800789B42 /* Sources */,
 				76A82A9623CD8EDA002BC687 /* ViewController */,
 				76A82A9523CD8EC1002BC687 /* ContentManager */,
 				76A82A9223CD8E91002BC687 /* Util */,
 				76A82A9123CD8E68002BC687 /* Cell */,
 				76A82A9023CD8E4F002BC687 /* Layout */,
-				763C81F5239E7E2900C93350 /* SWRevealViewController.h */,
 				76958A18239CDC3100770439 /* AppDelegate.swift */,
 				76958A1A239CDC3100770439 /* SceneDelegate.swift */,
-				763C81F4239E7E2800C93350 /* SWRevealViewController.m */,
 				76958A24239CDC3300770439 /* Assets.xcassets */,
 				76958A26239CDC3300770439 /* LaunchScreen.storyboard */,
 				76958A29239CDC3300770439 /* Info.plist */,
@@ -213,6 +212,15 @@
 				76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */,
 			);
 			name = Sources;
+			sourceTree = "<group>";
+		};
+		76B7F3E823F673B400A1584D /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				763C81F5239E7E2900C93350 /* SWRevealViewController.h */,
+				763C81F4239E7E2800C93350 /* SWRevealViewController.m */,
+			);
+			name = SideBar;
 			sourceTree = "<group>";
 		};
 		EC1B415DD9C16785B3BD536F /* Frameworks */ = {

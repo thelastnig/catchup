@@ -28,6 +28,23 @@ extension UIViewController {
         return UIColor(red:0.91, green:0.93, blue:0.94, alpha:1.0)
     }
     
+    // upper area height를 위한 연산 프로퍼티
+    var statusHeight: CGFloat {
+        get {
+            return UIApplication.shared.statusBarFrame.size.height
+        }
+    }
+    
+    var upperHeight: CGFloat {
+        get {
+            let safeHeight = UIApplication.shared.statusBarFrame.size.height
+            
+            let navi = self.storyboard?.instantiateViewController(identifier: "side_navi") as! UINavigationController
+                
+            return  safeHeight + navi.navigationBar.frame.height
+        }
+    }
+    
     func alert(_ message: String, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -146,7 +163,7 @@ class Constants {
     public static let boonItemDistance: CGFloat = 10
     
     // TabbarVC의 custom 관련 설정
-    public static let csHeaderHeight: CGFloat = 90
+    // public static let csHeaderHeight: CGFloat = 90
     public static let csTabbarHeight: CGFloat = 40
     
     // TabbarBoonVC의 custom 관련 설정
