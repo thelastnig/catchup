@@ -344,11 +344,11 @@ class CommunityVC: UITableViewController {
 
         let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
         
-        headerUpperView.backgroundColor = self.mainColor
+        headerUpperView.backgroundColor = UIColor.white
         
         let title = UILabel()
-        title.font = UIFont.boldSystemFont(ofSize: 17)
-        title.textColor = UIColor.white
+        title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+        title.textColor = UIColor.black
         title.textAlignment = .left
         
         switch section {

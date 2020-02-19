@@ -32,8 +32,7 @@
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
 		76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABE30523F139D300CD5847 /* BoonViewVC.swift */; };
 		76AC1AE423F52B2E009F5C5D /* TabbarBoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */; };
-		76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B7339D23D8149700789B42 /* ON I고딕.ttf */; };
-		76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */; };
+		76AF4B5C23FD1315009EDE81 /* NanumBarunGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */; };
 		76B733A423D8302700789B42 /* TabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B733A323D8302700789B42 /* TabbarVC.swift */; };
 		76C7A05C23E80AF0003B20BF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C7A05B23E80AF0003B20BF /* NetworkManager.swift */; };
 		76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */; };
@@ -70,8 +69,7 @@
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
 		76ABE30523F139D300CD5847 /* BoonViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonViewVC.swift; sourceTree = "<group>"; };
 		76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarBoonVC.swift; sourceTree = "<group>"; };
-		76B7339D23D8149700789B42 /* ON I고딕.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ON I고딕.ttf"; sourceTree = "<group>"; };
-		76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Danjunghae.ttf; sourceTree = "<group>"; };
+		76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunGothic.ttf; sourceTree = "<group>"; };
 		76B733A323D8302700789B42 /* TabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarVC.swift; sourceTree = "<group>"; };
 		76C7A05B23E80AF0003B20BF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		76F11B7023CECA2F004E9ADA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -208,8 +206,7 @@
 		76B7339C23D8148800789B42 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				76B7339D23D8149700789B42 /* ON I고딕.ttf */,
-				76B733A123D8187500789B42 /* Cafe24Danjunghae.ttf */,
+				76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -294,11 +291,10 @@
 			files = (
 				76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */,
 				76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */,
-				76B733A223D8187700789B42 /* Cafe24Danjunghae.ttf in Resources */,
-				76B733A023D814AF00789B42 /* ON I고딕.ttf in Resources */,
 				76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */,
 				76958A25239CDC3300770439 /* Assets.xcassets in Resources */,
 				76958A20239CDC3100770439 /* Main.storyboard in Resources */,
+				76AF4B5C23FD1315009EDE81 /* NanumBarunGothic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +528,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "catchup/catchup-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -554,7 +550,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "catchup/catchup-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

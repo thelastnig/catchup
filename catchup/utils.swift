@@ -8,12 +8,15 @@ extension UIViewController {
     }
     
     var mainColor: UIColor {
-        return UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
+        
+        // return UIColor(red:0.65, green:0.85, blue:1.00, alpha:1.0) // blue2
+        return UIColor(red:0.45, green:0.75, blue:0.99, alpha:1.0) // blue3
+        //return UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
         //return UIColor(red:0.26, green:0.36, blue:0.35, alpha:1.0)
     }
     
     var subColor: UIColor {
-        return UIColor(red:1.00, green:0.82, blue:0.48, alpha:1.0)
+        return UIColor(red:0.20, green:0.60, blue:0.94, alpha:1.0) //blue5
     }
     
     var grayColor0: UIColor {
@@ -28,6 +31,33 @@ extension UIViewController {
         return UIColor(red:0.91, green:0.93, blue:0.94, alpha:1.0)
     }
     
+    var grayColor5: UIColor {
+        return UIColor(red:0.68, green:0.71, blue:0.74, alpha:1.0)
+    }
+    
+    var grayColor6: UIColor {
+        return UIColor(red:0.53, green:0.56, blue:0.59, alpha:1.0)
+    }
+    
+    var grayColor7: UIColor {
+        return UIColor(red:0.29, green:0.31, blue:0.34, alpha:1.0)
+    }
+    
+    var greenColor7: UIColor {
+        return UIColor(red:0.22, green:0.70, blue:0.30, alpha:1.0)
+    }
+    
+    var yellowColor7: UIColor {
+        return UIColor(red:0.96, green:0.62, blue:0.00, alpha:1.0)
+    }
+    
+    var pinkColor7: UIColor {
+        UIColor(red:0.84, green:0.20, blue:0.42, alpha:1.0)
+    }
+
+    
+    
+    
     // upper area height를 위한 연산 프로퍼티
     var statusHeight: CGFloat {
         get {
@@ -39,8 +69,8 @@ extension UIViewController {
         get {
             let safeHeight = UIApplication.shared.statusBarFrame.size.height
             
-            let navi = self.storyboard?.instantiateViewController(identifier: "side_navi") as! UINavigationController
-                
+            let navi = self.storyboard?.instantiateViewController(withIdentifier: "side_navi") as! UINavigationController
+            
             return  safeHeight + navi.navigationBar.frame.height
         }
     }
@@ -142,6 +172,20 @@ extension CALayer {
     }
 }
 
+// 버튼 배경색 지정
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+         
+        self.setBackgroundImage(backgroundImage, for: state)
+    }
+}
 
 class Constants {
     // MainVC, CommunityVC의 table(header, cell) 관련 설정

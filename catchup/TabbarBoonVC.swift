@@ -13,8 +13,8 @@ class TabbarBoonVC: UITabBarController {
     // Tabbar Custom
     let csTabbar = UIView()
     
-    let tabBoon = UIButton(type: .system)
-    let tabBoonView = UIButton(type: .system)
+    let tabBoon = UIButton(type: .custom)
+    let tabBoonView = UIButton(type: .custom)
     let tabCount: CGFloat = 2
 
     override func viewDidLoad() {
@@ -29,9 +29,7 @@ class TabbarBoonVC: UITabBarController {
         let height_tabbar: CGFloat = Constants.csBoonTabbarHeight
         
         self.csTabbar.frame = CGRect(x: 0, y: 0, width: width, height: height_tabbar)
-        
-        self.csTabbar.backgroundColor = self.grayColor1
-        
+        self.csTabbar.backgroundColor = UIColor.white
         self.view.addSubview(self.csTabbar)
         
         // tabbar button 설정
@@ -60,8 +58,10 @@ class TabbarBoonVC: UITabBarController {
         btn.setTitle(title, for: .normal)
         btn.tag = tag
         
-        btn.setTitleColor(UIColor.blue, for: .normal)
-        btn.setTitleColor(UIColor.black, for: .selected)
+        btn.setTitleColor(self.grayColor7, for: .normal)
+        btn.setTitleColor(self.subColor, for: .selected)
+        btn.titleLabel?.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 13)
+        btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)
         
@@ -71,6 +71,11 @@ class TabbarBoonVC: UITabBarController {
     @objc func onTabBarItemClick(_ sender: UIButton) {
         self.tabBoon.isSelected = false
         self.tabBoonView.isSelected = false
+        self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 1)
+        self.tabBoonView.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 1)
+        
+        sender.isSelected = true
+        sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 1)
         
         sender.isSelected = true
         self.selectedIndex = sender.tag

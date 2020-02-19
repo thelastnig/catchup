@@ -14,9 +14,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     let csHeader = UIView()
     let csTabbar = UIView()
     
-    let tabMain = UIButton(type: .system)
-    let tabCommunity = UIButton(type: .system)
-    let tabBoon = UIButton(type: .system)
+    let tabMain = UIButton(type: .custom)
+    let tabCommunity = UIButton(type: .custom)
+    let tabBoon = UIButton(type: .custom)
     let tabCount: CGFloat = 3
     
     // 메인 페이지를 위한 변수 설정
@@ -95,7 +95,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.csTabbar.frame = CGRect(x: x, y: y_tabbar, width: width, height: height_tabbar)
         
         self.csHeader.backgroundColor = self.mainColor
-        self.csTabbar.backgroundColor = self.grayColor2
+        self.csTabbar.backgroundColor = UIColor.white
         
         self.view.addSubview(self.csHeader)
         self.view.addSubview(self.csTabbar)
@@ -103,7 +103,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         // header에 sidebar를 위한 toggle 버튼 달기
         let sideBtn = UIButton(type: .system)
         sideBtn.frame = CGRect(x: 10, y: self.statusHeight + 5, width: 30, height: 30)
-        sideBtn.setTitle("BTN", for: .normal)
+        sideBtn.setTitle("A", for: .normal)
         
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
@@ -155,8 +155,10 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         btn.setTitle(title, for: .normal)
         btn.tag = tag
         
-        btn.setTitleColor(UIColor.blue, for: .normal)
-        btn.setTitleColor(UIColor.black, for: .selected)
+        btn.setTitleColor(UIColor.black, for: .normal)
+        btn.setTitleColor(self.subColor, for: .selected)
+        btn.titleLabel?.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)
         
@@ -167,8 +169,12 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.tabMain.isSelected = false
         self.tabCommunity.isSelected = false
         self.tabBoon.isSelected = false
+        self.tabMain.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
+        self.tabCommunity.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
+        self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
         
         sender.isSelected = true
+        sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 3)
         self.selectedIndex = sender.tag
         if sender.tag == 1 {
             let naviVC = self.selectedViewController as! UINavigationController

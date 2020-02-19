@@ -24,7 +24,7 @@ public enum NaverType: Int {
     func getNaverName() -> String {
         switch self {
         case .naverKeyword:
-            return "네이버 실시간 검색어"
+            return "실시간 검색어"
         case .naverMainNews:
             return "주요 뉴스"
         case .naverEnterNews:
@@ -113,14 +113,14 @@ class MainVC: UITableViewController {
         }
         
         // 폰트 이름 찾기 위한 임시 프로세스
-        /*
+        
         for familyName in UIFont.familyNames {
             print("========\(familyName)===========")
             for fontName in UIFont.fontNames(forFamilyName: familyName) {
                  print(fontName)
             }
         }
-        */
+        
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -272,7 +272,7 @@ class MainVC: UITableViewController {
             cell.pageControll.currentPage = 0
             cell.pageControll.isUserInteractionEnabled = false
             cell.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
-            cell.pageControll.currentPageIndicatorTintColor = UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
+            cell.pageControll.currentPageIndicatorTintColor = self.mainColor
             cell.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             
             // keywordContentView 설정
@@ -387,31 +387,44 @@ class MainVC: UITableViewController {
 
         let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
         
-        headerUpperView.backgroundColor = self.mainColor
+        headerUpperView.backgroundColor = UIColor.white
+        
+        let common = UILabel()
+        common.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 18)
+        common.textColor = self.grayColor7
+        common.textAlignment = .left
+        common.text = "네이버"
         
         let title = UILabel()
-        let fontDec = UIFontDescriptor(name: "TTIGothicR", size: 18)
-        fontDec.withSymbolicTraits(.traitBold)
-        title.font = UIFont(descriptor: fontDec, size: 18)
-        title.textColor = UIColor.white
+        title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 18)
         title.textAlignment = .left
         
         switch section {
         case NaverType.naverKeyword.rawValue:
             title.text = NaverType.getNaverName(.naverKeyword)()
+            title.textColor = self.subColor
         case NaverType.naverMainNews.rawValue:
             title.text = NaverType.getNaverName(.naverMainNews)()
+            title.textColor = self.pinkColor7
         case NaverType.naverEnterNews.rawValue:
             title.text = NaverType.getNaverName(.naverEnterNews)()
+            title.textColor = self.yellowColor7
         case NaverType.naverSportNews.rawValue:
             title.text = NaverType.getNaverName(.naverSportNews)()
+            title.textColor = self.greenColor7
         default:
             ()
         }
+        headerUpperView.addSubview(common)
         headerUpperView.addSubview(title)
         
-        title.snp.makeConstraints { (make) in
+        common.snp.makeConstraints { (make) in
             make.left.equalTo(headerUpperView).offset(20)
+            make.bottom.equalTo(headerUpperView).offset(-10)
+        }
+        
+        title.snp.makeConstraints { (make) in
+            make.left.equalTo(common.snp.right).offset(5)
             make.bottom.equalTo(headerUpperView).offset(-10)
         }
         

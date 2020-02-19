@@ -6,8 +6,7 @@
 	<string>Light</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>ON I고딕.ttf</string>
-		<string>Cafe24Danjunghae.ttf</string>
+		<string>NanumBarunGothic.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
