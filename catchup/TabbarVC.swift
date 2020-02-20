@@ -97,6 +97,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.csHeader.backgroundColor = self.mainColor
         self.csTabbar.backgroundColor = UIColor.white
         
+        // tabbar 아래 선 추가
+        self.csTabbar.layer.addBorder([.bottom], color: self.grayColor1, width: 1)
+        
         self.view.addSubview(self.csHeader)
         self.view.addSubview(self.csTabbar)
         
@@ -114,7 +117,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
-        let tabBtnHeight = self.csTabbar.frame.height
+        let tabBtnHeight = self.csTabbar.frame.height - 1
         
         self.tabMain.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight)
         self.tabCommunity.frame = CGRect(x: tabBtnWidth, y: 0, width: tabBtnWidth, height: tabBtnHeight)
@@ -169,14 +172,15 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.tabMain.isSelected = false
         self.tabCommunity.isSelected = false
         self.tabBoon.isSelected = false
-        self.tabMain.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
-        self.tabCommunity.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
-        self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 3)
+        self.tabMain.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
+        self.tabCommunity.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
+        self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
         
         sender.isSelected = true
         sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 3)
         self.selectedIndex = sender.tag
         if sender.tag == 1 {
+            print("aaaaaaaaaaaaaaaaaaaaa")
             let naviVC = self.selectedViewController as! UINavigationController
             let communityVC = naviVC.viewControllers.first as! CommunityVC
             communityVC.cookContents = self.cookContents

@@ -13,9 +13,13 @@ class TabbarBoonVC: UITabBarController {
     // Tabbar Custom
     let csTabbar = UIView()
     
+    let tabBoonContainer = UIView()
+    let tabBoonViewContainer = UIView()
     let tabBoon = UIButton(type: .custom)
     let tabBoonView = UIButton(type: .custom)
     let tabCount: CGFloat = 2
+    let tabBoonBottomBar = UIView()
+    let tabBoonViewBottomBar = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +34,37 @@ class TabbarBoonVC: UITabBarController {
         
         self.csTabbar.frame = CGRect(x: 0, y: 0, width: width, height: height_tabbar)
         self.csTabbar.backgroundColor = UIColor.white
+        self.csTabbar.layer.addBorder([.bottom], color: self.grayColor1, width: 1)
         self.view.addSubview(self.csTabbar)
         
-        // tabbar button 설정
+        
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
         let tabBtnHeight = self.csTabbar.frame.height
         
-        self.tabBoon.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight)
-        self.tabBoonView.frame = CGRect(x: tabBtnWidth, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        // tabbar button container 설정
+        self.tabBoonContainer.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        self.tabBoonViewContainer.frame = CGRect(x: tabBtnWidth, y: 0, width: tabBtnWidth, height: tabBtnHeight)
+        
+        // tabbar button 설정
+        self.tabBoon.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight - 3)
+        self.tabBoonView.frame = CGRect(x: 0, y: 0, width: tabBtnWidth, height: tabBtnHeight - 3)
+        
+        // tabbar button bottom bar 설정
+        let barWidth = tabBtnWidth / 2
+        self.tabBoonBottomBar.frame = CGRect(x: barWidth / 2, y: tabBtnHeight - 3, width: barWidth, height: 2)
+        self.tabBoonViewBottomBar.frame = CGRect(x: barWidth / 2, y: tabBtnHeight - 3, width: barWidth, height: 2)
+        self.tabBoonBottomBar.tag = 0
+        self.tabBoonViewBottomBar.tag = 1
+        
+        self.tabBoonContainer.addSubview(self.tabBoon)
+        self.tabBoonContainer.addSubview(self.tabBoonBottomBar)
+        self.tabBoonViewContainer.addSubview(self.tabBoonView)
+        self.tabBoonViewContainer.addSubview(self.tabBoonViewBottomBar)
         
         self.addTabBarBtn(btn: self.tabBoon, title: "실시간 인기 게시물", tag: 0)
         self.addTabBarBtn(btn: self.tabBoonView, title: "많이 본 게시물", tag: 1)
+        self.csTabbar.addSubview(self.tabBoonContainer)
+        self.csTabbar.addSubview(self.tabBoonViewContainer)
         
         // 실시간 인기 게시물 선택
         self.onTabBarItemClick(self.tabBoon)
@@ -64,21 +88,24 @@ class TabbarBoonVC: UITabBarController {
         btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)
-        
-        self.csTabbar.addSubview(btn)
     }
     
     @objc func onTabBarItemClick(_ sender: UIButton) {
         self.tabBoon.isSelected = false
         self.tabBoonView.isSelected = false
-        self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 1)
-        self.tabBoonView.layer.addBorder([UIRectEdge.bottom], color: self.grayColor1, width: 1)
-        
-        sender.isSelected = true
-        sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 1)
+        self.tabBoonBottomBar.backgroundColor = UIColor.white
+        self.tabBoonViewBottomBar.backgroundColor = UIColor.white
         
         sender.isSelected = true
         self.selectedIndex = sender.tag
+        switch sender.tag {
+        case self.tabBoonBottomBar.tag:
+            self.tabBoonBottomBar.backgroundColor = self.mainColor
+        case self.tabBoonViewBottomBar.tag:
+            self.tabBoonViewBottomBar.backgroundColor = self.mainColor
+        default:
+            ()
+        }
     }
     
 

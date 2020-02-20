@@ -113,14 +113,14 @@ class MainVC: UITableViewController {
         }
         
         // 폰트 이름 찾기 위한 임시 프로세스
-        
+        /*
         for familyName in UIFont.familyNames {
             print("========\(familyName)===========")
             for fontName in UIFont.fontNames(forFamilyName: familyName) {
                  print(fontName)
             }
         }
-        
+        */
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
