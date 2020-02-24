@@ -85,7 +85,7 @@ class MainVC: UITableViewController {
     var keywordLabelsNum: Array<UILabel> = []
     
     lazy var naverKeyword: [String] = {
-        var list = [String]()
+        var list = Array.init(repeating: "", count: 20)
         return list
     }()
     
@@ -192,6 +192,9 @@ class MainVC: UITableViewController {
         ]
         
         self.getContents()
+//        for idx in 0...19 {
+//            self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
+//        }
         
         // 당겨서 새로고침
         self.refreshControl = UIRefreshControl()
@@ -206,6 +209,7 @@ class MainVC: UITableViewController {
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
         print("main height did load: \(self.view.frame.size.height)")
+        self.tableView.reloadData()
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력

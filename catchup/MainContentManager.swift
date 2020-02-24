@@ -13,7 +13,7 @@ import Firebase
 class MainContentManager {
     
     lazy var naverKeyword: [String] = {
-        var list = [String]()
+        var list = Array.init(repeating: "", count: 20)
         return list
     }()
     

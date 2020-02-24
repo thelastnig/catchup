@@ -20,6 +20,25 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     let tabCount: CGFloat = 3
     
     // 메인 페이지를 위한 변수 설정
+    lazy var naverKeyword: [String] = {
+        var list = Array.init(repeating: "", count: 20)
+        return list
+    }()
+    
+    lazy var naverMainNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
+    
+    lazy var naverEnterNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
+    
+    lazy var naverSportsNews: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
     
     
     // 커뮤니티 탭을 위한 변수 설정
@@ -81,6 +100,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 네트워크 연결 확인
+        self.checkNetwork()
+        
         // 기존 tabbar 숨기기
         self.tabBar.isHidden = true
         
@@ -107,13 +129,24 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         let sideBtn = UIButton(type: .system)
         sideBtn.frame = CGRect(x: 10, y: self.statusHeight + 5, width: 30, height: 30)
         sideBtn.setTitle("A", for: .normal)
+        csHeader.addSubview(sideBtn)
         
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
             revealVC.rearViewRevealWidth = self.view.frame.size.width
             revealVC.rearViewRevealOverdraw = 0
         }
-        csHeader.addSubview(sideBtn)
+        
+        // header에 새로 고침을 위한 버튼 달기
+        let reloadBtn = UIButton(type: .system)
+        reloadBtn.frame.size = CGSize(width: 100, height: 30)
+        reloadBtn.setTitle("RELOAD", for: .normal)
+        csHeader.addSubview(reloadBtn)
+        reloadBtn.snp.makeConstraints{(make) in
+            make.right.equalTo(self.csHeader).offset(-10)
+            make.bottom.equalTo(self.csHeader).offset(-10)
+        }
+        reloadBtn.addTarget(self, action: #selector(onReloadButtonClick(_:)), for: .touchUpInside)
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
@@ -127,15 +160,13 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.addTabBarBtn(btn: self.tabCommunity, title: "Community", tag: 1)
         self.addTabBarBtn(btn: self.tabBoon, title: "Boon", tag: 2)
         
-        // main 선택
-        self.onTabBarItemClick(self.tabMain)
-        
-        // 네트워크 연결 확인
-        self.checkNetwork()
-        
         self.delegate = self
         
         // background에서 메인 페이지 관련 API를 호출하여 로딩 지연 방지
+//        self.getContents()
+        
+        // main 선택
+        self.onTabBarItemClick(self.tabMain)
         
         // background에서 커뮤니티 관련 API를 호출하여 카뮤니티 탭으로 이동 시 로딩 지연 방지
         self.getCommunityContents()
@@ -179,8 +210,17 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         sender.isSelected = true
         sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 3)
         self.selectedIndex = sender.tag
-        if sender.tag == 1 {
-            print("aaaaaaaaaaaaaaaaaaaaa")
+        if sender.tag == 0 {
+//            let naviVC = self.selectedViewController as! UINavigationController
+//            let mainVC = naviVC.viewControllers.first as! MainVC
+//            mainVC.naverKeyword = self.naverKeyword
+//            mainVC.naverMainNews = self.naverMainNews
+//            mainVC.naverEnterNews = self.naverEnterNews
+//            mainVC.naverSportsNews = self.naverSportsNews
+//            print("sender----------0")
+//            print(self.naverSportsNews)
+        }
+        else if sender.tag == 1 {
             let naviVC = self.selectedViewController as! UINavigationController
             let communityVC = naviVC.viewControllers.first as! CommunityVC
             communityVC.cookContents = self.cookContents
@@ -192,6 +232,34 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             communityVC.ppomppuContents = self.ppomppuContents
             communityVC.nateContents = self.nateContents
             communityVC.fmContents = self.fmContents
+        }
+    }
+    
+    @objc func onReloadButtonClick(_ sender: UIButton) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if self.selectedIndex == 0 {
+            let naviVC = self.selectedViewController as! UINavigationController
+            let mainVC = naviVC.viewControllers.first as! MainVC
+            mainVC.tableView.reloadData()
+            mainVC.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        } else if self.selectedIndex == 1 {
+            let naviVC = self.selectedViewController as! UINavigationController
+            let communityVC = naviVC.viewControllers.first as! CommunityVC
+            communityVC.tableView.reloadData()
+            communityVC.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        } else if self.selectedIndex == 2 {
+            let tabVC = self.selectedViewController as! UITabBarController
+            if tabVC.selectedIndex == 0 {
+                let naviVC = tabVC.viewControllers?.first as! UINavigationController
+                let boonVC = naviVC.viewControllers.first as! BoonVC
+                boonVC.collectionView.reloadData()
+                boonVC.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            } else if tabVC.selectedIndex == 1 {
+                let naviVC = tabVC.viewControllers?.last as! UINavigationController
+                let boonViewVC = naviVC.viewControllers.first as! BoonViewVC
+                boonViewVC.collectionView.reloadData()
+                boonViewVC.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            }
         }
     }
     
@@ -213,6 +281,26 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         }
     }
     
+    // Main 화면 Data Load
+    func getContents() {
+        let webContentManager = MainContentManager()
+        DispatchQueue.global(qos: .background).async {
+            webContentManager.getNaverKeyword {
+                self.naverKeyword = webContentManager.naverKeyword
+            }
+            webContentManager.getNaverMainNews {
+                self.naverMainNews = webContentManager.naverMainNews
+            }
+            webContentManager.getNaverEnterNews {
+                self.naverEnterNews = webContentManager.naverEnterNews
+            }
+            webContentManager.getNaverSportsNews {
+                self.naverSportsNews = webContentManager.naverSportsNews
+            }
+        }
+    }
+    
+    // Community 화면 Data Load
     func getCommunityContents() {
         let communityWebContentManager = CommunityContentManager()
         DispatchQueue.global(qos: .background).async {
