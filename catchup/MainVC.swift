@@ -472,10 +472,12 @@ class MainVC: UITableViewController {
         let webContentManager = MainContentManager()
         
         webContentManager.getNaverKeyword {
-            self.naverKeyword = webContentManager.naverKeyword
-            
+            if !webContentManager.naverKeyword.isEmpty {
+                self.naverKeyword = webContentManager.naverKeyword
+            }
             for idx in 0...19 {
                 self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
+                print(self.naverKeyword[idx])
             }
         }
         webContentManager.getNaverMainNews {
