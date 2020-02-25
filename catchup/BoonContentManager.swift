@@ -12,13 +12,13 @@ import Firebase
 
 class BoonContentManager {
     
-    lazy var boonContents: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
-        var list = [(String, String, String, Int)]()
+    lazy var boonContents: [(title: String, url: String, imgUrl: String, imgHeight: Int, id: String)] = {
+        var list = [(String, String, String, Int, String)]()
         return list
     }()
     
-    lazy var boonContentsView: [(title: String, url: String, imgUrl: String, imgHeight: Int)] = {
-        var list = [(String, String, String, Int)]()
+    lazy var boonContentsView: [(title: String, url: String, imgUrl: String, imgHeight: Int, id: String)] = {
+        var list = [(String, String, String, Int, String)]()
         return list
     }()
     
@@ -43,8 +43,11 @@ class BoonContentManager {
                     let url = data["link"]
                     let imgUrl = data["imageLink"]
                     let imgHeight = data["imageHeight"]
-                    self.boonContents.append((title as! String, url as! String, imgUrl as! String, imgHeight as! Int))
+                    let id = "normal"
+                    self.boonContents.append((title as! String, url as! String, imgUrl as! String, imgHeight as! Int, id))
                 }
+                
+                self.boonContents.append(("", "", "", 0, "last"))
                 completion?()
             }
         }
@@ -68,8 +71,10 @@ class BoonContentManager {
                     let url = data["link"]
                     let imgUrl = data["imageLink"]
                     let imgHeight = data["imageHeight"]
-                    self.boonContentsView.append((title as! String, url as! String, imgUrl as! String, imgHeight as! Int))
+                    let id = "normal"
+                    self.boonContentsView.append((title as! String, url as! String, imgUrl as! String, imgHeight as! Int, id))
                 }
+                self.boonContentsView.append(("", "", "", 0, "last"))
                 completion?()
             }
         }

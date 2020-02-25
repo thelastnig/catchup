@@ -84,8 +84,8 @@ class MainVC: UITableViewController {
     var keywordLabelsTitle: Array<UILabel> = []
     var keywordLabelsNum: Array<UILabel> = []
     
-    lazy var naverKeyword: [String] = {
-        var list = Array.init(repeating: "", count: 20)
+    lazy var naverKeyword: [(keyword: String, url: String)] = {
+        var list = Array.init(repeating: ("", "https://www.naver.com"), count: 20)
         return list
     }()
     
@@ -190,11 +190,18 @@ class MainVC: UITableViewController {
             self.keywordLabel07_2Num, self.keywordLabel08_2Num,
             self.keywordLabel09_2Num, self.keywordLabel10_2Num,
         ]
+        // keyword 클릭 이벤트를 감지하는 recognizer 설정
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(clickKeyword(_:)))
+
+        for idx in 0...19 {
+            self.keywordLabelsTitle[idx].layer.borderColor = UIColor.red.cgColor
+            self.keywordLabelsTitle[idx].layer.borderWidth = 1
+            self.keywordLabelsTitle[idx].isUserInteractionEnabled = true
+            self.keywordLabelsTitle[idx].addGestureRecognizer(gesture)
+        }
+        
         
         self.getContents()
-//        for idx in 0...19 {
-//            self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
-//        }
         
         // 당겨서 새로고침
         self.refreshControl = UIRefreshControl()
@@ -209,7 +216,6 @@ class MainVC: UITableViewController {
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
         print("main height did load: \(self.view.frame.size.height)")
-        self.tableView.reloadData()
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
@@ -226,6 +232,7 @@ class MainVC: UITableViewController {
         let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
+        print("main height will LAyout: \(self.view.frame.size.height)")
     }
     
     @objc func willEnterForeground() {
@@ -308,6 +315,8 @@ class MainVC: UITableViewController {
                 cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
                 labelNum.text = String(tag)
             }
+            
+            
             
             return cell
         } else {
@@ -476,8 +485,7 @@ class MainVC: UITableViewController {
                 self.naverKeyword = webContentManager.naverKeyword
             }
             for idx in 0...19 {
-                self.keywordLabelsTitle[idx].text = self.naverKeyword[idx]
-                print(self.naverKeyword[idx])
+                self.keywordLabelsTitle[idx].text = self.naverKeyword[idx].keyword
             }
         }
         webContentManager.getNaverMainNews {
@@ -502,10 +510,8 @@ class MainVC: UITableViewController {
         }
     }
     
-//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        guard let refresh = self.refreshControl else { return }
-//        if scrollView.contentOffset.y < -90 && !refresh.isRefreshing {
-//            refresh.beginRefreshing()
-//        }
-//    }
+    // keyword 클릭 시 작동하는 함수
+    @objc func clickKeyword(_ sender: Any) {
+        print("Click")
+    }
 }

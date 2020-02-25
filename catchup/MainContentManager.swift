@@ -12,9 +12,9 @@ import Firebase
 
 class MainContentManager {
     
-    lazy var naverKeyword: [String] = {
+    lazy var naverKeyword: [(keyword: String, url: String)] = {
         //        var list = Array.init(repeating: "", count: 20)
-        var list = [String]()
+        var list = [(String, String)]()
         return list
     }()
     
@@ -49,11 +49,13 @@ class MainContentManager {
             let status = html["status"] as! String
             if status == "success" {
                 let items = html["data"] as! NSArray
+                let url_pre = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="
 
                 for item in items {
                     let data = item as! NSDictionary
                     let title = data["title"]
-                    self.naverKeyword.append(title as! String)
+                    let url = url_pre + (title as! String)
+                    self.naverKeyword.append((title as! String, url))
                 }
                 completion?()
             }

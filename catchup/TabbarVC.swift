@@ -20,8 +20,8 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     let tabCount: CGFloat = 3
     
     // 메인 페이지를 위한 변수 설정
-    lazy var naverKeyword: [String] = {
-        var list = Array.init(repeating: "", count: 20)
+    lazy var naverKeyword: [(keyword: String, url: String)] = {
+        var list = Array.init(repeating: ("", "https://www.naver.com"), count: 20)
         return list
     }()
     
@@ -91,11 +91,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         var list = [(String, String, Int)]()
         return list
     }()
-    
-    // community 선택 시 데이터 전송을 위한 코드
-
-    // handle new selection
-     func tabChangedTo(selectedIndex: Int) {}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,11 +160,11 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         // background에서 메인 페이지 관련 API를 호출하여 로딩 지연 방지
 //        self.getContents()
         
-        // main 선택
-        self.onTabBarItemClick(self.tabMain)
-        
         // background에서 커뮤니티 관련 API를 호출하여 카뮤니티 탭으로 이동 시 로딩 지연 방지
         self.getCommunityContents()
+        
+        // main 선택
+        self.onTabBarItemClick(self.tabMain)
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -264,22 +259,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     }
     
     // MARK: - Navigation
-
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if tabBarController.selectedIndex == 1 {
-            let naviVC = viewController as! UINavigationController
-            let communityVC = naviVC.viewControllers.first as! CommunityVC
-            communityVC.cookContents = self.cookContents
-            communityVC.ilbeContents = self.ilbeContents
-            communityVC.instizContents = self.instizContents
-            communityVC.ruliwebContents = self.ruliwebContents
-            communityVC.clienContents = self.clienContents
-            communityVC.namuContents = self.namuContents
-            communityVC.ppomppuContents = self.ppomppuContents
-            communityVC.nateContents = self.nateContents
-            communityVC.fmContents = self.fmContents
-        }
-    }
     
     // Main 화면 Data Load
     func getContents() {
