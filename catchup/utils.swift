@@ -19,6 +19,10 @@ extension UIViewController {
         return UIColor(red:0.20, green:0.60, blue:0.94, alpha:1.0) //blue5
     }
     
+    var subColorlight: UIColor {
+        return UIColor(red:0.82, green:0.92, blue:1.00, alpha:1.0) //blue1
+    }
+    
     var grayColor0: UIColor {
         return UIColor(red:0.97, green:0.98, blue:0.98, alpha:1.0)
     }

@@ -190,16 +190,6 @@ class MainVC: UITableViewController {
             self.keywordLabel07_2Num, self.keywordLabel08_2Num,
             self.keywordLabel09_2Num, self.keywordLabel10_2Num,
         ]
-        // keyword 클릭 이벤트를 감지하는 recognizer 설정
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(clickKeyword(_:)))
-
-        for idx in 0...19 {
-            self.keywordLabelsTitle[idx].layer.borderColor = UIColor.red.cgColor
-            self.keywordLabelsTitle[idx].layer.borderWidth = 1
-            self.keywordLabelsTitle[idx].isUserInteractionEnabled = true
-            self.keywordLabelsTitle[idx].addGestureRecognizer(gesture)
-        }
-        
         
         self.getContents()
         
@@ -305,19 +295,25 @@ class MainVC: UITableViewController {
                 
                 cell.cellKeywordViews[idx].tag = tag
                 cell.setKeywordView(view: cell.cellKeywordViews[idx], superView: superView)
+                
             }
             
             // 순번 및 검색어를 위한 label 설정
             for idx in 0...19 {
                 let labelNum = self.keywordLabelsNum[idx]
                 let labelTitle = self.keywordLabelsTitle[idx]
+                
+                 // keyword 클릭 이벤트를 감지하는 recognizer 생성 및 설정
+                let gesture = KeywordGestureRecognizer(target: self, action: #selector(clickKeyword(_:)))
+                gesture.index = idx
+                gesture.minimumPressDuration = 0.1
+                labelTitle.isUserInteractionEnabled = true
+                labelTitle.addGestureRecognizer(gesture)
+
                 let tag = idx < 10 ? cell.cellKeywordViews[idx].tag : cell.cellKeywordViews[idx].tag + 10
                 cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
                 labelNum.text = String(tag)
             }
-            
-            
-            
             return cell
         } else {
             var data: (title: String, url: String, idx: Int)!
@@ -511,7 +507,34 @@ class MainVC: UITableViewController {
     }
     
     // keyword 클릭 시 작동하는 함수
-    @objc func clickKeyword(_ sender: Any) {
-        print("Click")
+    @objc func clickKeyword(_ gesture: KeywordGestureRecognizer) {
+        if let index = gesture.index {
+            // 터치 시 효과 구현
+            let label = self.keywordLabelsTitle[index]
+            if gesture.state == .began {
+                label.backgroundColor = self.subColorlight
+                // 터치 시 웹브라우저를 통한 검색 구현
+                let url = self.naverKeyword[index].url
+                let log = NaverType.getNaverName(.naverKeyword)()
+                
+                let urlEncoded = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                
+                // safariViewController 생성 및 설정
+                let config = SFSafariViewController.Configuration()
+                config.barCollapsingEnabled = false
+                let safariViewController = SFSafariViewController(url: URL(string: urlEncoded!)!, configuration: config)
+                safariViewController.dismissButtonStyle = .close
+
+                self.navigationController?.present(safariViewController, animated: true, completion: nil)
+
+                Analytics.logEvent("keyword_click", parameters: ["section" : log])
+            } else if gesture.state == .ended || gesture.state == .cancelled {
+                label.backgroundColor = UIColor.white
+            }
+        }
     }
+}
+
+class KeywordGestureRecognizer: UILongPressGestureRecognizer {
+    var index: Int!
 }
