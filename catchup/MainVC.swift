@@ -104,6 +104,9 @@ class MainVC: UITableViewController {
         return list
     }()
     
+    // 실시간 검색어 1위를 위한 imageView
+    var keywordStar: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -191,6 +194,13 @@ class MainVC: UITableViewController {
             self.keywordLabel09_2Num, self.keywordLabel10_2Num,
         ]
         
+        // 실시간 검색어 1위를 표시하는 imageView 생성 및 설정
+        self.keywordStar = UIImageView()
+        self.keywordStar.image = UIImage(named: "iconStar")
+        self.keywordStar.contentMode = .scaleAspectFit
+//        self.keywordStar.layer.borderColor = UIColor.red.cgColor
+//        self.keywordStar.layer.borderWidth = 1
+        
         self.getContents()
         
         // 당겨서 새로고침
@@ -214,6 +224,7 @@ class MainVC: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
         print("main height will appear: \(self.view.frame.size.height)")
+        self.keywordStar.rotate()
     }
     
     override func viewWillLayoutSubviews() {
@@ -295,7 +306,6 @@ class MainVC: UITableViewController {
                 
                 cell.cellKeywordViews[idx].tag = tag
                 cell.setKeywordView(view: cell.cellKeywordViews[idx], superView: superView)
-                
             }
             
             // 순번 및 검색어를 위한 label 설정
@@ -311,7 +321,22 @@ class MainVC: UITableViewController {
                 labelTitle.addGestureRecognizer(gesture)
 
                 let tag = idx < 10 ? cell.cellKeywordViews[idx].tag : cell.cellKeywordViews[idx].tag + 10
-                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
+                
+                // label 속성 설정
+                labelNum.textAlignment = .left
+                labelNum.textColor = UIColor.brown
+                labelNum.font = UIFont.boldSystemFont(ofSize: 12)
+
+                labelTitle.textAlignment = .left
+                labelTitle.font = idx == 0 ? UIFont.boldSystemFont(ofSize: 16) :  UIFont.systemFont(ofSize: 12)
+                labelTitle.lineBreakMode = .byTruncatingTail
+                
+                if idx == 0 {                cell.setKeywordLabels(cell.cellKeywordViews[idx], self.keywordStar, labelTitle)
+
+                    self.keywordStar.rotate()
+                    
+                } else {                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
+                }
                 labelNum.text = String(tag)
             }
             return cell

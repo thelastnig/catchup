@@ -148,6 +148,41 @@ extension UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
+    
+    // rotation animation
+    func rotate() {
+        let rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.toValue = NSNumber(value: Double.pi * 2)
+        rotation.duration = 0.5
+        rotation.isCumulative = true
+        
+        let rotation2: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation2.toValue = NSNumber(value: Double.pi * 2)
+        rotation2.duration = 0.35
+        rotation2.beginTime = 0.75
+        rotation2.isCumulative = true
+        
+//        let jumpUp: CABasicAnimation = CABasicAnimation(keyPath: "transform.translation.y")
+//        jumpUp.toValue = -10
+//        jumpUp.duration = 0.25
+//        jumpUp.beginTime = 1
+//        jumpUp.isCumulative = true
+        
+        
+        let pause: CABasicAnimation = CABasicAnimation(keyPath: "opacity")
+        pause.fromValue = 1
+        pause.toValue = 1
+        pause.beginTime = 2
+        pause.duration = 3
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations = [rotation, rotation2, pause]
+        animationGroup.duration = 5
+        animationGroup.beginTime = 2
+        animationGroup.repeatCount = .greatestFiniteMagnitude
+        
+        self.layer.add(animationGroup, forKey: "rotation&pause")
+    }
 }
 
 extension CALayer {
@@ -216,6 +251,4 @@ class Constants {
     
     // TabbarBoonVC의 custom 관련 설정
     public static let csBoonTabbarHeight: CGFloat = 40
-    
-    
 }

@@ -86,7 +86,7 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         superView.addSubview(view)
    }
    
-   func setKeywordLabels(_ superView: UIView, _ numLabel: UILabel, _ titleLabel: UILabel) {
+   func setKeywordLabels(_ superView: UIView, _ numLabel: UIView, _ titleLabel: UILabel) {
 
         let leftOffset: CGFloat = 10
         let rightOffset: CGFloat = 10
@@ -95,29 +95,28 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         /*
         numLabel.frame = CGRect(x: 0, y: 0, width: numLabelWidth, height: superView.frame.height)
         */
-        numLabel.textAlignment = .left
-        numLabel.textColor = UIColor.brown
-        numLabel.font = UIFont.boldSystemFont(ofSize: 12)
-
-        titleLabel.textAlignment = .left
-        titleLabel.font = UIFont.systemFont(ofSize: 12)
-        titleLabel.lineBreakMode = .byTruncatingTail
 
         superView.addSubview(numLabel)
         superView.addSubview(titleLabel)
 
+        let isImage = numLabel is UIImageView ? true : false
         numLabel.snp.makeConstraints { (make) in
-           make.left.equalTo(superView).offset(leftOffset)
-           make.height.equalTo(superView.frame.height)
-           make.width.equalTo(numLabelWidth)
+            make.left.equalTo(superView).offset(leftOffset)
+            if isImage {
+                make.top.equalTo(superView.frame.height).offset(5)
+                make.bottom.equalTo(superView.frame.height).offset(-5)
+                make.width.equalTo(numLabel.snp.height)
+            } else {
+                make.height.equalTo(superView.frame.height)
+                make.width.equalTo(numLabelWidth)
+            }
         }
-
+    
         titleLabel.snp.makeConstraints { (make) in
-           make.left.equalTo(numLabel.snp.right).offset(rightOffset)
-           make.right.equalTo(superView).offset(-rightOffset)
-           make.height.equalTo(superView.frame.height)
+            make.left.equalTo(numLabel.snp.right).offset(rightOffset)
+            make.right.equalTo(superView).offset(-rightOffset)
+            make.height.equalTo(superView.frame.height)
         }
-       
    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
