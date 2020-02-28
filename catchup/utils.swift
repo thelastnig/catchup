@@ -1,67 +1,10 @@
-
-
 extension UIViewController {
     
     // 네트워크 연결 확인을 위한 변수 설정
     var network: NetworkManager {
        return NetworkManager.sharedInstance
     }
-    
-    var mainColor: UIColor {
-        
-        // return UIColor(red:0.65, green:0.85, blue:1.00, alpha:1.0) // blue2
-        return UIColor(red:0.45, green:0.75, blue:0.99, alpha:1.0) // blue3
-        //return UIColor(red:0.31, green:0.53, blue:0.27, alpha:1.0)
-        //return UIColor(red:0.26, green:0.36, blue:0.35, alpha:1.0)
-    }
-    
-    var subColor: UIColor {
-        return UIColor(red:0.20, green:0.60, blue:0.94, alpha:1.0) //blue5
-    }
-    
-    var subColorlight: UIColor {
-        return UIColor(red:0.82, green:0.92, blue:1.00, alpha:1.0) //blue1
-    }
-    
-    var grayColor0: UIColor {
-        return UIColor(red:0.97, green:0.98, blue:0.98, alpha:1.0)
-    }
-    
-    var grayColor1: UIColor {
-        return UIColor(red:0.95, green:0.95, blue:0.96, alpha:1.0)
-    }
-    
-    var grayColor2: UIColor {
-        return UIColor(red:0.91, green:0.93, blue:0.94, alpha:1.0)
-    }
-    
-    var grayColor5: UIColor {
-        return UIColor(red:0.68, green:0.71, blue:0.74, alpha:1.0)
-    }
-    
-    var grayColor6: UIColor {
-        return UIColor(red:0.53, green:0.56, blue:0.59, alpha:1.0)
-    }
-    
-    var grayColor7: UIColor {
-        return UIColor(red:0.29, green:0.31, blue:0.34, alpha:1.0)
-    }
-    
-    var greenColor7: UIColor {
-        return UIColor(red:0.22, green:0.70, blue:0.30, alpha:1.0)
-    }
-    
-    var yellowColor7: UIColor {
-        return UIColor(red:0.96, green:0.62, blue:0.00, alpha:1.0)
-    }
-    
-    var pinkColor7: UIColor {
-        UIColor(red:0.84, green:0.20, blue:0.42, alpha:1.0)
-    }
 
-    
-    
-    
     // upper area height를 위한 연산 프로퍼티
     var statusHeight: CGFloat {
         get {
@@ -226,29 +169,14 @@ extension UIButton {
     }
 }
 
-class Constants {
-    // MainVC, CommunityVC의 table(header, cell) 관련 설정
-    public static let cellHeight: CGFloat = 50
-    public static let sectionHeight: CGFloat = 60
-    public static let sectionMargin: CGFloat = 10
-    public static let keywordAreaHeight: CGFloat = 200
-    
-    // refreshcontrol의 delaytime
-    public static let delayTime: Double = 2
-    
-    // BoonVC의 item 사이즈 설정
-    public static let boonWidthRatio: CGFloat = 4
-    public static let boonHeightRatio: CGFloat = 5
-    public static let boonImageHeightRatio: CGFloat = 2.7
-    public static let boonLabelVerticalMarginS: CGFloat = 8
-    public static let boonLabelVerticalMargin: CGFloat = 10
-    public static let boonLabelHorizontalMargin: CGFloat = 7
-    public static let boonItemDistance: CGFloat = 10
-    
-    // TabbarVC의 custom 관련 설정
-    // public static let csHeaderHeight: CGFloat = 90
-    public static let csTabbarHeight: CGFloat = 40
-    
-    // TabbarBoonVC의 custom 관련 설정
-    public static let csBoonTabbarHeight: CGFloat = 40
+// 라벨에 letter spacing 설정
+extension UILabel {
+  func addCharacterSpacing(kernValue: Double = 1.15) {
+    if let labelText = text, labelText.count > 0 {
+      let attributedString = NSMutableAttributedString(string: labelText)
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length - 1))
+      attributedText = attributedString
+    }
+  }
 }
+

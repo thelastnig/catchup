@@ -18,6 +18,7 @@
 		766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E07D923AB6CD30065948E /* ContentVC.swift */; };
 		76859B5423C2C0E10066B5CF /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76859B5323C2C0E10066B5CF /* ArticleCell.swift */; };
 		768BDA352403A9CD0010B71B /* dataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BDA342403A9CD0010B71B /* dataLoader.swift */; };
+		76921E8A24090C14000DC4B7 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76921E8924090C14000DC4B7 /* constants.swift */; };
 		7693BD3A23ACB023000C5963 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693BD3923ACB023000C5963 /* utils.swift */; };
 		76948D2423C83055009C0F67 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76948D2323C83055009C0F67 /* SettingCell.swift */; };
 		76948D2623C83076009C0F67 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76948D2523C83076009C0F67 /* SettingVC.swift */; };
@@ -28,6 +29,11 @@
 		76958A23239CDC3100770439 /* catchup.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76958A21239CDC3100770439 /* catchup.xcdatamodeld */; };
 		76958A25239CDC3300770439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76958A24239CDC3300770439 /* Assets.xcassets */; };
 		76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76958A26239CDC3300770439 /* LaunchScreen.storyboard */; };
+		769E63242408E2F400CBF339 /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769E63232408E2F400CBF339 /* colors.swift */; };
+		769E63272408F94400CBF339 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63252408F93100CBF339 /* Montserrat-Bold.ttf */; };
+		769E63282408F94800CBF339 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */; };
+		769E632A2408F9D800CBF339 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */; };
+		769E632C2408F9E100CBF339 /* JosefinSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */; };
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
@@ -54,6 +60,7 @@
 		766E07D923AB6CD30065948E /* ContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVC.swift; sourceTree = "<group>"; };
 		76859B5323C2C0E10066B5CF /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		768BDA342403A9CD0010B71B /* dataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataLoader.swift; sourceTree = "<group>"; };
+		76921E8924090C14000DC4B7 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		7693BD3923ACB023000C5963 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		76948D2323C83055009C0F67 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		76948D2523C83076009C0F67 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
@@ -66,6 +73,11 @@
 		76958A24239CDC3300770439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76958A27239CDC3300770439 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76958A29239CDC3300770439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		769E63232408E2F400CBF339 /* colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
+		769E63252408F93100CBF339 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
+		769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
@@ -175,6 +187,8 @@
 			children = (
 				7693BD3923ACB023000C5963 /* utils.swift */,
 				768BDA342403A9CD0010B71B /* dataLoader.swift */,
+				769E63232408E2F400CBF339 /* colors.swift */,
+				76921E8924090C14000DC4B7 /* constants.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -209,7 +223,11 @@
 		76B7339C23D8148800789B42 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */,
+				769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */,
+				769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */,
 				76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */,
+				769E63252408F93100CBF339 /* Montserrat-Bold.ttf */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -292,12 +310,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				769E63282408F94800CBF339 /* Montserrat-Regular.ttf in Resources */,
 				76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */,
 				76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */,
 				76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */,
 				76958A25239CDC3300770439 /* Assets.xcassets in Resources */,
 				76958A20239CDC3100770439 /* Main.storyboard in Resources */,
 				76AF4B5C23FD1315009EDE81 /* NanumBarunGothic.ttf in Resources */,
+				769E632A2408F9D800CBF339 /* JosefinSans-Regular.ttf in Resources */,
+				769E63272408F94400CBF339 /* Montserrat-Bold.ttf in Resources */,
+				769E632C2408F9E100CBF339 /* JosefinSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,8 +388,10 @@
 				76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */,
 				7604609823C6DD170022A062 /* MainContentManager.swift in Sources */,
 				7604609E23C6E5880022A062 /* CommunityVC.swift in Sources */,
+				769E63242408E2F400CBF339 /* colors.swift in Sources */,
 				7693BD3A23ACB023000C5963 /* utils.swift in Sources */,
 				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,
+				76921E8A24090C14000DC4B7 /* constants.swift in Sources */,
 				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
 				76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */,
 				76AC1AE423F52B2E009F5C5D /* TabbarBoonVC.swift in Sources */,
@@ -522,7 +546,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -545,7 +569,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WH4AQ68Y57;
 				INFOPLIST_FILE = catchup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -99,7 +99,7 @@ class BoonViewVC: UICollectionViewController {
             // lableTitle 설정
             cell.labelTitle.text = data.title
             cell.labelTitle.textColor = UIColor.black
-            cell.labelTitle.font = UIFont.systemFont(ofSize: 13)
+            cell.labelTitle.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 13)
             
             cell.labelTitle.frame.size.width = itemWidth - (Constants.boonLabelHorizontalMargin * 2)
             cell.labelTitle.frame.size.height = 42
@@ -116,7 +116,7 @@ class BoonViewVC: UICollectionViewController {
             // lableSource 설정
             cell.labelSource.text = "많이 본 게시물 \(indexPath.row + 1)"
             cell.labelSource.textColor = UIColor.lightGray
-            cell.labelSource.font = UIFont.boldSystemFont(ofSize: 12)
+            cell.labelSource.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
             
             cell.labelSource.frame.size.width = itemWidth - (Constants.boonLabelHorizontalMargin * 2)
             cell.labelSource.frame.size.height = 21

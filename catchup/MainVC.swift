@@ -116,14 +116,13 @@ class MainVC: UITableViewController {
         }
         
         // 폰트 이름 찾기 위한 임시 프로세스
-        /*
-        for familyName in UIFont.familyNames {
-            print("========\(familyName)===========")
-            for fontName in UIFont.fontNames(forFamilyName: familyName) {
-                 print(fontName)
-            }
-        }
-        */
+//        for familyName in UIFont.familyNames {
+//            print("========\(familyName)===========")
+//            for fontName in UIFont.fontNames(forFamilyName: familyName) {
+//                 print(fontName)
+//            }
+//        }
+        
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -240,8 +239,6 @@ class MainVC: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 4
@@ -268,13 +265,19 @@ class MainVC: UITableViewController {
         if indexPath.section == NaverType.naverKeyword.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
+            // contentview 설정
+            cell.contentView.backgroundColor = self.grayColor1
+            
+            
             // scrollview 설정
+            let scrollViewWidth = self.tableView.frame.width - 20
             cell.scrollView.showsHorizontalScrollIndicator = false
             cell.scrollView.showsVerticalScrollIndicator = false
             
             cell.scrollView.isPagingEnabled = true
-            cell.scrollView.frame.size.width = self.tableView.frame.width
-            cell.scrollView.contentSize = CGSize(width: CGFloat(cell.pageSize) * self.tableView.frame.width, height: 0)
+            cell.scrollView.frame.size.width = scrollViewWidth
+            cell.scrollView.contentSize = CGSize(width: CGFloat(cell.pageSize) * scrollViewWidth, height: 0)
+            cell.scrollView.frame.origin = CGPoint(x: 10, y: 0)
             
             // pageControll 설정
             cell.pageControll.snp.makeConstraints{ (make) in
@@ -288,7 +291,7 @@ class MainVC: UITableViewController {
             cell.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             
             // keywordContentView 설정
-            let pageWidth = self.tableView.frame.width
+            let pageWidth = self.tableView.frame.width - 20
             let pageHeight = cell.contentView.frame.height - 40
 
             cell.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
@@ -324,11 +327,11 @@ class MainVC: UITableViewController {
                 
                 // label 속성 설정
                 labelNum.textAlignment = .left
-                labelNum.textColor = UIColor.brown
-                labelNum.font = UIFont.boldSystemFont(ofSize: 12)
+                labelNum.textColor = self.brownColor
+                labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
 
                 labelTitle.textAlignment = .left
-                labelTitle.font = idx == 0 ? UIFont.boldSystemFont(ofSize: 16) :  UIFont.systemFont(ofSize: 12)
+                labelTitle.font = idx == 0 ? UIFont.init(name: "AppleSDGothicNeo-Bold", size: 16) : UIFont.init(name: "AppleSDGothicNeo-Regular", size: 12)
                 labelTitle.lineBreakMode = .byTruncatingTail
                 
                 if idx == 0 {                cell.setKeywordLabels(cell.cellKeywordViews[idx], self.keywordStar, labelTitle)
@@ -344,9 +347,10 @@ class MainVC: UITableViewController {
             var data: (title: String, url: String, idx: Int)!
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.boldSystemFont(ofSize: 14)
-            cell.labelNum.textColor = UIColor.brown
-            cell.labelText.font = UIFont.systemFont(ofSize: 14)
+            cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+            cell.labelNum.textColor = self.brownColor
+            
+            cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
             cell.contentView.backgroundColor = self.grayColor1
             
             switch indexPath.section {
@@ -418,10 +422,24 @@ class MainVC: UITableViewController {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
         
         headerView.backgroundColor = self.grayColor1
-
-        let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
+        
+        // header의 상위 margin view 설정
+        let headerUpperMarginView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionMargin))
+        headerUpperMarginView.backgroundColor = self.grayColor1
+        
+        // header의 main view 설정
+        let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - (Constants.sectionMargin * 2)))
         
         headerUpperView.backgroundColor = UIColor.white
+        
+        let circle = UILabel()
+        circle.text = "●"
+        circle.font = UIFont.systemFont(ofSize: 10)
+        
+        let subTitle = UILabel()
+        subTitle.textColor = self.grayColor5
+        subTitle.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
+        subTitle.textAlignment = .left
         
         let common = UILabel()
         common.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 18)
@@ -437,20 +455,50 @@ class MainVC: UITableViewController {
         case NaverType.naverKeyword.rawValue:
             title.text = NaverType.getNaverName(.naverKeyword)()
             title.textColor = self.subColor
+            
+            circle.textColor = self.subColor
+            subTitle.text = "KEYWORD"
         case NaverType.naverMainNews.rawValue:
             title.text = NaverType.getNaverName(.naverMainNews)()
             title.textColor = self.pinkColor7
+            
+            circle.textColor = self.pinkColor7
+            subTitle.text = "MAIN NEWS"
         case NaverType.naverEnterNews.rawValue:
             title.text = NaverType.getNaverName(.naverEnterNews)()
             title.textColor = self.yellowColor7
+            
+            circle.textColor = self.yellowColor7
+            subTitle.text = "ENTERTAINMENT"
         case NaverType.naverSportNews.rawValue:
             title.text = NaverType.getNaverName(.naverSportNews)()
             title.textColor = self.greenColor7
+            
+            circle.textColor = self.greenColor7
+            subTitle.text = "SPORTS"
         default:
             ()
         }
+        
+        // subTitle view에 letter-spaing 설정
+        subTitle.addCharacterSpacing(kernValue: 1.5)
+        
+        headerUpperView.addSubview(circle)
+        headerUpperView.addSubview(subTitle)
         headerUpperView.addSubview(common)
         headerUpperView.addSubview(title)
+        headerView.addSubview(headerUpperMarginView)
+        headerView.addSubview(headerUpperView)
+        
+        circle.snp.makeConstraints { (make) in
+            make.left.equalTo(headerUpperView).offset(20)
+            make.top.equalTo(headerUpperView).offset(10)
+        }
+        
+        subTitle.snp.makeConstraints { (make) in
+            make.left.equalTo(circle.snp.right).offset(10)
+            make.top.equalTo(headerUpperView).offset(10)
+        }
         
         common.snp.makeConstraints { (make) in
             make.left.equalTo(headerUpperView).offset(20)
@@ -461,8 +509,6 @@ class MainVC: UITableViewController {
             make.left.equalTo(common.snp.right).offset(5)
             make.bottom.equalTo(headerUpperView).offset(-10)
         }
-        
-        headerView.addSubview(headerUpperView)
         
         return headerView
     }
@@ -479,7 +525,8 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return Constants.sectionMargin
+//        return Constants.sectionMargin
+        return Constants.sectionFooterMargin
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

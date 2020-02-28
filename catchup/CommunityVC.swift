@@ -48,6 +48,31 @@ public enum CommunityType: Int {
         }
     }
     
+    func getCommunityKoreanName() -> String {
+        switch self {
+        case .cook:
+            return "82cook"
+        case .ilbe:
+            return "일간베스트"
+        case .instiz:
+            return "인스티즈"
+        case .ruliweb:
+            return "루리웹"
+        case .clien:
+            return "클리앙"
+        case .namu:
+            return "나무위키"
+        case .ppomppu:
+            return "뽐뿌"
+        case .nate:
+            return "네이트"
+        case .fm:
+            return "FM Korea"
+        case .count:
+            return ""
+        }
+    }
+    
     func getCommunityKeyName() -> String {
         switch self {
         case .cook:
@@ -306,9 +331,9 @@ class CommunityVC: UITableViewController {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-        cell.labelNum.font = UIFont.boldSystemFont(ofSize: 14)
-        cell.labelNum.textColor = UIColor.brown
-        cell.labelText.font = UIFont.systemFont(ofSize: 14)
+        cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        cell.labelNum.textColor = self.brownColor
+        cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
         
         cell.contentView.backgroundColor = self.grayColor1
         
@@ -341,127 +366,229 @@ class CommunityVC: UITableViewController {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
         
         headerView.backgroundColor = self.grayColor1
-
-        let headerUpperView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight - Constants.sectionMargin))
+        
+        // header의 상위 margin view 설정
+        let headerUpperMarginView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionMargin))
+        headerUpperMarginView.backgroundColor = self.grayColor1
+        
+        // header의 main view 설정
+        let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - (Constants.sectionMargin * 2)))
         
         headerUpperView.backgroundColor = UIColor.white
         
+        let circle = UILabel()
+        circle.font = UIFont.systemFont(ofSize: 10)
+        
+        let subTitle = UILabel()
+        subTitle.textColor = self.grayColor5
+        subTitle.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
+        subTitle.textAlignment = .left
+        
         let title = UILabel()
         title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
-        title.textColor = UIColor.black
+        title.textColor = self.grayColor7
         title.textAlignment = .left
         
         switch section {
         case CommunityType.cook.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.cook)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.orangeColor7
+                subTitle.text = CommunityType.getCommunityName(.cook)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.cook)()
             } else {
-                title.text = CommunityType.getCommunityName(.cook)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.orangeColor7
+            subTitle.text = CommunityType.getCommunityName(.cook)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.cook)()
+        }
         case CommunityType.ilbe.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.ilbe)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.yellowColor7
+                subTitle.text = CommunityType.getCommunityName(.ilbe)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.ilbe)()
             } else {
-                title.text = CommunityType.getCommunityName(.ilbe)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.yellowColor7
+            subTitle.text = CommunityType.getCommunityName(.ilbe)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.ilbe)()
+        }
         case CommunityType.instiz.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.instiz)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.cyanColor7
+                subTitle.text = CommunityType.getCommunityName(.instiz)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.instiz)()
             } else {
-                title.text = CommunityType.getCommunityName(.instiz)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.cyanColor7
+            subTitle.text = CommunityType.getCommunityName(.instiz)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.instiz)()
+        }
         case CommunityType.ruliweb.rawValue:
             if let switchValue = ud.value(forKey: key) {
                 let value = switchValue as! Bool
                 if value {
-                    title.text = CommunityType.getCommunityName(.ruliweb)()
+                    circle.text = "●"
+                    circle.textColor = self.subColor
+                    subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
+                    title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
                 } else {
+                    circle.text = ""
                     title.text = ""
+                    subTitle.text = ""
                 }
             } else {
-                title.text = CommunityType.getCommunityName(.ruliweb)()
+                circle.text = "●"
+                circle.textColor = self.subColor
+                subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
             }
         case CommunityType.clien.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.clien)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.grapeColor7
+                subTitle.text = CommunityType.getCommunityName(.clien)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.clien)()
             } else {
-                title.text = CommunityType.getCommunityName(.clien)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.grapeColor7
+            subTitle.text = CommunityType.getCommunityName(.clien)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.clien)()
+        }
         case CommunityType.namu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.namu)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.limeColor7
+                subTitle.text = CommunityType.getCommunityName(.namu)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.namu)()
             } else {
-                title.text = CommunityType.getCommunityName(.namu)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.limeColor7
+            subTitle.text = CommunityType.getCommunityName(.namu)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.namu)()
+        }
         case CommunityType.ppomppu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.ppomppu)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.greenColor7
+                subTitle.text = CommunityType.getCommunityName(.ppomppu)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
             } else {
-                title.text = CommunityType.getCommunityName(.ppomppu)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.greenColor7
+            subTitle.text = CommunityType.getCommunityName(.ppomppu)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
+        }
         case CommunityType.nate.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.nate)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.pinkColor7
+                subTitle.text = CommunityType.getCommunityName(.nate)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.nate)()
             } else {
-                title.text = CommunityType.getCommunityName(.nate)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.pinkColor7
+            subTitle.text = CommunityType.getCommunityName(.nate)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.nate)()
+        }
         case CommunityType.fm.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    title.text = CommunityType.getCommunityName(.fm)()
-                } else {
-                    title.text = ""
-                }
+        if let switchValue = ud.value(forKey: key) {
+            let value = switchValue as! Bool
+            if value {
+                circle.text = "●"
+                circle.textColor = self.violetColor7
+                subTitle.text = CommunityType.getCommunityName(.fm)().uppercased()
+                title.text = CommunityType.getCommunityKoreanName(.fm)()
             } else {
-                title.text = CommunityType.getCommunityName(.fm)()
+                circle.text = ""
+                title.text = ""
+                subTitle.text = ""
             }
+        } else {
+            circle.text = "●"
+            circle.textColor = self.violetColor7
+            subTitle.text = CommunityType.getCommunityName(.fm)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.fm)()
+        }
         default:
             ()
         }
+        
+        // title, subTitle view에 letter-spaing 설정
+        title.addCharacterSpacing(kernValue: 1.5)
+        subTitle.addCharacterSpacing(kernValue: 1.5)
+        
+        headerUpperView.addSubview(circle)
+        headerUpperView.addSubview(subTitle)
         headerUpperView.addSubview(title)
+        headerView.addSubview(headerUpperMarginView)
+        headerView.addSubview(headerUpperView)
+        
+        circle.snp.makeConstraints { (make) in
+            make.left.equalTo(headerUpperView).offset(20)
+            make.top.equalTo(headerUpperView).offset(10)
+        }
+        
+        subTitle.snp.makeConstraints { (make) in
+            make.left.equalTo(circle.snp.right).offset(10)
+            make.top.equalTo(headerUpperView).offset(10)
+        }
         
         title.snp.makeConstraints { (make) in
             make.left.equalTo(headerUpperView).offset(20)
             make.bottom.equalTo(headerUpperView).offset(-10)
         }
-        
-        headerView.addSubview(headerUpperView)
         
         return headerView
     }
@@ -583,7 +710,7 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let sectionHeight: CGFloat = Constants.sectionMargin
+        let sectionHeight: CGFloat = Constants.sectionFooterMargin
         let ud = UserDefaults.standard
         let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         switch section {

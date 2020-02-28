@@ -6,6 +6,10 @@
 	<string>Light</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>JosefinSans-Regular.ttf</string>
+		<string>JosefinSans-Bold.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
+		<string>Montserrat-Bold.ttf</string>
 		<string>NanumBarunGothic.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
