@@ -120,11 +120,34 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.view.addSubview(self.csHeader)
         self.view.addSubview(self.csTabbar)
         
+        // headar에 symbol image 추가
+        let symbolView = UIImageView()
+        symbolView.frame.size = CGSize(width: 35, height: 35)
+        symbolView.contentMode =  UIView.ContentMode.scaleAspectFit
+        let image = UIImage(named: "symbol_default")
+        let newImage = self.resizeImage(image: image!, toTheSize: CGSize(width: 35, height: 35))
+        symbolView.image = newImage
+        self.csHeader.addSubview(symbolView)
+        symbolView.snp.makeConstraints{ (make) in
+            make.centerX.equalTo(self.csHeader)
+            make.bottom.equalTo(self.csHeader).offset(-10)
+        }
+        
+//        symbolView.layer.borderWidth = 1
+//        symbolView.layer.borderColor = UIColor.red.cgColor
+        
         // header에 sidebar를 위한 toggle 버튼 달기
         let sideBtn = UIButton(type: .system)
-        sideBtn.frame = CGRect(x: 10, y: self.statusHeight + 5, width: 30, height: 30)
+        sideBtn.frame.size = CGSize(width: 30, height: 30)
+        self.csHeader.addSubview(sideBtn)
+        sideBtn.snp.makeConstraints{ (make) in
+            make.bottom.equalTo(self.csHeader).offset(-10)
+            make.left.equalTo(self.csHeader).offset(10)
+        }
         sideBtn.setTitle("A", for: .normal)
-        csHeader.addSubview(sideBtn)
+        
+        sideBtn.layer.borderWidth = 1
+        sideBtn.layer.borderColor = UIColor.red.cgColor
         
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)

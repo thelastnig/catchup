@@ -150,6 +150,12 @@ class CommunityVC: UITableViewController {
         var list = [(String, String, Int)]()
         return list
     }()
+    
+    // section 접기/펼치기를 위한 Dictionary 선언
+    var toggleDict: Dictionary<Int, Bool> = [
+        0: true, 1: true, 2: true, 3: true, 4: true,
+        5: true, 6: true, 7: true, 8: true
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,108 +202,61 @@ class CommunityVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        let ud = UserDefaults.standard
-        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         
         switch section {
-        case CommunityType.cook.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.cookContents.count
-                } else {
-                    return 0
-                }
-            } else {
-                return self.cookContents.count
-            }
-        case CommunityType.ilbe.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.ilbeContents.count
-                } else {
-                    return 0
-                }
-            } else {
-                return self.ilbeContents.count
-            }
-        case CommunityType.instiz.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.instizContents.count
-                } else {
-                    return 0
-                }
-            } else {
-                return self.instizContents.count
-            }
         case CommunityType.ruliweb.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.ruliwebContents.count
-                } else {
-                    return 0
-                }
-            } else {
+            if toggleDict[CommunityType.ruliweb.rawValue]! {
                 return self.ruliwebContents.count
-            }
-        case CommunityType.clien.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.clienContents.count
-                } else {
-                    return 0
-                }
             } else {
-                return self.clienContents.count
-            }
-        case CommunityType.namu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.namuContents.count
-                } else {
-                    return 0
-                }
-            } else {
-                return self.namuContents.count
-            }
-        case CommunityType.ppomppu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.ppomppuContents.count
-                } else {
-                    return 0
-                }
-            } else {
-                return self.ppomppuContents.count
+                return 1
             }
         case CommunityType.nate.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.nateContents.count
-                } else {
-                    return 0
-                }
-            } else {
+            if toggleDict[CommunityType.nate.rawValue]! {
                 return self.nateContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.ilbe.rawValue:
+            if toggleDict[CommunityType.ilbe.rawValue]! {
+                return self.ilbeContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.ppomppu.rawValue:
+            if toggleDict[CommunityType.ppomppu.rawValue]! {
+                return self.ppomppuContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.clien.rawValue:
+            if toggleDict[CommunityType.clien.rawValue]! {
+                return self.clienContents.count
+            } else {
+                return 1
             }
         case CommunityType.fm.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return self.fmContents.count
-                } else {
-                    return 0
-                }
-            } else {
+            if toggleDict[CommunityType.fm.rawValue]! {
                 return self.fmContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.instiz.rawValue:
+            if toggleDict[CommunityType.instiz.rawValue]! {
+                return self.instizContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.cook.rawValue:
+            if toggleDict[CommunityType.cook.rawValue]! {
+                return self.cookContents.count
+            } else {
+                return 1
+            }
+        case CommunityType.namu.rawValue:
+            if toggleDict[CommunityType.namu.rawValue]! {
+                return self.namuContents.count
+            } else {
+                return 1
             }
         default:
             return 0
@@ -308,60 +267,61 @@ class CommunityVC: UITableViewController {
         var data: (title: String, url: String, idx: Int)!
         
         switch indexPath.section {
-        case CommunityType.cook.rawValue:
-            data = self.cookContents[indexPath.row]
-        case CommunityType.ilbe.rawValue:
-            data = self.ilbeContents[indexPath.row]
-        case CommunityType.instiz.rawValue:
-            data = self.instizContents[indexPath.row]
         case CommunityType.ruliweb.rawValue:
             data = self.ruliwebContents[indexPath.row]
-        case CommunityType.clien.rawValue:
-            data = self.clienContents[indexPath.row]
-        case CommunityType.namu.rawValue:
-            data = self.namuContents[indexPath.row]
-        case CommunityType.ppomppu.rawValue:
-            data = self.ppomppuContents[indexPath.row]
         case CommunityType.nate.rawValue:
             data = self.nateContents[indexPath.row]
+        case CommunityType.ilbe.rawValue:
+            data = self.ilbeContents[indexPath.row]
+        case CommunityType.ppomppu.rawValue:
+            data = self.ppomppuContents[indexPath.row]
+        case CommunityType.clien.rawValue:
+            data = self.clienContents[indexPath.row]
         case CommunityType.fm.rawValue:
             data = self.fmContents[indexPath.row]
+        case CommunityType.instiz.rawValue:
+            data = self.instizContents[indexPath.row]
+        case CommunityType.cook.rawValue:
+            data = self.cookContents[indexPath.row]
+        case CommunityType.namu.rawValue:
+            data = self.namuContents[indexPath.row]
         default:
             ()
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-        cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
-        cell.labelNum.textColor = self.brownColor
-        cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
-        
-        cell.contentView.backgroundColor = self.grayColor1
-        
-        cell.labelNum.text = String(indexPath.row + 1)
-        cell.labelText.text = data.title
-        
-        let lineView = UIView()
-        lineView.backgroundColor = self.grayColor2
-        cell.containerView.addSubview(lineView)
-        lineView.snp.makeConstraints { (make) in
-            make.left.equalTo(cell.containerView).offset(15)
-            make.right.equalTo(cell.containerView).offset(-15)
-            make.top.equalTo(cell.containerView)
-            make.height.equalTo(1)
-        }
-
-        if data.idx != 1 {
-            lineView.backgroundColor = self.grayColor2
+        if self.toggleDict[indexPath.section] == false {
+            return UITableViewCell()
         } else {
-            lineView.backgroundColor = UIColor.white
+            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
+            cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+            cell.labelNum.textColor = self.brownColor
+            cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
+            
+            cell.contentView.backgroundColor = self.grayColor1
+            
+            cell.labelNum.text = String(indexPath.row + 1)
+            cell.labelText.text = data.title
+            
+            let lineView = UIView()
+            lineView.backgroundColor = self.grayColor2
+            cell.containerView.addSubview(lineView)
+            lineView.snp.makeConstraints { (make) in
+                make.left.equalTo(cell.containerView).offset(15)
+                make.right.equalTo(cell.containerView).offset(-15)
+                make.top.equalTo(cell.containerView)
+                make.height.equalTo(1)
+            }
+
+            if data.idx != 1 {
+                lineView.backgroundColor = self.grayColor2
+            } else {
+                lineView.backgroundColor = UIColor.white
+            }
+            return cell
         }
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let ud = UserDefaults.standard
-        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
         
@@ -378,6 +338,7 @@ class CommunityVC: UITableViewController {
         
         let circle = UILabel()
         circle.font = UIFont.systemFont(ofSize: 10)
+        circle.text = "●"
         
         let subTitle = UILabel()
         subTitle.textColor = self.grayColor5
@@ -389,178 +350,82 @@ class CommunityVC: UITableViewController {
         title.textColor = self.grayColor7
         title.textAlignment = .left
         
+        // 접기/펼치기 버튼 생성 및 설정
+        let toggleBtn = UILabel()
+        toggleBtn.isUserInteractionEnabled = true
+        toggleBtn.text = "TG"
+        toggleBtn.tag = section
+        toggleBtn.frame.size = CGSize(width: 30, height: 30)
+        headerUpperView.addSubview(toggleBtn)
+        toggleBtn.snp.makeConstraints{ (make) in
+            make.right.equalTo(headerUpperView).offset(-10)
+            make.top.equalTo(headerUpperView).offset(10)
+        }
+        
         switch section {
         case CommunityType.cook.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.orangeColor7
-                subTitle.text = CommunityType.getCommunityName(.cook)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.cook)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.orangeColor7
             subTitle.text = CommunityType.getCommunityName(.cook)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.cook)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.ilbe.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.yellowColor7
-                subTitle.text = CommunityType.getCommunityName(.ilbe)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.ilbe)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.yellowColor7
             subTitle.text = CommunityType.getCommunityName(.ilbe)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.ilbe)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.instiz.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.cyanColor7
-                subTitle.text = CommunityType.getCommunityName(.instiz)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.instiz)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.cyanColor7
             subTitle.text = CommunityType.getCommunityName(.instiz)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.instiz)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.ruliweb.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    circle.text = "●"
-                    circle.textColor = self.subColor
-                    subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
-                    title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
-                } else {
-                    circle.text = ""
-                    title.text = ""
-                    subTitle.text = ""
-                }
-            } else {
-                circle.text = "●"
-                circle.textColor = self.subColor
-                subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
-            }
+            circle.textColor = self.subColor
+            subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
+            title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.clien.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.grapeColor7
-                subTitle.text = CommunityType.getCommunityName(.clien)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.clien)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.grapeColor7
             subTitle.text = CommunityType.getCommunityName(.clien)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.clien)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.namu.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.limeColor7
-                subTitle.text = CommunityType.getCommunityName(.namu)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.namu)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.limeColor7
             subTitle.text = CommunityType.getCommunityName(.namu)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.namu)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.ppomppu.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.greenColor7
-                subTitle.text = CommunityType.getCommunityName(.ppomppu)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.greenColor7
             subTitle.text = CommunityType.getCommunityName(.ppomppu)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.nate.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.pinkColor7
-                subTitle.text = CommunityType.getCommunityName(.nate)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.nate)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.pinkColor7
             subTitle.text = CommunityType.getCommunityName(.nate)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.nate)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         case CommunityType.fm.rawValue:
-        if let switchValue = ud.value(forKey: key) {
-            let value = switchValue as! Bool
-            if value {
-                circle.text = "●"
-                circle.textColor = self.violetColor7
-                subTitle.text = CommunityType.getCommunityName(.fm)().uppercased()
-                title.text = CommunityType.getCommunityKoreanName(.fm)()
-            } else {
-                circle.text = ""
-                title.text = ""
-                subTitle.text = ""
-            }
-        } else {
-            circle.text = "●"
             circle.textColor = self.violetColor7
             subTitle.text = CommunityType.getCommunityName(.fm)().uppercased()
             title.text = CommunityType.getCommunityKoreanName(.fm)()
-        }
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            toggleBtn.addGestureRecognizer(tapGesture)
         default:
             ()
         }
@@ -602,224 +467,25 @@ class CommunityVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let sectionHeight: CGFloat = Constants.sectionHeight
-        let ud = UserDefaults.standard
-        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
-        switch section {
-        case CommunityType.cook.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ilbe.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.instiz.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ruliweb.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.clien.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.namu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ppomppu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.nate.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.fm.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        default:
-            return sectionHeight
-        }
+        return sectionHeight
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionHeight: CGFloat = Constants.sectionFooterMargin
-        let ud = UserDefaults.standard
-        let key = CommunityType.getCommunityKeyName(CommunityType(rawValue: section)!)()
-        switch section {
-        case CommunityType.cook.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ilbe.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.instiz.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ruliweb.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.clien.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.namu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.ppomppu.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.nate.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        case CommunityType.fm.rawValue:
-            if let switchValue = ud.value(forKey: key) {
-                let value = switchValue as! Bool
-                if value {
-                    return sectionHeight
-                } else {
-                    return CGFloat.leastNormalMagnitude
-                }
-            } else {
-                return sectionHeight
-            }
-        default:
+        if toggleDict[section] == false {
+            return CGFloat.leastNonzeroMagnitude
+        } else {
             return sectionHeight
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.cellHeight
+        if toggleDict[indexPath.section] == false {
+            return 0
+        } else {
+            return Constants.cellHeight
+        }
     }
     
     // MARK: - Table view delegate
@@ -912,6 +578,19 @@ class CommunityVC: UITableViewController {
             // 당겨서 새로고침 종료
            self.refreshControl?.endRefreshing()
         }
+    }
+    
+    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
+        let tag = (sender.view?.tag)!
+        
+        if toggleDict[tag]! {
+            toggleDict[tag] = false
+        } else {
+            toggleDict[tag] = true
+        }
+
+        self.tableView.reloadSections(NSIndexSet(index: tag) as IndexSet, with: UITableView.RowAnimation.automatic)
+        
     }
 
 }

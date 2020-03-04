@@ -2,7 +2,7 @@ extension UIViewController {
     
     // MAIN COLORS
     var mainColor: UIColor {
-        return UIColor(red:0.45, green:0.75, blue:0.99, alpha:1.0) //
+        return UIColor(red:0.45, green:0.75, blue:0.99, alpha:1.0) //blue3
     }
     
     var subColor: UIColor {
