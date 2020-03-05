@@ -5,6 +5,8 @@ class Constants {
     public static let sectionMargin: CGFloat = 10
     public static let sectionFooterMargin: CGFloat = 20
     public static let keywordAreaHeight: CGFloat = 200
+    public static let cellToggleBtnHeight: CGFloat = 50
+    public static let cellToggleBtnWidth: CGFloat = 100
     
     // refreshcontrol의 delaytime
     public static let delayTime: Double = 2
