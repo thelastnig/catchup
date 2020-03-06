@@ -578,6 +578,17 @@ class MainVC: UITableViewController {
         }
     }
     
+    func reload() {
+        let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
+        activityIndicator.showActivityIndicator(text: "로딩 중")
+        self.getContents()
+        self.dispatchDelay(delay: Constants.delayTime) {
+            activityIndicator.stopActivityIndicator()
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+    }
+    
     // keyword 클릭 시 작동하는 함수
     @objc func clickKeyword(_ gesture: KeywordGestureRecognizer) {
         if let index = gesture.index {

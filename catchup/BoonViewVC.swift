@@ -19,6 +19,9 @@ class BoonViewVC: UICollectionViewController {
     }()
     
     var boonImages: Array<UIImage> = []
+    
+    // refreshcontroll 설정
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,6 +167,34 @@ class BoonViewVC: UICollectionViewController {
         safariViewController.dismissButtonStyle = .close
         
         self.navigationController?.present(safariViewController, animated: true, completion: nil)
+    }
+    
+    @objc func pullToRefresh(_ sender: Any) {
+        let webContentManager = BoonContentManager()
+        webContentManager.getBoonContentsView {
+            self.boonContentsView = webContentManager.boonContentsView
+            self.collectionView.reloadData()
+        }
+        
+        self.dispatchDelay(delay: Constants.delayTime) {
+            // 당겨서 새로고침 종료
+           self.refreshControl.endRefreshing()
+        }
+    }
+    
+    func reload() {
+        let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
+        activityIndicator.showActivityIndicator(text: "로딩 중")
+        let webContentManager = BoonContentManager()
+        webContentManager.getBoonContentsView {
+            self.boonContentsView = webContentManager.boonContentsView
+            self.collectionView.reloadData()
+        }
+        self.dispatchDelay(delay: Constants.delayTime) {
+            activityIndicator.stopActivityIndicator()
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
     }
 
     /*

@@ -193,6 +193,21 @@ class BoonVC: UICollectionViewController {
            self.refreshControl.endRefreshing()
         }
     }
+    
+    func reload() {
+        let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
+        activityIndicator.showActivityIndicator(text: "로딩 중")
+        let webContentManager = BoonContentManager()
+        webContentManager.getBoonContents {
+            self.boonContents = webContentManager.boonContents
+            self.collectionView.reloadData()
+        }
+        self.dispatchDelay(delay: Constants.delayTime) {
+            activityIndicator.stopActivityIndicator()
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
+    }
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

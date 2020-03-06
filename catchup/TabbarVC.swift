@@ -261,25 +261,21 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         if self.selectedIndex == 0 {
             let naviVC = self.selectedViewController as! UINavigationController
             let mainVC = naviVC.viewControllers.first as! MainVC
-            mainVC.tableView.reloadData()
-            mainVC.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            mainVC.reload()
         } else if self.selectedIndex == 1 {
             let naviVC = self.selectedViewController as! UINavigationController
             let communityVC = naviVC.viewControllers.first as! CommunityVC
-            communityVC.tableView.reloadData()
-            communityVC.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            communityVC.reload()
         } else if self.selectedIndex == 2 {
             let tabVC = self.selectedViewController as! UITabBarController
             if tabVC.selectedIndex == 0 {
                 let naviVC = tabVC.viewControllers?.first as! UINavigationController
                 let boonVC = naviVC.viewControllers.first as! BoonVC
-                boonVC.collectionView.reloadData()
-                boonVC.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+                boonVC.reload()
             } else if tabVC.selectedIndex == 1 {
                 let naviVC = tabVC.viewControllers?.last as! UINavigationController
                 let boonViewVC = naviVC.viewControllers.first as! BoonViewVC
-                boonViewVC.collectionView.reloadData()
-                boonViewVC.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+                boonViewVC.reload()
             }
         }
     }
