@@ -157,10 +157,29 @@ class CommunityVC: UITableViewController {
         5: true, 6: true, 7: true, 8: true
     ]
     
-    // cell 접기/펼치기를 위한 Dictionary 생성
-    var cellDict: Dictionary<Int, Bool> = [
-        4: false, 5: false
-    ]
+    let toggleLabelClian = UILabel()
+    
+    var toggleClian: Bool = false {
+        didSet {
+            if toggleClian {
+                toggleLabelClian.text = "<< 접기"
+            } else {
+                toggleLabelClian.text = "더보기 >>"
+            }
+        }
+    }
+    
+    let toggleLabelFm = UILabel()
+    
+    var toggleFm: Bool = false {
+        didSet {
+            if toggleFm {
+                toggleLabelFm.text = "<< 접기"
+            } else {
+                toggleLabelFm.text = "더보기 >>"
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,6 +204,27 @@ class CommunityVC: UITableViewController {
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
  
         // self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
+        
+        // toggleLabel 설정
+        self.toggleLabelClian.text = "더보기 >>"
+        self.toggleLabelClian.textAlignment = .center
+        self.toggleLabelClian.textColor = UIColor.white
+        self.toggleLabelClian.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        self.toggleLabelClian.addCharacterSpacing(kernValue: 1.5)
+        self.toggleLabelClian.isUserInteractionEnabled = true
+        self.toggleLabelClian.layer.cornerRadius = 15
+        self.toggleLabelClian.clipsToBounds = true
+        self.toggleLabelClian.backgroundColor = self.mainColor
+        
+        self.toggleLabelFm.text = "더보기 >>"
+        self.toggleLabelFm.textAlignment = .center
+        self.toggleLabelFm.textColor = UIColor.white
+        self.toggleLabelFm.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        self.toggleLabelFm.addCharacterSpacing(kernValue: 1.5)
+        self.toggleLabelFm.isUserInteractionEnabled = true
+        self.toggleLabelFm.layer.cornerRadius = 15
+        self.toggleLabelFm.clipsToBounds = true
+        self.toggleLabelFm.backgroundColor = self.mainColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -235,7 +275,7 @@ class CommunityVC: UITableViewController {
             }
         case CommunityType.clien.rawValue:
             if toggleDict[CommunityType.clien.rawValue]! {
-                if self.cellDict[CommunityType.clien.rawValue]! {
+                if self.toggleClian {
                     return self.clienContents.count
                 } else {
                     return self.clienContents.count / 2
@@ -245,7 +285,7 @@ class CommunityVC: UITableViewController {
             }
         case CommunityType.fm.rawValue:
             if toggleDict[CommunityType.fm.rawValue]! {
-                if self.cellDict[CommunityType.fm.rawValue]! {
+                if self.toggleFm {
                     return self.fmContents.count
                 } else {
                     return self.fmContents.count / 2
@@ -364,14 +404,17 @@ class CommunityVC: UITableViewController {
         title.textAlignment = .left
         
         // 접기/펼치기 버튼 생성 및 설정
-        let toggleBtn = UILabel()
+        let toggleBtn = UIImageView()
+        let windowIcon = self.toggleDict[section]! ? UIImage(named: "iconMinimize") : UIImage(named: "iconRestore")
+        let newWindowIcon = resizeImage(image: windowIcon!, toTheSize: CGSize(width: 20, height: 20))
         toggleBtn.isUserInteractionEnabled = true
-        toggleBtn.text = "TG"
+        toggleBtn.image = newWindowIcon
+        toggleBtn.contentMode = .scaleAspectFit
         toggleBtn.tag = section
-        toggleBtn.frame.size = CGSize(width: 30, height: 30)
+        toggleBtn.frame.size = CGSize(width: 20, height: 20)
         headerUpperView.addSubview(toggleBtn)
         toggleBtn.snp.makeConstraints{ (make) in
-            make.right.equalTo(headerUpperView).offset(-10)
+            make.right.equalTo(headerUpperView).offset(-15)
             make.top.equalTo(headerUpperView).offset(10)
         }
         
@@ -473,7 +516,7 @@ class CommunityVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
-        if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty {
+        if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty && self.toggleDict[CommunityType.clien.rawValue]! {
             // 접기/펼치기를 위한 버튼 생성
             footer.frame.size.width = self.tableView.frame.width
             let toggleView = UIView()
@@ -493,31 +536,21 @@ class CommunityVC: UITableViewController {
             }
             lineView.backgroundColor = self.grayColor2
             
-            let toggleLabel = UILabel()
-            toggleView.addSubview(toggleLabel)
-            toggleLabel.snp.makeConstraints{ (make) in
+            toggleView.addSubview(self.toggleLabelClian)
+            
+            self.toggleLabelClian.snp.makeConstraints{ (make) in
                 make.centerX.equalTo(toggleView)
                 make.top.equalTo(toggleView).offset(7.5)
                 make.width.equalTo(Constants.cellToggleBtnWidth)
                 make.height.equalTo(Constants.cellToggleBtnHeight - 15)
             }
-            
-            toggleLabel.textAlignment = .center
-            toggleLabel.text = self.cellDict[CommunityType.clien.rawValue]! ? "<< 접기" : "더보기 >>"
-            toggleLabel.textColor = UIColor.white
-            toggleLabel.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
-            toggleLabel.addCharacterSpacing(kernValue: 1.5)
-            toggleLabel.tag = section
-            toggleLabel.isUserInteractionEnabled = true
-            toggleLabel.layer.cornerRadius = 15
-            toggleLabel.clipsToBounds = true
-            toggleLabel.backgroundColor = self.mainColor
+            self.toggleLabelClian.tag = section
             
             footer.addSubview(toggleView)
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
-            toggleLabel.addGestureRecognizer(tapGesture)
-        } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty {
+            self.toggleLabelClian.addGestureRecognizer(tapGesture)
+        } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty && self.toggleDict[CommunityType.fm.rawValue]! {
             // 접기/펼치기를 위한 버튼 생성
             footer.frame.size.width = self.tableView.frame.width
             let toggleView = UIView()
@@ -537,32 +570,21 @@ class CommunityVC: UITableViewController {
             }
             lineView.backgroundColor = self.grayColor2
             
-            let toggleLabel = UILabel()
-            toggleView.addSubview(toggleLabel)
-            toggleLabel.snp.makeConstraints{ (make) in
+            toggleView.addSubview(self.toggleLabelFm)
+            toggleLabelFm.snp.makeConstraints{ (make) in
                 make.centerX.equalTo(toggleView)
                 make.top.equalTo(toggleView).offset(7.5)
                 make.width.equalTo(Constants.cellToggleBtnWidth)
                 make.height.equalTo(Constants.cellToggleBtnHeight - 15)
             }
             
-            toggleLabel.textAlignment = .center
-            toggleLabel.text = self.cellDict[CommunityType.fm.rawValue]! ? "<< 접기" : "더보기 >>"
-            toggleLabel.textColor = UIColor.white
-            toggleLabel.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
-            toggleLabel.addCharacterSpacing(kernValue: 1.5)
-            toggleLabel.tag = section
-            toggleLabel.isUserInteractionEnabled = true
-            toggleLabel.layer.cornerRadius = 15
-            toggleLabel.clipsToBounds = true
-            toggleLabel.backgroundColor = self.mainColor
-            
+            self.toggleLabelFm.tag = section
             footer.addSubview(toggleView)
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
-            toggleLabel.addGestureRecognizer(tapGesture)
+            self.toggleLabelFm.addGestureRecognizer(tapGesture)
         } else {
-            footer.backgroundColor = self.grayColor1
+           
         }
         footer.backgroundColor = self.grayColor1
         
@@ -710,21 +732,30 @@ class CommunityVC: UITableViewController {
         if section == CommunityType.clien.rawValue {
             last = self.clienContents.count
             half = last / 2
+            self.toggleClian = !(self.toggleClian)
         } else if section == CommunityType.fm.rawValue {
             last = self.fmContents.count
             half = last / 2
+            self.toggleFm = !(self.toggleFm)
         }
         let indexPaths = (half..<last).map{
             i in return IndexPath(item: i, section: section)
         }
-        self.cellDict[section] = !(self.cellDict[section])!
-        
+
         self.tableView.beginUpdates()
-        if self.cellDict[section]! {
-            self.tableView.insertRows(at: indexPaths, with: .automatic)
-        } else {
-            self.tableView.deleteRows(at: indexPaths, with: .automatic)
-        }
+            if section == CommunityType.clien.rawValue {
+                if self.toggleClian {
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                } else {
+                    self.tableView.deleteRows(at: indexPaths, with: .automatic)
+                }
+            } else if section == CommunityType.fm.rawValue {
+                if self.toggleFm{
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                } else {
+                    self.tableView.deleteRows(at: indexPaths, with: .automatic)
+                }
+            }
         self.tableView.endUpdates()
     }
 }

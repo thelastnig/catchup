@@ -133,21 +133,21 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             make.bottom.equalTo(self.csHeader).offset(-10)
         }
         
-//        symbolView.layer.borderWidth = 1
-//        symbolView.layer.borderColor = UIColor.red.cgColor
-        
         // header에 sidebar를 위한 toggle 버튼 달기
-        let sideBtn = UIButton(type: .system)
-        sideBtn.frame.size = CGSize(width: 30, height: 30)
+        let sideBtn = UIButton(type: .custom)
+        sideBtn.frame.size = CGSize(width: 20, height: 20)
         self.csHeader.addSubview(sideBtn)
         sideBtn.snp.makeConstraints{ (make) in
             make.bottom.equalTo(self.csHeader).offset(-10)
-            make.left.equalTo(self.csHeader).offset(10)
+            make.left.equalTo(self.csHeader).offset(15)
         }
-        sideBtn.setTitle("A", for: .normal)
+  
+        let iconMenu = UIImage(named: "iconBar")
+        let newIconMenu = resizeImage(image: iconMenu!, toTheSize: CGSize(width: 20, height: 20))
+        sideBtn.setImage(newIconMenu, for: .normal)
         
-        sideBtn.layer.borderWidth = 1
-        sideBtn.layer.borderColor = UIColor.red.cgColor
+//        sideBtn.layer.borderWidth = 1
+//        sideBtn.layer.borderColor = UIColor.red.cgColor
         
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
@@ -156,15 +156,18 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         }
         
         // header에 새로 고침을 위한 버튼 달기
-        let reloadBtn = UIButton(type: .system)
-        reloadBtn.frame.size = CGSize(width: 100, height: 30)
-        reloadBtn.setTitle("RELOAD", for: .normal)
+        let reloadBtn = UIButton(type: .custom)
+        reloadBtn.frame.size = CGSize(width: 20, height: 20)
         csHeader.addSubview(reloadBtn)
         reloadBtn.snp.makeConstraints{(make) in
-            make.right.equalTo(self.csHeader).offset(-10)
+            make.right.equalTo(self.csHeader).offset(-15)
             make.bottom.equalTo(self.csHeader).offset(-10)
         }
         reloadBtn.addTarget(self, action: #selector(onReloadButtonClick(_:)), for: .touchUpInside)
+        
+        let iconReload = UIImage(named: "iconReload")
+        let newIconReload = resizeImage(image: iconReload!, toTheSize: CGSize(width: 20, height: 20))
+        reloadBtn.setImage(newIconReload, for: .normal)
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
