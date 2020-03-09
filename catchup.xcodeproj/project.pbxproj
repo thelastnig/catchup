@@ -37,6 +37,13 @@
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
+		76AB3FA12415F90D004A0FB5 /* 12롯데마트드림Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9A2415F908004A0FB5 /* 12롯데마트드림Light.ttf */; };
+		76AB3FA22415F90D004A0FB5 /* YoonMingukR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9B2415F909004A0FB5 /* YoonMingukR.ttf */; };
+		76AB3FA32415F90D004A0FB5 /* YoonMingukB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9C2415F90A004A0FB5 /* YoonMingukB.ttf */; };
+		76AB3FA42415F90D004A0FB5 /* YoonDaehanB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9D2415F90B004A0FB5 /* YoonDaehanB.ttf */; };
+		76AB3FA52415F90D004A0FB5 /* 12롯데마트드림Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9E2415F90C004A0FB5 /* 12롯데마트드림Medium.ttf */; };
+		76AB3FA62415F90D004A0FB5 /* YoonDaehanR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3F9F2415F90C004A0FB5 /* YoonDaehanR.ttf */; };
+		76AB3FA92415F933004A0FB5 /* 12롯데마트드림Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AB3FA82415F933004A0FB5 /* 12롯데마트드림Bold.ttf */; };
 		76ABE30623F139D300CD5847 /* BoonViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ABE30523F139D300CD5847 /* BoonViewVC.swift */; };
 		76AC1AE423F52B2E009F5C5D /* TabbarBoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */; };
 		76AF4B5C23FD1315009EDE81 /* NanumBarunGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */; };
@@ -81,6 +88,13 @@
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
+		76AB3F9A2415F908004A0FB5 /* 12롯데마트드림Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "12롯데마트드림Light.ttf"; sourceTree = "<group>"; };
+		76AB3F9B2415F909004A0FB5 /* YoonMingukR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = YoonMingukR.ttf; sourceTree = "<group>"; };
+		76AB3F9C2415F90A004A0FB5 /* YoonMingukB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = YoonMingukB.ttf; sourceTree = "<group>"; };
+		76AB3F9D2415F90B004A0FB5 /* YoonDaehanB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = YoonDaehanB.ttf; sourceTree = "<group>"; };
+		76AB3F9E2415F90C004A0FB5 /* 12롯데마트드림Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "12롯데마트드림Medium.ttf"; sourceTree = "<group>"; };
+		76AB3F9F2415F90C004A0FB5 /* YoonDaehanR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = YoonDaehanR.ttf; sourceTree = "<group>"; };
+		76AB3FA82415F933004A0FB5 /* 12롯데마트드림Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "12롯데마트드림Bold.ttf"; sourceTree = "<group>"; };
 		76ABE30523F139D300CD5847 /* BoonViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonViewVC.swift; sourceTree = "<group>"; };
 		76AC1AE323F52B2E009F5C5D /* TabbarBoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarBoonVC.swift; sourceTree = "<group>"; };
 		76AF4B5B23FD1315009EDE81 /* NanumBarunGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunGothic.ttf; sourceTree = "<group>"; };
@@ -223,6 +237,13 @@
 		76B7339C23D8148800789B42 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				76AB3FA82415F933004A0FB5 /* 12롯데마트드림Bold.ttf */,
+				76AB3F9A2415F908004A0FB5 /* 12롯데마트드림Light.ttf */,
+				76AB3F9E2415F90C004A0FB5 /* 12롯데마트드림Medium.ttf */,
+				76AB3F9D2415F90B004A0FB5 /* YoonDaehanB.ttf */,
+				76AB3F9F2415F90C004A0FB5 /* YoonDaehanR.ttf */,
+				76AB3F9C2415F90A004A0FB5 /* YoonMingukB.ttf */,
+				76AB3F9B2415F909004A0FB5 /* YoonMingukR.ttf */,
 				769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */,
 				769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */,
 				769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */,
@@ -310,16 +331,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76AB3FA32415F90D004A0FB5 /* YoonMingukB.ttf in Resources */,
 				769E63282408F94800CBF339 /* Montserrat-Regular.ttf in Resources */,
 				76958A28239CDC3300770439 /* LaunchScreen.storyboard in Resources */,
+				76AB3FA62415F90D004A0FB5 /* YoonDaehanR.ttf in Resources */,
 				76F11B7323CECC8F004E9ADA /* RemoteConfigDefaults.plist in Resources */,
 				76F11B7123CECA2F004E9ADA /* GoogleService-Info.plist in Resources */,
+				76AB3FA12415F90D004A0FB5 /* 12롯데마트드림Light.ttf in Resources */,
 				76958A25239CDC3300770439 /* Assets.xcassets in Resources */,
+				76AB3FA92415F933004A0FB5 /* 12롯데마트드림Bold.ttf in Resources */,
+				76AB3FA52415F90D004A0FB5 /* 12롯데마트드림Medium.ttf in Resources */,
 				76958A20239CDC3100770439 /* Main.storyboard in Resources */,
 				76AF4B5C23FD1315009EDE81 /* NanumBarunGothic.ttf in Resources */,
 				769E632A2408F9D800CBF339 /* JosefinSans-Regular.ttf in Resources */,
+				76AB3FA22415F90D004A0FB5 /* YoonMingukR.ttf in Resources */,
 				769E63272408F94400CBF339 /* Montserrat-Bold.ttf in Resources */,
 				769E632C2408F9E100CBF339 /* JosefinSans-Bold.ttf in Resources */,
+				76AB3FA42415F90D004A0FB5 /* YoonDaehanB.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

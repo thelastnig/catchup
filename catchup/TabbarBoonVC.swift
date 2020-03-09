@@ -84,7 +84,7 @@ class TabbarBoonVC: UITabBarController {
         
         btn.setTitleColor(self.grayColor7, for: .normal)
         btn.setTitleColor(self.subColor, for: .selected)
-        btn.titleLabel?.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 13)
+        btn.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 13)
         btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)

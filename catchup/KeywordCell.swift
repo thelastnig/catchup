@@ -105,7 +105,7 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
             if isImage {
                 make.top.equalTo(superView.frame.height).offset(5)
                 make.bottom.equalTo(superView.frame.height).offset(-5)
-                make.width.equalTo(numLabel.snp.height)
+                make.width.equalTo(numLabel.snp.height).offset(-5)
             } else {
                 make.height.equalTo(superView.frame.height)
                 make.width.equalTo(numLabelWidth)

@@ -162,9 +162,11 @@ class CommunityVC: UITableViewController {
     var toggleClian: Bool = false {
         didSet {
             if toggleClian {
-                toggleLabelClian.text = "<< 접기"
+                toggleLabelClian.text = "접기 ⋀"
+                toggleLabelClian.textColor = self.grayColor6
             } else {
-                toggleLabelClian.text = "더보기 >>"
+                toggleLabelClian.text = "더보기 ⋁"
+                toggleLabelClian.textColor = self.mainColor
             }
         }
     }
@@ -174,9 +176,11 @@ class CommunityVC: UITableViewController {
     var toggleFm: Bool = false {
         didSet {
             if toggleFm {
-                toggleLabelFm.text = "<< 접기"
+                toggleLabelFm.text = "접기 ⋀"
+                toggleLabelFm.textColor = self.grayColor6
             } else {
-                toggleLabelFm.text = "더보기 >>"
+                toggleLabelFm.text = "더보기 ⋁"
+                toggleLabelFm.textColor = self.mainColor
             }
         }
     }
@@ -206,25 +210,19 @@ class CommunityVC: UITableViewController {
         // self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
         
         // toggleLabel 설정
-        self.toggleLabelClian.text = "더보기 >>"
+        self.toggleLabelClian.text = "더보기 ⋁"
         self.toggleLabelClian.textAlignment = .center
-        self.toggleLabelClian.textColor = UIColor.white
-        self.toggleLabelClian.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        self.toggleLabelClian.textColor = self.mainColor
+        self.toggleLabelClian.font = UIFont.init(name: Constants.mainFontBold, size: 13)
         self.toggleLabelClian.addCharacterSpacing(kernValue: 1.5)
         self.toggleLabelClian.isUserInteractionEnabled = true
-        self.toggleLabelClian.layer.cornerRadius = 15
-        self.toggleLabelClian.clipsToBounds = true
-        self.toggleLabelClian.backgroundColor = self.mainColor
         
-        self.toggleLabelFm.text = "더보기 >>"
+        self.toggleLabelFm.text = "더보기 ⋁"
         self.toggleLabelFm.textAlignment = .center
-        self.toggleLabelFm.textColor = UIColor.white
-        self.toggleLabelFm.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        self.toggleLabelFm.textColor = self.mainColor
+        self.toggleLabelFm.font = UIFont.init(name: Constants.mainFontBold, size: 13)
         self.toggleLabelFm.addCharacterSpacing(kernValue: 1.5)
         self.toggleLabelFm.isUserInteractionEnabled = true
-        self.toggleLabelFm.layer.cornerRadius = 15
-        self.toggleLabelFm.clipsToBounds = true
-        self.toggleLabelFm.backgroundColor = self.mainColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -346,9 +344,10 @@ class CommunityVC: UITableViewController {
             return UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 14)
             cell.labelNum.textColor = self.brownColor
-            cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
+            cell.labelText.font = UIFont.init(name: Constants.subFont, size: 14)
+            cell.labelText.textColor = self.grayColor9
             
             cell.contentView.backgroundColor = self.grayColor1
             
@@ -392,7 +391,7 @@ class CommunityVC: UITableViewController {
         // header의 main view 설정
         let headerUpperView = UIView()
         if self.toggleDict[section]! {
-            headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - (Constants.sectionMargin * 2))
+            headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight)
         } else {
             headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: (Constants.sectionHeight - (Constants.sectionMargin * 2)) / 2)
         }
@@ -405,7 +404,7 @@ class CommunityVC: UITableViewController {
         
         let subTitle = UILabel()
         subTitle.textColor = self.grayColor5
-        subTitle.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
+        subTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
         subTitle.textAlignment = .left
         
         // 접기/펼치기 버튼 생성 및 설정
@@ -423,6 +422,21 @@ class CommunityVC: UITableViewController {
             make.top.equalTo(headerUpperView).offset(7)
         }
         
+        // toggleLabelHeader 설정
+        let toggleLabelHeader = UILabel()
+        toggleLabelHeader.text = self.toggleDict[section]! ? "숨기기" : "펼치기"
+        toggleLabelHeader.textColor = self.grayColor5
+        toggleLabelHeader.contentMode = .right
+        toggleLabelHeader.addCharacterSpacing(kernValue: 1.5)
+        toggleLabelHeader.font = UIFont.init(name: Constants.mainFont, size: 12)
+        toggleLabelHeader.isUserInteractionEnabled = true
+        toggleLabelHeader.tag = section
+        headerUpperView.addSubview(toggleLabelHeader)
+        toggleLabelHeader.snp.makeConstraints{ (make) in
+            make.right.equalTo(toggleBtn.snp.left).offset(-5)
+            make.centerY.equalTo(toggleBtn.snp.centerY)
+        }
+        
         switch section {
         case CommunityType.cook.rawValue:
             circle.textColor = self.orangeColor7
@@ -430,11 +444,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.cook.rawValue]! {            let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.cook)()
@@ -442,7 +458,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.ilbe.rawValue:
@@ -451,11 +467,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.ilbe.rawValue]! {            let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.ilbe)()
@@ -463,7 +481,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.instiz.rawValue:
@@ -472,11 +490,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.instiz.rawValue]! {          let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.instiz)()
@@ -484,7 +504,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.ruliweb.rawValue:
@@ -493,11 +513,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.ruliweb.rawValue]! {         let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
@@ -505,7 +527,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.clien.rawValue:
@@ -514,11 +536,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.clien.rawValue]! {           let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.clien)()
@@ -526,7 +550,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.namu.rawValue:
@@ -535,11 +559,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.namu.rawValue]! {            let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.namu)()
@@ -547,7 +573,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.ppomppu.rawValue:
@@ -556,11 +582,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.ppomppu.rawValue]! {         let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
@@ -568,7 +596,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.nate.rawValue:
@@ -577,11 +605,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.nate.rawValue]! {            let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.nate)()
@@ -589,7 +619,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         case CommunityType.fm.rawValue:
@@ -598,11 +628,13 @@ class CommunityVC: UITableViewController {
             
             // UITapGestureRecognizer 설정
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             toggleBtn.addGestureRecognizer(tapGesture)
+            toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
             if self.toggleDict[CommunityType.fm.rawValue]! {            let title = UILabel()
-                title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 17)
+                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
                 title.text = CommunityType.getCommunityKoreanName(.fm)()
@@ -610,7 +642,7 @@ class CommunityVC: UITableViewController {
                 headerUpperView.addSubview(title)
                 title.snp.makeConstraints { (make) in
                     make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-10)
+                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
                 }
             }
         default:
@@ -674,6 +706,7 @@ class CommunityVC: UITableViewController {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
             self.toggleLabelClian.addGestureRecognizer(tapGesture)
         } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty && self.toggleDict[CommunityType.fm.rawValue]! {
+            
             // 접기/펼치기를 위한 버튼 생성
             footer.frame.size.width = self.tableView.frame.width
             let toggleView = UIView()
@@ -842,11 +875,11 @@ class CommunityVC: UITableViewController {
     func reload() {
         let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
         activityIndicator.showActivityIndicator(text: "로딩 중")
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.getContents()
         self.dispatchDelay(delay: Constants.delayTime) {
             activityIndicator.stopActivityIndicator()
-            let indexPath = IndexPath(row: 0, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     

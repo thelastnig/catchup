@@ -197,6 +197,8 @@ class BoonVC: UICollectionViewController {
     func reload() {
         let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
         activityIndicator.showActivityIndicator(text: "로딩 중")
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         let webContentManager = BoonContentManager()
         webContentManager.getBoonContents {
             self.boonContents = webContentManager.boonContents
@@ -204,8 +206,6 @@ class BoonVC: UICollectionViewController {
         }
         self.dispatchDelay(delay: Constants.delayTime) {
             activityIndicator.stopActivityIndicator()
-            let indexPath = IndexPath(row: 0, section: 0)
-            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
     }
 

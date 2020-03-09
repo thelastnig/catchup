@@ -123,7 +123,6 @@ class MainVC: UITableViewController {
 //            }
 //        }
         
-        
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
         self.keywordLabel01Title = UILabel()
@@ -197,8 +196,6 @@ class MainVC: UITableViewController {
         self.keywordStar = UIImageView()
         self.keywordStar.image = UIImage(named: "iconStar")
         self.keywordStar.contentMode = .scaleAspectFit
-//        self.keywordStar.layer.borderColor = UIColor.red.cgColor
-//        self.keywordStar.layer.borderWidth = 1
         
         self.getContents()
         
@@ -223,7 +220,7 @@ class MainVC: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
         print("main height will appear: \(self.view.frame.size.height)")
-        self.keywordStar.rotate()
+//        self.keywordStar.rotate()
     }
     
     override func viewWillLayoutSubviews() {
@@ -267,7 +264,7 @@ class MainVC: UITableViewController {
             
             // contentview 설정
             cell.contentView.backgroundColor = self.grayColor1
-            
+            cell.contentView.frame.size.height = Constants.keywordAreaHeight
             
             // scrollview 설정
             let scrollViewWidth = self.tableView.frame.width - 20
@@ -280,27 +277,29 @@ class MainVC: UITableViewController {
             cell.scrollView.frame.origin = CGPoint(x: 10, y: 0)
             
             // pageControll 설정
-            cell.pageControll.snp.makeConstraints{ (make) in
-                make.bottom.equalTo(cell.scrollView).offset(-5)
-            }
             cell.pageControll.numberOfPages = 2
             cell.pageControll.currentPage = 0
             cell.pageControll.isUserInteractionEnabled = false
-            cell.pageControll.pageIndicatorTintColor = UIColor(red:0.87, green:0.89, blue:0.90, alpha:1.0)
-            cell.pageControll.currentPageIndicatorTintColor = self.mainColor
+            cell.pageControll.pageIndicatorTintColor = self.grayColor4
+            cell.pageControll.currentPageIndicatorTintColor = self.grayColor6
             cell.pageControll.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             
             // keywordContentView 설정
             let pageWidth = self.tableView.frame.width - 20
-            let pageHeight = cell.contentView.frame.height - 40
+            let pageHeight = cell.contentView.frame.height - 20
 
             cell.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+            cell.keywordContentView1.roundCorners([.allCorners], radius: Constants.cornerRound)
 
             cell.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
+            cell.keywordContentView2.roundCorners([.allCorners], radius: Constants.cornerRound)
 
             cell.scrollView.addSubview(cell.keywordContentView1)
             cell.scrollView.addSubview(cell.keywordContentView2)
             cell.contentView.addSubview(cell.pageControll)
+            cell.pageControll.snp.makeConstraints{ (make) in
+                make.bottom.equalTo(cell.contentView).offset(13)
+            }
             
             // keywordLabel 설정
             for idx in 0...19 {
@@ -328,15 +327,18 @@ class MainVC: UITableViewController {
                 // label 속성 설정
                 labelNum.textAlignment = .left
                 labelNum.textColor = self.brownColor
-                labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
+                labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 12)
 
                 labelTitle.textAlignment = .left
-                labelTitle.font = idx == 0 ? UIFont.init(name: "AppleSDGothicNeo-Bold", size: 16) : UIFont.init(name: "AppleSDGothicNeo-Regular", size: 12)
+                labelTitle.font = idx == 0 ? UIFont.init(name: Constants.mainFontBold, size: 14) : UIFont.init(name: Constants.subFont, size: 12)
+                labelTitle.textColor = idx == 0 ? UIColor.black : self.grayColor9
+                
                 labelTitle.lineBreakMode = .byTruncatingTail
                 
                 if idx == 0 {                cell.setKeywordLabels(cell.cellKeywordViews[idx], self.keywordStar, labelTitle)
 
-                    self.keywordStar.rotate()
+                    // 애니메이션
+//                    self.keywordStar.rotate()
                     
                 } else {                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
                 }
@@ -347,10 +349,11 @@ class MainVC: UITableViewController {
             var data: (title: String, url: String, idx: Int)!
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 14)
             cell.labelNum.textColor = self.brownColor
             
-            cell.labelText.font = UIFont.init(name: "AppleSDGothicNeo-Regular", size: 14)
+            cell.labelText.font = UIFont.init(name: Constants.subFont, size: 14)
+            cell.labelText.textColor = self.grayColor9
             cell.contentView.backgroundColor = self.grayColor1
             
             switch indexPath.section {
@@ -428,7 +431,7 @@ class MainVC: UITableViewController {
         headerUpperMarginView.backgroundColor = self.grayColor1
         
         // header의 main view 설정
-        let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - (Constants.sectionMargin * 2)))
+        let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight))
         
         headerUpperView.backgroundColor = UIColor.white
         
@@ -438,26 +441,45 @@ class MainVC: UITableViewController {
         
         let subTitle = UILabel()
         subTitle.textColor = self.grayColor5
-        subTitle.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 12)
+        subTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
         subTitle.textAlignment = .left
         
+        // keyword section을 위한 label
+        let paddingSubTitle = PaddingLabel()
+        let rightSubTitle = UILabel()
+        
         let common = UILabel()
-        common.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 18)
+        common.font = UIFont.init(name: Constants.mainFontBold, size: 18)
         common.textColor = self.grayColor7
         common.textAlignment = .left
         common.text = "네이버"
         
         let title = UILabel()
-        title.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 18)
+        title.font = UIFont.init(name: Constants.mainFontBold, size: 18)
         title.textAlignment = .left
         
         switch section {
         case NaverType.naverKeyword.rawValue:
+            headerUpperView.backgroundColor = UIColor.clear
             title.text = NaverType.getNaverName(.naverKeyword)()
-            title.textColor = self.subColor
+            title.textColor = self.grayColor7
             
-            circle.textColor = self.subColor
-            subTitle.text = "KEYWORD"
+            rightSubTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+            rightSubTitle.textColor = self.mainColor
+            
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "M월 d일 H시 m분 기준"
+            let dateString = dateFormatter.string(from: date)
+            rightSubTitle.text = dateString
+
+            paddingSubTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+            paddingSubTitle.contentMode = .center
+   
+            paddingSubTitle.textColor = self.grayColor6
+            paddingSubTitle.text = "#KEYWORD"
+            paddingSubTitle.layer.borderColor = self.grayColor6.cgColor
+            paddingSubTitle.layer.borderWidth = 1
         case NaverType.naverMainNews.rawValue:
             title.text = NaverType.getNaverName(.naverMainNews)()
             title.textColor = self.pinkColor7
@@ -483,32 +505,56 @@ class MainVC: UITableViewController {
         // subTitle view에 letter-spaing 설정
         subTitle.addCharacterSpacing(kernValue: 1.5)
         
-        headerUpperView.addSubview(circle)
-        headerUpperView.addSubview(subTitle)
+        if section != NaverType.naverKeyword.rawValue {
+            headerUpperView.addSubview(circle)
+            headerUpperView.addSubview(subTitle)
+        } else {
+            headerUpperView.addSubview(paddingSubTitle)
+            headerUpperView.addSubview(rightSubTitle)
+        }
+
         headerUpperView.addSubview(common)
         headerUpperView.addSubview(title)
         headerView.addSubview(headerUpperMarginView)
         headerView.addSubview(headerUpperView)
+
         
-        circle.snp.makeConstraints { (make) in
-            make.left.equalTo(headerUpperView).offset(20)
-            make.top.equalTo(headerUpperView).offset(10)
+        if section != NaverType.naverKeyword.rawValue {
+            circle.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(20)
+                make.top.equalTo(headerUpperView).offset(10)
+            }
+            subTitle.snp.makeConstraints { (make) in
+                make.left.equalTo(circle.snp.right).offset(10)
+                make.top.equalTo(headerUpperView).offset(10)
+            }
+            common.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(20)
+                make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
+            }
+            title.snp.makeConstraints { (make) in
+                make.left.equalTo(common.snp.right).offset(5)
+                make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
+            }
+        } else {
+            paddingSubTitle.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(5)
+                make.top.equalTo(headerUpperView).offset(10)
+            }
+            common.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(5)
+                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+            }
+            title.snp.makeConstraints { (make) in
+                make.left.equalTo(common.snp.right).offset(5)
+                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+            }
+            rightSubTitle.snp.makeConstraints{ (make) in
+                make.right.equalTo(headerUpperView).offset(-5)
+                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+            }
         }
-        
-        subTitle.snp.makeConstraints { (make) in
-            make.left.equalTo(circle.snp.right).offset(10)
-            make.top.equalTo(headerUpperView).offset(10)
-        }
-        
-        common.snp.makeConstraints { (make) in
-            make.left.equalTo(headerUpperView).offset(20)
-            make.bottom.equalTo(headerUpperView).offset(-10)
-        }
-        
-        title.snp.makeConstraints { (make) in
-            make.left.equalTo(common.snp.right).offset(5)
-            make.bottom.equalTo(headerUpperView).offset(-10)
-        }
+
         
         return headerView
     }
@@ -581,11 +627,11 @@ class MainVC: UITableViewController {
     func reload() {
         let activityIndicator = ActivityIndicator(view: self.view, navigationController: self.navigationController, tabBarController: nil, upperHeight: self.upperHeight)
         activityIndicator.showActivityIndicator(text: "로딩 중")
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.getContents()
         self.dispatchDelay(delay: Constants.delayTime) {
             activityIndicator.stopActivityIndicator()
-            let indexPath = IndexPath(row: 0, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     

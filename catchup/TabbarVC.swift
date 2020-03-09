@@ -138,16 +138,31 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         sideBtn.frame.size = CGSize(width: 20, height: 20)
         self.csHeader.addSubview(sideBtn)
         sideBtn.snp.makeConstraints{ (make) in
-            make.bottom.equalTo(self.csHeader).offset(-10)
-            make.left.equalTo(self.csHeader).offset(15)
+            make.bottom.equalTo(self.csHeader).offset(-20)
+            make.left.equalTo(self.csHeader).offset(20)
         }
   
         let iconMenu = UIImage(named: "iconBar")
         let newIconMenu = resizeImage(image: iconMenu!, toTheSize: CGSize(width: 20, height: 20))
         sideBtn.setImage(newIconMenu, for: .normal)
         
+        // sidebar toggle 버튼의 label 달기
+        let sideBtnLabel = UILabel()
+        sideBtnLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+        sideBtnLabel.text = "메뉴"
+        sideBtnLabel.textColor = UIColor.white
+        sideBtnLabel.contentMode = .center
+        sideBtnLabel.addCharacterSpacing(kernValue: 1.5)
+        self.csHeader.addSubview(sideBtnLabel)
+        sideBtnLabel.snp.makeConstraints{ (make) in
+            make.top.equalTo(sideBtn.snp.bottom).offset(2)
+            make.centerX.equalTo(sideBtn.snp.centerX)
+        }
+        
 //        sideBtn.layer.borderWidth = 1
 //        sideBtn.layer.borderColor = UIColor.red.cgColor
+        
+    
         
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
@@ -160,14 +175,26 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         reloadBtn.frame.size = CGSize(width: 20, height: 20)
         csHeader.addSubview(reloadBtn)
         reloadBtn.snp.makeConstraints{(make) in
-            make.right.equalTo(self.csHeader).offset(-15)
-            make.bottom.equalTo(self.csHeader).offset(-10)
+            make.right.equalTo(self.csHeader).offset(-20)
+            make.bottom.equalTo(self.csHeader).offset(-20)
         }
         reloadBtn.addTarget(self, action: #selector(onReloadButtonClick(_:)), for: .touchUpInside)
         
         let iconReload = UIImage(named: "iconReload")
         let newIconReload = resizeImage(image: iconReload!, toTheSize: CGSize(width: 20, height: 20))
         reloadBtn.setImage(newIconReload, for: .normal)
+        
+        // reload 버튼의 label 달기
+        let reloadLabel = UILabel()
+        reloadLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+        reloadLabel.text = "새로고침"
+        reloadLabel.textColor = UIColor.white
+        reloadLabel.contentMode = .center
+        self.csHeader.addSubview(reloadLabel)
+        reloadLabel.snp.makeConstraints{ (make) in
+            make.top.equalTo(reloadBtn.snp.bottom).offset(2)
+            make.centerX.equalTo(reloadBtn.snp.centerX)
+        }
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
@@ -177,9 +204,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.tabCommunity.frame = CGRect(x: tabBtnWidth, y: 0, width: tabBtnWidth, height: tabBtnHeight)
         self.tabBoon.frame = CGRect(x: tabBtnWidth * 2, y: 0, width: tabBtnWidth, height: tabBtnHeight)
         
-        self.addTabBarBtn(btn: self.tabMain, title: "Main", tag: 0)
-        self.addTabBarBtn(btn: self.tabCommunity, title: "Community", tag: 1)
-        self.addTabBarBtn(btn: self.tabBoon, title: "Boon", tag: 2)
+        self.addTabBarBtn(btn: self.tabMain, title: "검색어/뉴스", tag: 0)
+        self.addTabBarBtn(btn: self.tabCommunity, title: "커뮤니티", tag: 1)
+        self.addTabBarBtn(btn: self.tabBoon, title: "1분 카카오", tag: 2)
         
         self.delegate = self
         
@@ -212,7 +239,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         
         btn.setTitleColor(UIColor.black, for: .normal)
         btn.setTitleColor(self.subColor, for: .selected)
-        btn.titleLabel?.font = UIFont.init(name: "AppleSDGothicNeo-Bold", size: 14)
+        btn.titleLabel?.font = UIFont.init(name: Constants.mainFontBold, size: 14)
         btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)

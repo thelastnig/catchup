@@ -81,7 +81,6 @@ extension UIViewController {
     
 }
 extension UIView {
-
     // OUTPUT 1
     func dropShadow(scale: Bool = true) {
         layer.masksToBounds = false
@@ -106,6 +105,14 @@ extension UIView {
         layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+    
+    // corner radius 설정
+    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
     }
     
     // rotation animation
@@ -144,6 +151,7 @@ extension UIView {
     }
 }
 
+// UIView에 border를 설정하는 함수
 extension CALayer {
     func addBorder(_ arr_edge: [UIRectEdge], color: UIColor, width: CGFloat) {
         for edge in arr_edge {
@@ -252,3 +260,21 @@ struct ActivityIndicator {
     }
 }
 
+@IBDesignable class PaddingLabel: UILabel {
+    
+    @IBInspectable var topInset: CGFloat = 5.0
+    @IBInspectable var bottomInset: CGFloat = 5.0
+    @IBInspectable var leftInset: CGFloat = 5.0
+    @IBInspectable var rightInset: CGFloat = 5.0
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets.init(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
+    }
+}

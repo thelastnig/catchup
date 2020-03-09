@@ -6,6 +6,13 @@
 	<string>Light</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>YoonMingukB.ttf</string>
+		<string>YoonMingukR.ttf</string>
+		<string>12롯데마트드림Bold.ttf</string>
+		<string>12롯데마트드림Light.ttf</string>
+		<string>12롯데마트드림Medium.ttf</string>
+		<string>YoonDaehanB.ttf</string>
+		<string>YoonDaehanR.ttf</string>
 		<string>JosefinSans-Regular.ttf</string>
 		<string>JosefinSans-Bold.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
