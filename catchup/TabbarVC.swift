@@ -162,8 +162,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
 //        sideBtn.layer.borderWidth = 1
 //        sideBtn.layer.borderColor = UIColor.red.cgColor
         
-    
-        
         if let revealVC = self.revealViewController() {
             sideBtn.addTarget(revealVC, action: #selector(revealVC.revealToggle(_:)), for: .touchUpInside)
             revealVC.rearViewRevealWidth = self.view.frame.size.width
