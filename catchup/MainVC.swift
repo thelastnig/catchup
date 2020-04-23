@@ -349,10 +349,10 @@ class MainVC: UITableViewController {
             var data: (title: String, url: String, idx: Int)!
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 14)
+            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
             cell.labelNum.textColor = self.brownColor
             
-            cell.labelText.font = UIFont.init(name: Constants.subFont, size: 14)
+            cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
             cell.labelText.textColor = self.grayColor9
             cell.contentView.backgroundColor = self.grayColor1
             

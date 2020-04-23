@@ -213,14 +213,14 @@ class CommunityVC: UITableViewController {
         self.toggleLabelClian.text = "더보기 ⋁"
         self.toggleLabelClian.textAlignment = .center
         self.toggleLabelClian.textColor = self.mainColor
-        self.toggleLabelClian.font = UIFont.init(name: Constants.mainFontBold, size: 13)
+        self.toggleLabelClian.font = UIFont.init(name: Constants.mainFontBold, size: 12)
         self.toggleLabelClian.addCharacterSpacing(kernValue: 1.5)
         self.toggleLabelClian.isUserInteractionEnabled = true
         
         self.toggleLabelFm.text = "더보기 ⋁"
         self.toggleLabelFm.textAlignment = .center
         self.toggleLabelFm.textColor = self.mainColor
-        self.toggleLabelFm.font = UIFont.init(name: Constants.mainFontBold, size: 13)
+        self.toggleLabelFm.font = UIFont.init(name: Constants.mainFontBold, size: 12)
         self.toggleLabelFm.addCharacterSpacing(kernValue: 1.5)
         self.toggleLabelFm.isUserInteractionEnabled = true
     }
@@ -344,9 +344,9 @@ class CommunityVC: UITableViewController {
             return UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 14)
+            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
             cell.labelNum.textColor = self.brownColor
-            cell.labelText.font = UIFont.init(name: Constants.subFont, size: 14)
+            cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
             cell.labelText.textColor = self.grayColor9
             
             cell.contentView.backgroundColor = self.grayColor1

@@ -94,6 +94,8 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        delegate = self
         
         // 네트워크 연결 확인
         self.checkNetwork()
@@ -111,7 +113,7 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.csHeader.frame = CGRect(x: x, y: 0, width: width, height: height_header)
         self.csTabbar.frame = CGRect(x: x, y: y_tabbar, width: width, height: height_tabbar)
         
-        self.csHeader.backgroundColor = self.mainColor
+        self.csHeader.backgroundColor = UIColor.white
         self.csTabbar.backgroundColor = UIColor.white
         
         // tabbar 아래 선 추가
@@ -145,19 +147,21 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         let iconMenu = UIImage(named: "iconBar")
         let newIconMenu = resizeImage(image: iconMenu!, toTheSize: CGSize(width: 20, height: 20))
         sideBtn.setImage(newIconMenu, for: .normal)
+        sideBtn.layer.borderWidth = 1
+        sideBtn.layer.borderColor = UIColor.red.cgColor
         
         // sidebar toggle 버튼의 label 달기
-        let sideBtnLabel = UILabel()
-        sideBtnLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-        sideBtnLabel.text = "메뉴"
-        sideBtnLabel.textColor = UIColor.white
-        sideBtnLabel.contentMode = .center
-        sideBtnLabel.addCharacterSpacing(kernValue: 1.5)
-        self.csHeader.addSubview(sideBtnLabel)
-        sideBtnLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(sideBtn.snp.bottom).offset(2)
-            make.centerX.equalTo(sideBtn.snp.centerX)
-        }
+//        let sideBtnLabel = UILabel()
+//        sideBtnLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+//        sideBtnLabel.text = "메뉴"
+//        sideBtnLabel.textColor = UIColor.white
+//        sideBtnLabel.contentMode = .center
+//        sideBtnLabel.addCharacterSpacing(kernValue: 1.5)
+//        self.csHeader.addSubview(sideBtnLabel)
+//        sideBtnLabel.snp.makeConstraints{ (make) in
+//            make.top.equalTo(sideBtn.snp.bottom).offset(2)
+//            make.centerX.equalTo(sideBtn.snp.centerX)
+//        }
         
 //        sideBtn.layer.borderWidth = 1
 //        sideBtn.layer.borderColor = UIColor.red.cgColor
@@ -181,18 +185,20 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         let iconReload = UIImage(named: "iconReload")
         let newIconReload = resizeImage(image: iconReload!, toTheSize: CGSize(width: 20, height: 20))
         reloadBtn.setImage(newIconReload, for: .normal)
+        reloadBtn.layer.borderWidth = 1
+        reloadBtn.layer.borderColor = UIColor.red.cgColor
         
         // reload 버튼의 label 달기
-        let reloadLabel = UILabel()
-        reloadLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-        reloadLabel.text = "새로고침"
-        reloadLabel.textColor = UIColor.white
-        reloadLabel.contentMode = .center
-        self.csHeader.addSubview(reloadLabel)
-        reloadLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(reloadBtn.snp.bottom).offset(2)
-            make.centerX.equalTo(reloadBtn.snp.centerX)
-        }
+//        let reloadLabel = UILabel()
+//        reloadLabel.font = UIFont.init(name: Constants.mainFontBold, size: 12)
+//        reloadLabel.text = "새로고침"
+//        reloadLabel.textColor = UIColor.white
+//        reloadLabel.contentMode = .center
+//        self.csHeader.addSubview(reloadLabel)
+//        reloadLabel.snp.makeConstraints{ (make) in
+//            make.top.equalTo(reloadBtn.snp.bottom).offset(2)
+//            make.centerX.equalTo(reloadBtn.snp.centerX)
+//        }
         
         // tabbar button 설정
         let tabBtnWidth = self.csTabbar.frame.width / self.tabCount
@@ -360,3 +366,5 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         }
     }
 }
+
+
