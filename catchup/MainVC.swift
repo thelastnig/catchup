@@ -12,6 +12,7 @@ import Alamofire
 import SnapKit
 import Firebase
 import SafariServices
+import GoogleMobileAds
 
 public enum NaverType: Int {
     case naverKeyword
@@ -107,6 +108,9 @@ class MainVC: UITableViewController {
     // 실시간 검색어 1위를 위한 imageView
     var keywordStar: UIImageView!
     
+    // 구글 애드몹 배너 객체 선언
+    var bannerView: GADBannerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,7 +126,6 @@ class MainVC: UITableViewController {
 //                 print(fontName)
 //            }
 //        }
-        
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
         self.keywordLabel01Title = UILabel()
@@ -211,7 +214,12 @@ class MainVC: UITableViewController {
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
-        print("main height did load: \(self.view.frame.size.height)")
+        // 구글 애드몹 달기
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
     
     // 앱이 foreground에 왔을 때 실행할 코드 입력
@@ -219,7 +227,7 @@ class MainVC: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification
         , object: nil)
-        print("main height will appear: \(self.view.frame.size.height)")
+//        print("main height will appear: \(self.view.frame.size.height)")
 //        self.keywordStar.rotate()
     }
     
@@ -229,7 +237,7 @@ class MainVC: UITableViewController {
         let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
-        print("main height will LAyout: \(self.view.frame.size.height)")
+//        print("main height will LAyout: \(self.view.frame.size.height)")
     }
     
     @objc func willEnterForeground() {
@@ -512,12 +520,11 @@ class MainVC: UITableViewController {
             headerUpperView.addSubview(paddingSubTitle)
             headerUpperView.addSubview(rightSubTitle)
         }
-
+        
         headerUpperView.addSubview(common)
         headerUpperView.addSubview(title)
         headerView.addSubview(headerUpperMarginView)
         headerView.addSubview(headerUpperView)
-
         
         if section != NaverType.naverKeyword.rawValue {
             circle.snp.makeConstraints { (make) in
@@ -555,7 +562,6 @@ class MainVC: UITableViewController {
             }
         }
 
-        
         return headerView
     }
     
@@ -662,6 +668,30 @@ class MainVC: UITableViewController {
             }
         }
     }
+            
+    // 구글 애드몹 배너 설정 메소드
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(bannerView)
+//        self.view.bringSubviewToFront(bannerView)
+        self.view.insertSubview(bannerView, aboveSubview: tableView)
+        self.view.addConstraints(
+        [NSLayoutConstraint(item: bannerView,
+                            attribute: .bottom,
+                            relatedBy: .equal,
+                            toItem: bottomLayoutGuide,
+                            attribute: .top,
+                            multiplier: 1,
+                            constant: 0),
+         NSLayoutConstraint(item: bannerView,
+                            attribute: .centerX,
+                            relatedBy: .equal,
+                            toItem: view,
+                            attribute: .centerX,
+                            multiplier: 1,
+                            constant: 0)
+        ])
+     }
 }
 
 class KeywordGestureRecognizer: UILongPressGestureRecognizer {

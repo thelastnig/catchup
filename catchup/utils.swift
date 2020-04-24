@@ -78,7 +78,6 @@ extension UIViewController {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
 }
 extension UIView {
     // OUTPUT 1

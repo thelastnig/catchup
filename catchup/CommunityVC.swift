@@ -9,6 +9,7 @@
 import UIKit
 import Kanna
 import SafariServices
+import GoogleMobileAds
 
 public enum CommunityType: Int {
     case ruliweb
@@ -184,6 +185,9 @@ class CommunityVC: UITableViewController {
             }
         }
     }
+    
+    // 구글 애드몹 배너 객체 선언
+    var bannerView: GADBannerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -223,6 +227,13 @@ class CommunityVC: UITableViewController {
         self.toggleLabelFm.font = UIFont.init(name: Constants.mainFontBold, size: 12)
         self.toggleLabelFm.addCharacterSpacing(kernValue: 1.5)
         self.toggleLabelFm.isUserInteractionEnabled = true
+        
+        // 구글 애드몹 달기
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        self.addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -928,4 +939,28 @@ class CommunityVC: UITableViewController {
             }
         self.tableView.endUpdates()
     }
+                
+    // 구글 애드몹 배너 설정 메소드
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(bannerView)
+//        self.view.bringSubviewToFront(bannerView)
+        self.view.insertSubview(bannerView, at: self.view.subviews.count)
+        self.view.addConstraints(
+        [NSLayoutConstraint(item: bannerView,
+                            attribute: .bottom,
+                            relatedBy: .equal,
+                            toItem: bottomLayoutGuide,
+                            attribute: .top,
+                            multiplier: 1,
+                            constant: 0),
+         NSLayoutConstraint(item: bannerView,
+                            attribute: .centerX,
+                            relatedBy: .equal,
+                            toItem: view,
+                            attribute: .centerX,
+                            multiplier: 1,
+                            constant: 0)
+        ])
+     }
 }

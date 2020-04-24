@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().estimatedRowHeight = 0
         UITableView.appearance().estimatedSectionHeaderHeight = 0
         UITableView.appearance().estimatedSectionFooterHeight = 0
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         return true
     }
