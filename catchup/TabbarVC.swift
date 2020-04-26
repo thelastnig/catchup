@@ -122,19 +122,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.view.addSubview(self.csHeader)
         self.view.addSubview(self.csTabbar)
         
-        // headar에 symbol image 추가
-        let symbolView = UIImageView()
-        symbolView.frame.size = CGSize(width: 35, height: 35)
-        symbolView.contentMode =  UIView.ContentMode.scaleAspectFit
-        let image = UIImage(named: "symbol_default")
-        let newImage = self.resizeImage(image: image!, toTheSize: CGSize(width: 35, height: 35))
-        symbolView.image = newImage
-        self.csHeader.addSubview(symbolView)
-        symbolView.snp.makeConstraints{ (make) in
-            make.centerX.equalTo(self.csHeader)
-            make.bottom.equalTo(self.csHeader).offset(-10)
-        }
-        
         // header에 sidebar를 위한 toggle 버튼 달기
         let sideBtn = UIButton(type: .custom)
         sideBtn.frame.size = CGSize(width: 20, height: 20)
@@ -241,9 +228,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         btn.setTitle(title, for: .normal)
         btn.tag = tag
         
-        btn.setTitleColor(UIColor.black, for: .normal)
-        btn.setTitleColor(self.subColor, for: .selected)
-        btn.titleLabel?.font = UIFont.init(name: Constants.mainFontBold, size: 14)
+        btn.setTitleColor(self.grayColor8, for: .normal)
+        btn.setTitleColor(self.grayColor9, for: .selected)
+        btn.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 14)
         btn.setBackgroundColor(.white, for: .selected)
         
         btn.addTarget(self, action: #selector(onTabBarItemClick(_:)), for: .touchUpInside)
@@ -258,9 +245,13 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         self.tabMain.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
         self.tabCommunity.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
         self.tabBoon.layer.addBorder([UIRectEdge.bottom], color: UIColor.white, width: 3)
+        self.tabMain.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 14)
+        self.tabCommunity.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 14)
+        self.tabBoon.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 14)
         
         sender.isSelected = true
-        sender.layer.addBorder([UIRectEdge.bottom], color: self.mainColor, width: 3)
+        sender.layer.addBorder([UIRectEdge.bottom], color: self.grayColor9, width: 3)
+        sender.titleLabel?.font = UIFont.init(name: Constants.mainFontBold, size: 14)
         self.selectedIndex = sender.tag
         if sender.tag == 0 {
 //            let naviVC = self.selectedViewController as! UINavigationController
