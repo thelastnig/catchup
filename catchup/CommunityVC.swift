@@ -12,6 +12,7 @@ import SafariServices
 import GoogleMobileAds
 
 public enum CommunityType: Int {
+    case upperInfo
     case ruliweb
     case nate
     case ilbe
@@ -26,6 +27,8 @@ public enum CommunityType: Int {
     
     func getCommunityName() -> String {
         switch self {
+        case .upperInfo:
+            return ""
         case .cook:
             return "82cook"
         case .ilbe:
@@ -51,6 +54,8 @@ public enum CommunityType: Int {
     
     func getCommunityKoreanName() -> String {
         switch self {
+        case .upperInfo:
+            return ""
         case .cook:
             return "82cook"
         case .ilbe:
@@ -76,6 +81,8 @@ public enum CommunityType: Int {
     
     func getCommunityKeyName() -> String {
         switch self {
+        case .upperInfo:
+            return ""
         case .cook:
             return "cook"
         case .ilbe:
@@ -155,7 +162,7 @@ class CommunityVC: UITableViewController {
     // section 접기/펼치기를 위한 Dictionary 생성
     var toggleDict: Dictionary<Int, Bool> = [
         0: true, 1: true, 2: true, 3: true, 4: true,
-        5: true, 6: true, 7: true, 8: true
+        5: true, 6: true, 7: true, 8: true, 9: true
     ]
     
     let toggleLabelClian = UILabel()
@@ -188,6 +195,9 @@ class CommunityVC: UITableViewController {
     
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
+    
+    // 이미지 cell의 높이
+    let imgHeight: CGFloat = 150
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -234,6 +244,9 @@ class CommunityVC: UITableViewController {
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
+        // 상단 이미지 등록을 cell 위한 등록
+        self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -258,6 +271,8 @@ class CommunityVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         
         switch section {
+        case CommunityType.upperInfo.rawValue:
+            return 1
         case CommunityType.ruliweb.rawValue:
             if toggleDict[CommunityType.ruliweb.rawValue]! {
                 return self.ruliwebContents.count
@@ -328,59 +343,92 @@ class CommunityVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var data: (title: String, url: String, idx: Int)!
         
-        switch indexPath.section {
-        case CommunityType.ruliweb.rawValue:
-            data = self.ruliwebContents[indexPath.row]
-        case CommunityType.nate.rawValue:
-            data = self.nateContents[indexPath.row]
-        case CommunityType.ilbe.rawValue:
-            data = self.ilbeContents[indexPath.row]
-        case CommunityType.ppomppu.rawValue:
-            data = self.ppomppuContents[indexPath.row]
-        case CommunityType.clien.rawValue:
-            data = self.clienContents[indexPath.row]
-        case CommunityType.fm.rawValue:
-            data = self.fmContents[indexPath.row]
-        case CommunityType.instiz.rawValue:
-            data = self.instizContents[indexPath.row]
-        case CommunityType.cook.rawValue:
-            data = self.cookContents[indexPath.row]
-        case CommunityType.namu.rawValue:
-            data = self.namuContents[indexPath.row]
-        default:
-            ()
-        }
-        
-        if self.toggleDict[indexPath.section] == false {
-            return UITableViewCell()
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
-            cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
-            cell.labelNum.textColor = self.brownColor
-            cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
-            cell.labelText.textColor = self.grayColor9
+        if indexPath.section == CommunityType.upperInfo.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "image_cell") as! ImageCell
             
-            cell.contentView.backgroundColor = self.grayColor1
+            // cell 설정
+            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
+            cell.imgView.image = UIImage(named: "community_b")
+            cell.imgView.contentMode = .scaleAspectFill
+            cell.contentView.addSubview(cell.imgView)
             
-            cell.labelNum.text = String(indexPath.row + 1)
-            cell.labelText.text = data.title
-            
-            let lineView = UIView()
-            lineView.backgroundColor = self.grayColor2
-            cell.containerView.addSubview(lineView)
-            lineView.snp.makeConstraints { (make) in
-                make.left.equalTo(cell.containerView).offset(15)
-                make.right.equalTo(cell.containerView).offset(-15)
-                make.top.equalTo(cell.containerView)
-                make.height.equalTo(1)
+            cell.mainLabel = UILabel()
+            cell.mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
+            cell.mainLabel.textColor = UIColor.white
+            cell.mainLabel.text = "커뮤니티 인기글"
+            cell.contentView.addSubview(cell.mainLabel)
+            cell.mainLabel.snp.makeConstraints{(make) in
+                make.left.equalTo(cell.contentView).offset(20)
+                make.bottom.equalTo(cell.contentView).offset(-40)
             }
-
-            if data.idx != 1 {
-                lineView.backgroundColor = self.grayColor2
-            } else {
-                lineView.backgroundColor = UIColor.white
+            
+            cell.subLabel = UILabel()
+            cell.subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
+            cell.subLabel.textColor = UIColor.white
+            cell.subLabel.text = "커뮤티니 실시간 인기글 모음"
+            cell.contentView.addSubview(cell.subLabel)
+            cell.subLabel.snp.makeConstraints{(make) in
+                make.left.equalTo(cell.contentView).offset(20)
+                make.bottom.equalTo(cell.contentView).offset(-15)
             }
             return cell
+            
+        } else {
+            switch indexPath.section {
+            case CommunityType.ruliweb.rawValue:
+                data = self.ruliwebContents[indexPath.row]
+            case CommunityType.nate.rawValue:
+                data = self.nateContents[indexPath.row]
+            case CommunityType.ilbe.rawValue:
+                data = self.ilbeContents[indexPath.row]
+            case CommunityType.ppomppu.rawValue:
+                data = self.ppomppuContents[indexPath.row]
+            case CommunityType.clien.rawValue:
+                data = self.clienContents[indexPath.row]
+            case CommunityType.fm.rawValue:
+                data = self.fmContents[indexPath.row]
+            case CommunityType.instiz.rawValue:
+                data = self.instizContents[indexPath.row]
+            case CommunityType.cook.rawValue:
+                data = self.cookContents[indexPath.row]
+            case CommunityType.namu.rawValue:
+                data = self.namuContents[indexPath.row]
+            default:
+                ()
+            }
+            
+            if self.toggleDict[indexPath.section] == false {
+                return UITableViewCell()
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
+                cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
+                cell.labelNum.textColor = self.brownColor
+                cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
+                cell.labelText.textColor = self.grayColor9
+                
+                cell.contentView.backgroundColor = self.grayColor1
+                
+                cell.labelNum.text = String(indexPath.row + 1)
+                cell.labelText.text = data.title
+                
+                let lineView = UIView()
+                lineView.backgroundColor = self.grayColor2
+                cell.containerView.addSubview(lineView)
+                lineView.snp.makeConstraints { (make) in
+                    make.left.equalTo(cell.containerView).offset(15)
+                    make.right.equalTo(cell.containerView).offset(-15)
+                    make.top.equalTo(cell.containerView)
+                    make.height.equalTo(1)
+                }
+
+                if data.idx != 1 {
+                    lineView.backgroundColor = self.grayColor2
+                } else {
+                    lineView.backgroundColor = UIColor.white
+                }
+                return cell
+            }
         }
     }
     
@@ -677,7 +725,11 @@ class CommunityVC: UITableViewController {
             make.top.equalTo(headerUpperView).offset(10)
         }
         
-        return headerView
+        if section == CommunityType.upperInfo.rawValue {
+            return nil
+        } else {
+            return headerView
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -760,34 +812,54 @@ class CommunityVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let sectionHeight: CGFloat = Constants.sectionHeight
-        if self.toggleDict[section]! {
-            return sectionHeight
+        if section == CommunityType.upperInfo.rawValue {
+            return CGFloat.leastNonzeroMagnitude
         } else {
-            return Constants.sectionHeight / 2
+            if self.toggleDict[section]! {
+                return sectionHeight
+            } else {
+                return Constants.sectionHeight / 2
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionHeight: CGFloat = Constants.sectionFooterMargin
-        if toggleDict[section] == false {
-            return CGFloat.leastNonzeroMagnitude
+        if section == CommunityType.upperInfo.rawValue {
+            return sectionHeight
         } else {
-            if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty {
-                return sectionHeight + Constants.cellToggleBtnHeight
-            } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty {
-                return sectionHeight + Constants.cellToggleBtnHeight
-            }
-            else {
-                return sectionHeight
+            if toggleDict[section] == false {
+                return CGFloat.leastNonzeroMagnitude
+            } else {
+                if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty {
+                    return sectionHeight + Constants.cellToggleBtnHeight
+                } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty {
+                    return sectionHeight + Constants.cellToggleBtnHeight
+                }
+                else {
+                    return sectionHeight
+                }
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if toggleDict[indexPath.section] == false {
-            return 0
+        if indexPath.section == CommunityType.upperInfo.rawValue {
+            return self.imgHeight
         } else {
-            return Constants.cellHeight
+            if toggleDict[indexPath.section] == false {
+                return 0
+            } else {
+                return Constants.cellHeight
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == CommunityType.upperInfo.rawValue {
+            return nil
+        } else {
+            return indexPath
         }
     }
     

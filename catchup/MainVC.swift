@@ -15,6 +15,7 @@ import SafariServices
 import GoogleMobileAds
 
 public enum NaverType: Int {
+    case upperInfo
     case naverKeyword
     case naverMainNews
     case naverEnterNews
@@ -24,6 +25,8 @@ public enum NaverType: Int {
     
     func getNaverName() -> String {
         switch self {
+        case .upperInfo:
+            return ""
         case .naverKeyword:
             return "실시간 검색어"
         case .naverMainNews:
@@ -111,6 +114,9 @@ class MainVC: UITableViewController {
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
+    // 이미지 cell의 높이
+    let imgHeight: CGFloat = 150
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -126,6 +132,10 @@ class MainVC: UITableViewController {
 //                 print(fontName)
 //            }
 //        }
+        
+        // 상단 이미지 등록을 cell 위한 등록
+        self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
+        
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
         self.keywordLabel01Title = UILabel()
@@ -246,12 +256,14 @@ class MainVC: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         switch section {
+        case NaverType.upperInfo.rawValue:
+            return 1
         case NaverType.naverKeyword.rawValue:
             return 1
         case NaverType.naverMainNews.rawValue:
@@ -267,7 +279,44 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == NaverType.naverKeyword.rawValue {
+        if indexPath.section == NaverType.upperInfo.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "image_cell") as! ImageCell
+            
+            // cell 설정
+            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+            
+//            cell.contentView.layer.borderColor = UIColor.red.cgColor
+//            cell.contentView.layer.borderWidth = 1
+            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
+            cell.imgView.image = UIImage(named: "main_b")
+            cell.imgView.contentMode = .scaleAspectFill
+            cell.contentView.addSubview(cell.imgView)
+            
+            cell.mainLabel = UILabel()
+            cell.mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
+            cell.mainLabel.textColor = UIColor.white
+            cell.mainLabel.text = "실시간 검색어/뉴스"
+            cell.contentView.addSubview(cell.mainLabel)
+            cell.mainLabel.snp.makeConstraints{(make) in
+                make.left.equalTo(cell.contentView).offset(20)
+                make.bottom.equalTo(cell.contentView).offset(-40)
+            }
+            
+            cell.subLabel = UILabel()
+            cell.subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
+            cell.subLabel.textColor = UIColor.white
+            cell.subLabel.text = "#키워드 #뉴스 #연예 #스포츠"
+            cell.contentView.addSubview(cell.subLabel)
+            cell.subLabel.snp.makeConstraints{(make) in
+                make.left.equalTo(cell.contentView).offset(20)
+                make.bottom.equalTo(cell.contentView).offset(-15)
+            }
+            
+            
+            return cell
+            
+        }
+        else if indexPath.section == NaverType.naverKeyword.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
             // contentview 설정
@@ -395,6 +444,14 @@ class MainVC: UITableViewController {
             }
             
             return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == NaverType.upperInfo.rawValue {
+            return nil
+        } else {
+            return indexPath
         }
     }
     
@@ -561,8 +618,13 @@ class MainVC: UITableViewController {
                 make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
             }
         }
+        
+        if section == NaverType.upperInfo.rawValue {
+            return nil
+        } else {
+            return headerView
+        }
 
-        return headerView
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -573,6 +635,9 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == NaverType.upperInfo.rawValue {
+            return CGFloat.leastNonzeroMagnitude
+        }
         return Constants.sectionHeight
     }
     
@@ -582,7 +647,9 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        if indexPath.section == NaverType.upperInfo.rawValue {
+            return self.imgHeight
+        } else if indexPath.section == NaverType.naverKeyword.rawValue  {
             return Constants.keywordAreaHeight
         } else {
             return Constants.cellHeight

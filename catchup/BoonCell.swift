@@ -13,8 +13,7 @@ class BoonCell: UICollectionViewCell {
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var labelSource: UILabel!
     @IBOutlet var containerView: UIView!
-    override func
-        awakeFromNib() {
+    override func awakeFromNib() {
       super.awakeFromNib()
     }
     
