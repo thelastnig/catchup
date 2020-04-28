@@ -1,9 +1,10 @@
 class Constants {
     // MainVC, CommunityVC의 table(header, cell) 관련 설정
     public static let cellHeight: CGFloat = 50
+    public static let cellHorizontalMargin: CGFloat = 15
     public static let sectionHeight: CGFloat = 85
     public static let sectionMargin: CGFloat = 10
-    public static let sectionFooterMargin: CGFloat = 20
+    public static let sectionFooterMargin: CGFloat = 10
     public static let keywordAreaHeight: CGFloat = 180
     public static let cellToggleBtnHeight: CGFloat = 50
     public static let cellToggleBtnWidth: CGFloat = 100

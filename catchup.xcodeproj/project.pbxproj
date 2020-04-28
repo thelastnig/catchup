@@ -34,6 +34,7 @@
 		769E63282408F94800CBF339 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */; };
 		769E632A2408F9D800CBF339 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */; };
 		769E632C2408F9E100CBF339 /* JosefinSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */; };
+		76A5197E2457EE460003CFEA /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A5197D2457EE460003CFEA /* WeatherCell.swift */; };
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
@@ -86,6 +87,7 @@
 		769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
+		76A5197D2457EE460003CFEA /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				76948D2323C83055009C0F67 /* SettingCell.swift */,
 				76A94BDB23CC316800BB6937 /* BoonCell.swift */,
 				76B0A9712456A33800B778C6 /* ImageCell.swift */,
+				76A5197D2457EE460003CFEA /* WeatherCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				769E63242408E2F400CBF339 /* colors.swift in Sources */,
 				7693BD3A23ACB023000C5963 /* utils.swift in Sources */,
 				766E07DA23AB6CD30065948E /* ContentVC.swift in Sources */,
+				76A5197E2457EE460003CFEA /* WeatherCell.swift in Sources */,
 				76921E8A24090C14000DC4B7 /* constants.swift in Sources */,
 				763C81FA239E812500C93350 /* SideBarVC.swift in Sources */,
 				76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */,

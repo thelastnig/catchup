@@ -16,6 +16,7 @@ import GoogleMobileAds
 
 public enum NaverType: Int {
     case upperInfo
+    case weatherInfo
     case naverKeyword
     case naverMainNews
     case naverEnterNews
@@ -26,6 +27,8 @@ public enum NaverType: Int {
     func getNaverName() -> String {
         switch self {
         case .upperInfo:
+            return ""
+        case .weatherInfo:
             return ""
         case .naverKeyword:
             return "실시간 검색어"
@@ -117,6 +120,9 @@ class MainVC: UITableViewController {
     // 이미지 cell의 높이
     let imgHeight: CGFloat = 150
     
+    // 날씨 cell의 높이
+    let weatherHeight: CGFloat = 100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -133,8 +139,11 @@ class MainVC: UITableViewController {
 //            }
 //        }
         
-        // 상단 이미지 등록을 cell 위한 등록
+        // 상단 이미지 cell
         self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
+        
+        // 상단 날씨 정보 cell
+        self.tableView.register(WeatherCell.self, forCellReuseIdentifier: "weather_cell")
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -247,7 +256,6 @@ class MainVC: UITableViewController {
         let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
-//        print("main height will LAyout: \(self.view.frame.size.height)")
     }
     
     @objc func willEnterForeground() {
@@ -256,13 +264,15 @@ class MainVC: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 5
+        return NaverType.count.rawValue
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         switch section {
         case NaverType.upperInfo.rawValue:
+            return 1
+        case NaverType.weatherInfo.rawValue:
             return 1
         case NaverType.naverKeyword.rawValue:
             return 1
@@ -312,15 +322,30 @@ class MainVC: UITableViewController {
                 make.bottom.equalTo(cell.contentView).offset(-15)
             }
             
+            return cell
+        } else if indexPath.section == NaverType.weatherInfo.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "weather_cell") as! WeatherCell
+            
+            // cell 설정
+            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.weatherHeight)
+            
+            cell.initCell()
+            
+            let iconWeather = UIImage(named: "sun")
+            let infoText = "지금 서울은 맑음."
+            let maxText = "17도"
+            let minText = "6도"
+            
+            cell.setCell(iconWeather!, infoText, maxText, minText)
             
             return cell
             
-        }
-        else if indexPath.section == NaverType.naverKeyword.rawValue {
+            
+        } else if indexPath.section == NaverType.naverKeyword.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "keyword_cell") as! KeywordCell
             
             // contentview 설정
-            cell.contentView.backgroundColor = self.grayColor1
+            cell.contentView.backgroundColor = UIColor.white
             cell.contentView.frame.size.height = Constants.keywordAreaHeight
             
             // scrollview 설정
@@ -346,10 +371,12 @@ class MainVC: UITableViewController {
             let pageHeight = cell.contentView.frame.height - 20
 
             cell.keywordContentView1.frame = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
-            cell.keywordContentView1.roundCorners([.allCorners], radius: Constants.cornerRound)
+            cell.keywordContentView1.layer.borderColor = self.grayColor4.cgColor
+            cell.keywordContentView1.layer.borderWidth = 1
 
             cell.keywordContentView2.frame = CGRect(x: pageWidth, y: 0, width: pageWidth, height: pageHeight)
-            cell.keywordContentView2.roundCorners([.allCorners], radius: Constants.cornerRound)
+            cell.keywordContentView2.layer.borderColor = self.grayColor4.cgColor
+            cell.keywordContentView2.layer.borderWidth = 1
 
             cell.scrollView.addSubview(cell.keywordContentView1)
             cell.scrollView.addSubview(cell.keywordContentView2)
@@ -383,11 +410,11 @@ class MainVC: UITableViewController {
                 
                 // label 속성 설정
                 labelNum.textAlignment = .left
-                labelNum.textColor = self.brownColor
+                labelNum.textColor = self.grayColor5
                 labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 12)
 
                 labelTitle.textAlignment = .left
-                labelTitle.font = idx == 0 ? UIFont.init(name: Constants.mainFontBold, size: 14) : UIFont.init(name: Constants.subFont, size: 12)
+                labelTitle.font = idx == 0 ? UIFont.init(name: Constants.mainFontBold, size: 14) : UIFont.init(name: Constants.mainFont, size: 12)
                 labelTitle.textColor = idx == 0 ? UIColor.black : self.grayColor9
                 
                 labelTitle.lineBreakMode = .byTruncatingTail
@@ -396,7 +423,6 @@ class MainVC: UITableViewController {
 
                     // 애니메이션
 //                    self.keywordStar.rotate()
-                    
                 } else {                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
                 }
                 labelNum.text = String(tag)
@@ -407,11 +433,11 @@ class MainVC: UITableViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
             cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
-            cell.labelNum.textColor = self.brownColor
+            cell.labelNum.textColor = self.grayColor5
             
             cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
             cell.labelText.textColor = self.grayColor9
-            cell.contentView.backgroundColor = self.grayColor1
+            cell.contentView.backgroundColor = UIColor.white
             
             switch indexPath.section {
             case NaverType.naverMainNews.rawValue:
@@ -448,7 +474,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == NaverType.upperInfo.rawValue {
+        if indexPath.section == NaverType.upperInfo.rawValue || indexPath.section == NaverType.weatherInfo.rawValue {
             return nil
         } else {
             return indexPath
@@ -489,11 +515,11 @@ class MainVC: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight))
         
-        headerView.backgroundColor = self.grayColor1
+        headerView.backgroundColor = UIColor.white
         
         // header의 상위 margin view 설정
         let headerUpperMarginView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionMargin))
-        headerUpperMarginView.backgroundColor = self.grayColor1
+        headerUpperMarginView.backgroundColor = UIColor.white
         
         // header의 main view 설정
         let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight))
@@ -510,7 +536,6 @@ class MainVC: UITableViewController {
         subTitle.textAlignment = .left
         
         // keyword section을 위한 label
-        let paddingSubTitle = PaddingLabel()
         let rightSubTitle = UILabel()
         
         let common = UILabel()
@@ -530,21 +555,14 @@ class MainVC: UITableViewController {
             title.textColor = self.grayColor7
             
             rightSubTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-            rightSubTitle.textColor = self.mainColor
+            rightSubTitle.textColor = self.grayColor5
             
             let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "M월 d일 H시 m분 기준"
+            dateFormatter.dateFormat = "H시 m분 기준"
             let dateString = dateFormatter.string(from: date)
             rightSubTitle.text = dateString
 
-            paddingSubTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-            paddingSubTitle.contentMode = .center
-   
-            paddingSubTitle.textColor = self.grayColor6
-            paddingSubTitle.text = "#KEYWORD"
-            paddingSubTitle.layer.borderColor = self.grayColor6.cgColor
-            paddingSubTitle.layer.borderWidth = 1
         case NaverType.naverMainNews.rawValue:
             title.text = NaverType.getNaverName(.naverMainNews)()
             title.textColor = self.pinkColor7
@@ -574,7 +592,6 @@ class MainVC: UITableViewController {
             headerUpperView.addSubview(circle)
             headerUpperView.addSubview(subTitle)
         } else {
-            headerUpperView.addSubview(paddingSubTitle)
             headerUpperView.addSubview(rightSubTitle)
         }
         
@@ -601,10 +618,6 @@ class MainVC: UITableViewController {
                 make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
             }
         } else {
-            paddingSubTitle.snp.makeConstraints { (make) in
-                make.left.equalTo(headerUpperView).offset(5)
-                make.top.equalTo(headerUpperView).offset(10)
-            }
             common.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(5)
                 make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
@@ -619,23 +632,26 @@ class MainVC: UITableViewController {
             }
         }
         
-        if section == NaverType.upperInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.weatherInfo.rawValue {
             return nil
         } else {
             return headerView
         }
-
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
-        footer.backgroundColor = self.grayColor1
+        if section == NaverType.upperInfo.rawValue || section == NaverType.weatherInfo.rawValue || section == NaverType.naverKeyword.rawValue {
+            footer.backgroundColor = UIColor.white
+        } else {
+            footer.backgroundColor = self.grayColor1
+        }
         
         return footer
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == NaverType.upperInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.weatherInfo.rawValue {
             return CGFloat.leastNonzeroMagnitude
         }
         return Constants.sectionHeight
@@ -649,6 +665,8 @@ class MainVC: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == NaverType.upperInfo.rawValue {
             return self.imgHeight
+        } else if indexPath.section == NaverType.weatherInfo.rawValue {
+            return self.weatherHeight
         } else if indexPath.section == NaverType.naverKeyword.rawValue  {
             return Constants.keywordAreaHeight
         } else {
