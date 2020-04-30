@@ -121,7 +121,7 @@ class MainVC: UITableViewController {
     let imgHeight: CGFloat = 150
     
     // 날씨 cell의 높이
-    let weatherHeight: CGFloat = 100
+    let weatherHeight: CGFloat = 120
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -294,11 +294,11 @@ class MainVC: UITableViewController {
             
             // cell 설정
             cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+
+            let mainImage = self.resizeImage(image: UIImage(named: "main_b")!, toTheSize: CGSize(width: self.view.frame.width, height: imgHeight))
             
-//            cell.contentView.layer.borderColor = UIColor.red.cgColor
-//            cell.contentView.layer.borderWidth = 1
             cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
-            cell.imgView.image = UIImage(named: "main_b")
+            cell.imgView.image = mainImage
             cell.imgView.contentMode = .scaleAspectFill
             cell.contentView.addSubview(cell.imgView)
             
@@ -332,11 +332,11 @@ class MainVC: UITableViewController {
             cell.initCell()
             
             let iconWeather = UIImage(named: "sun")
-            let infoText = "지금 서울은 맑음."
-            let maxText = "17도"
-            let minText = "6도"
+            let infoText = "서울 맑음."
+            let curText = "17도"
+            let mmText = "21 / 6"
             
-            cell.setCell(iconWeather!, infoText, maxText, minText)
+            cell.setCell(iconWeather!, infoText, curText, mmText)
             
             return cell
             

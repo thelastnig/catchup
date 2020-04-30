@@ -348,8 +348,11 @@ class CommunityVC: UITableViewController {
             
             // cell 설정
             cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+
+            let communityImage = self.resizeImage(image: UIImage(named: "community_b")!, toTheSize: CGSize(width: self.view.frame.width, height: imgHeight))
+            
             cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
-            cell.imgView.image = UIImage(named: "community_b")
+            cell.imgView.image = communityImage
             cell.imgView.contentMode = .scaleAspectFill
             cell.contentView.addSubview(cell.imgView)
             

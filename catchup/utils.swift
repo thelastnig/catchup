@@ -51,7 +51,7 @@ extension UIViewController {
     }
     
     // 랜덤 색상을 리턴하는 함수
-    func getRandomColor()-> UIColor? {
+    func getRandomColor() -> UIColor? {
         let color1 = UIColor(red:0.39, green:0.90, blue:0.70, alpha:1.0)
         let color2 = UIColor(red:0.55, green:0.91, blue:0.60, alpha:1.0)
         let color3 = UIColor(red:0.75, green:0.92, blue:0.46, alpha:1.0)
@@ -64,7 +64,7 @@ extension UIViewController {
     }
     
     // 이미지 리사이징
-    func resizeImage(image:UIImage, toTheSize size:CGSize) -> UIImage{
+    func resizeImage(image:UIImage, toTheSize size:CGSize) -> UIImage {
         let scale = CGFloat(max(size.width/image.size.width,
         size.height/image.size.height))
         let width: CGFloat  = image.size.width * scale
