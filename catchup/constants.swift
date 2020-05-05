@@ -8,6 +8,8 @@ class Constants {
     public static let keywordAreaHeight: CGFloat = 180
     public static let cellToggleBtnHeight: CGFloat = 50
     public static let cellToggleBtnWidth: CGFloat = 100
+    public static let imgHeight: CGFloat = 150
+    public static let infoHeight: CGFloat = 100
     
     // refreshcontrol의 delaytime
     public static let delayTime: Double = 2

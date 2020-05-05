@@ -89,8 +89,8 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
    func setKeywordLabels(_ superView: UIView, _ numLabel: UIView, _ titleLabel: UILabel) {
 
         let leftOffset: CGFloat = 10
-        let rightOffset: CGFloat = 10
-        let numLabelWidth: CGFloat = 20
+        let rightOffset: CGFloat = 5
+        let numLabelWidth: CGFloat = 15
 
         /*
         numLabel.frame = CGRect(x: 0, y: 0, width: numLabelWidth, height: superView.frame.height)
@@ -99,17 +99,10 @@ class KeywordCell: UITableViewCell, UIScrollViewDelegate {
         superView.addSubview(numLabel)
         superView.addSubview(titleLabel)
 
-        let isImage = numLabel is UIImageView ? true : false
         numLabel.snp.makeConstraints { (make) in
             make.left.equalTo(superView).offset(leftOffset)
-            if isImage {
-                make.top.equalTo(superView.frame.height).offset(5)
-                make.bottom.equalTo(superView.frame.height).offset(-5)
-                make.width.equalTo(numLabel.snp.height).offset(-5)
-            } else {
-                make.height.equalTo(superView.frame.height)
-                make.width.equalTo(numLabelWidth)
-            }
+            make.height.equalTo(superView.frame.height)
+            make.width.equalTo(numLabelWidth)
         }
     
         titleLabel.snp.makeConstraints { (make) in

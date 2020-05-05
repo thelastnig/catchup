@@ -16,6 +16,7 @@ import GoogleMobileAds
 
 public enum NaverType: Int {
     case upperInfo
+    case lowerInfo
     case naverKeyword
     case naverMainNews
     case naverEnterNews
@@ -26,6 +27,8 @@ public enum NaverType: Int {
     func getNaverName() -> String {
         switch self {
         case .upperInfo:
+            return ""
+        case .lowerInfo:
             return ""
         case .naverKeyword:
             return "실시간 검색어"
@@ -108,14 +111,8 @@ class MainVC: UITableViewController {
         return list
     }()
     
-    // 실시간 검색어 1위를 위한 imageView
-    var keywordStar: UIImageView!
-    
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
-    
-    // 이미지 cell의 높이
-    let imgHeight: CGFloat = 150
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +132,9 @@ class MainVC: UITableViewController {
         
         // 상단 이미지 cell
         self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
+        
+        // 상단 info cell
+        self.tableView.register(InfoCell.self, forCellReuseIdentifier: "info_cell")
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -205,11 +205,6 @@ class MainVC: UITableViewController {
             self.keywordLabel09_2Num, self.keywordLabel10_2Num,
         ]
         
-        // 실시간 검색어 1위를 표시하는 imageView 생성 및 설정
-        self.keywordStar = UIImageView()
-        self.keywordStar.image = UIImage(named: "iconStar")
-        self.keywordStar.contentMode = .scaleAspectFit
-        
         self.getContents()
         
         // 당겨서 새로고침
@@ -263,6 +258,8 @@ class MainVC: UITableViewController {
         switch section {
         case NaverType.upperInfo.rawValue:
             return 1
+        case NaverType.lowerInfo.rawValue:
+            return 1
         case NaverType.naverKeyword.rawValue:
             return 1
         case NaverType.naverMainNews.rawValue:
@@ -280,13 +277,13 @@ class MainVC: UITableViewController {
         
         if indexPath.section == NaverType.upperInfo.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "image_cell") as! ImageCell
-            
+            let height = Constants.imgHeight
             // cell 설정
-            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: height)
 
-            let mainImage = self.resizeImage(image: UIImage(named: "main_b")!, toTheSize: CGSize(width: self.view.frame.width, height: imgHeight))
+            let mainImage = self.resizeImage(image: UIImage(named: "main_b")!, toTheSize: CGSize(width: self.view.frame.width, height: height))
             
-            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
+            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: height))
             cell.imgView.image = mainImage
             cell.imgView.contentMode = .scaleAspectFill
             cell.contentView.addSubview(cell.imgView)
@@ -309,6 +306,87 @@ class MainVC: UITableViewController {
             cell.subLabel.snp.makeConstraints{(make) in
                 make.left.equalTo(cell.contentView).offset(20)
                 make.bottom.equalTo(cell.contentView).offset(-15)
+            }
+            
+            return cell
+            
+        } else if indexPath.section == NaverType.lowerInfo.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "info_cell") as! InfoCell
+            
+//            cell.contentView.layer.borderColor = UIColor.red.cgColor
+//            cell.contentView.layer.borderWidth = 1
+            
+            cell.initCell()
+            
+            let outerMargin: CGFloat = 10
+            let innerMargin: CGFloat = 20
+            let imageSize: CGFloat = 40
+            
+            let viewWidth = (self.tableView.frame.width - (outerMargin * 2) - (innerMargin * 2)) / 3
+            let viewHeight = Constants.infoHeight
+
+            cell.container.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: viewHeight)
+            cell.leftView.frame = CGRect(x: outerMargin, y: 0, width: viewWidth, height: viewHeight)
+            cell.centerView.frame = CGRect(x: outerMargin + innerMargin + viewWidth, y: 0, width: viewWidth, height: viewHeight)
+            cell.rightView.frame = CGRect(x: outerMargin + (innerMargin * 2) + (viewWidth * 2), y: 0, width: viewWidth, height: viewHeight)
+
+            cell.leftView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
+            cell.centerView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
+            cell.rightView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
+            
+            let weatherImage = self.resizeImage(image: UIImage(named: "iconWeather")!, toTheSize: CGSize(width: imageSize, height: imageSize))
+            let stockImage = self.resizeImage(image: UIImage(named: "iconStock")!, toTheSize: CGSize(width: imageSize, height: imageSize))
+            let tarotImage = self.resizeImage(image: UIImage(named: "iconTarot")!, toTheSize: CGSize(width: imageSize, height: imageSize))
+            
+            cell.leftImageView.image = weatherImage
+            cell.centerImageView.image = stockImage
+            cell.rightImageView.image = tarotImage
+            cell.leftImageView.contentMode = .scaleAspectFit
+            cell.centerImageView.contentMode = .scaleAspectFit
+            cell.rightImageView.contentMode = .scaleAspectFit
+            
+            cell.leftView.addSubview(cell.leftImageView)
+            cell.centerView.addSubview(cell.centerImageView)
+            cell.rightView.addSubview(cell.rightImageView)
+            cell.leftView.addSubview(cell.leftLabel)
+            cell.centerView.addSubview(cell.centerLabel)
+            cell.rightView.addSubview(cell.rightLabel)
+            cell.container.addSubview(cell.leftView)
+            cell.container.addSubview(cell.centerView)
+            cell.container.addSubview(cell.rightView)
+
+            cell.contentView.addSubview(cell.container)
+            
+            cell.leftImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.leftView)
+                make.top.equalTo(cell.leftView).offset(20)
+                make.width.equalTo(imageSize)
+                make.height.equalTo(imageSize)
+            }
+            cell.centerImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.centerView)
+                make.top.equalTo(cell.centerView).offset(20)
+                make.width.equalTo(imageSize)
+                make.height.equalTo(imageSize)
+            }
+            cell.rightImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.rightView)
+                make.top.equalTo(cell.rightView).offset(20)
+                make.width.equalTo(imageSize)
+                make.height.equalTo(imageSize)
+            }
+            
+            cell.leftLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.leftView)
+                make.top.equalTo(cell.leftImageView.snp.bottom).offset(5)
+            }
+            cell.centerLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.centerView)
+                make.top.equalTo(cell.centerImageView.snp.bottom).offset(5)
+            }
+            cell.rightLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.rightView)
+                make.top.equalTo(cell.rightImageView.snp.bottom).offset(5)
             }
             
             return cell
@@ -388,17 +466,13 @@ class MainVC: UITableViewController {
                 labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 12)
 
                 labelTitle.textAlignment = .left
-                labelTitle.font = idx == 0 ? UIFont.init(name: Constants.mainFontBold, size: 14) : UIFont.init(name: Constants.mainFont, size: 12)
+                labelTitle.font = idx == 0 ? UIFont.init(name: Constants.mainFont, size: 14) : UIFont.init(name: Constants.mainFont, size: 12)
                 labelTitle.textColor = idx == 0 ? UIColor.black : self.grayColor9
                 
                 labelTitle.lineBreakMode = .byTruncatingTail
                 
-                if idx == 0 {                cell.setKeywordLabels(cell.cellKeywordViews[idx], self.keywordStar, labelTitle)
-
-                    // 애니메이션
-//                    self.keywordStar.rotate()
-                } else {                cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
-                }
+               cell.setKeywordLabels(cell.cellKeywordViews[idx], labelNum, labelTitle)
+                
                 labelNum.text = String(tag)
             }
             return cell
@@ -448,7 +522,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == NaverType.upperInfo.rawValue {
+        if indexPath.section == NaverType.upperInfo.rawValue || indexPath.section == NaverType.lowerInfo.rawValue {
             return nil
         } else {
             return indexPath
@@ -496,7 +570,13 @@ class MainVC: UITableViewController {
         headerUpperMarginView.backgroundColor = UIColor.white
         
         // header의 main view 설정
-        let headerUpperView = UIView(frame: CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight))
+        let headerUpperView = UIView()
+        
+        if section == NaverType.naverKeyword.rawValue {headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - 35)
+            
+        } else {
+            headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin)
+        }
         
         headerUpperView.backgroundColor = UIColor.white
         
@@ -521,7 +601,7 @@ class MainVC: UITableViewController {
         
         let headerImageView = UIImageView()
         let imageMargin: CGFloat = 5
-        let imageSizeMargin: CGFloat = 10
+        let imageSizeMargin: CGFloat = 12
         
         headerImageView.contentMode = .scaleAspectFill
         headerImageView.frame = CGRect(x: imageMargin * 2, y: 0, width: Constants.sectionHeight - (imageSizeMargin * 2), height: Constants.sectionHeight - (imageSizeMargin * 2))
@@ -580,11 +660,11 @@ class MainVC: UITableViewController {
         if section != NaverType.naverKeyword.rawValue {
             common.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(imageMargin + Constants.sectionHeight)
-                make.top.equalTo(headerUpperView).offset(20)
+                make.top.equalTo(headerUpperView).offset(15)
             }
             title.snp.makeConstraints { (make) in
                 make.left.equalTo(common.snp.right).offset(5)
-                make.top.equalTo(headerUpperView).offset(20)
+                make.top.equalTo(headerUpperView).offset(15)
             }
             subTitle.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(imageMargin + Constants.sectionHeight)
@@ -593,19 +673,19 @@ class MainVC: UITableViewController {
         } else {
             common.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(5)
-                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+                make.top.equalTo(headerUpperView)
             }
             title.snp.makeConstraints { (make) in
                 make.left.equalTo(common.snp.right).offset(5)
-                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+                make.top.equalTo(headerUpperView)
             }
             rightSubTitle.snp.makeConstraints{ (make) in
                 make.right.equalTo(headerUpperView).offset(-5)
-                make.bottom.equalTo(headerUpperView).offset(-(5 + (Constants.sectionMargin) * 2))
+                make.bottom.equalTo(title.snp.bottom)
             }
         }
         
-        if section == NaverType.upperInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
             return nil
         } else {
             return headerView
@@ -614,7 +694,7 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
-        if section == NaverType.upperInfo.rawValue || section == NaverType.naverKeyword.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.naverKeyword.rawValue {
             footer.backgroundColor = UIColor.white
         } else {
             footer.backgroundColor = self.grayColor1
@@ -624,10 +704,13 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == NaverType.upperInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
             return CGFloat.leastNonzeroMagnitude
+        } else if section == NaverType.naverKeyword.rawValue {
+            return Constants.sectionHeight - 35
+        } else {
+            return Constants.sectionHeight
         }
-        return Constants.sectionHeight
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -642,7 +725,9 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == NaverType.upperInfo.rawValue {
-            return self.imgHeight
+            return Constants.imgHeight
+        } else if indexPath.section == NaverType.lowerInfo.rawValue {
+            return Constants.infoHeight
         } else if indexPath.section == NaverType.naverKeyword.rawValue  {
             return Constants.keywordAreaHeight
         } else {
