@@ -18,6 +18,7 @@ public enum NaverType: Int {
     case upperInfo
     case lowerInfo
     case naverKeyword
+    case twitter
     case naverMainNews
     case naverEnterNews
     case naverSportNews
@@ -32,6 +33,8 @@ public enum NaverType: Int {
             return ""
         case .naverKeyword:
             return "실시간 검색어"
+        case .twitter:
+            return ""
         case .naverMainNews:
             return "주요 뉴스"
         case .naverEnterNews:
@@ -114,6 +117,8 @@ class MainVC: UITableViewController {
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
+    let twitterList = [["하객룩", "바캉스립", "파우치"], ["귀여운", "지속력갑", "세젤템"], ["여름휴가", "우울할때", "쿨톤인생립"], ["데일리립스틱", "립픽서"], ["에뛰드하우스신상", "입생로랑"]]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,11 +135,14 @@ class MainVC: UITableViewController {
 //            }
 //        }
         
-        // 상단 이미지 cell
+        // 상단 이미지 cell 등록
         self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
         
-        // 상단 info cell
-        self.tableView.register(InfoCell.self, forCellReuseIdentifier: "info_cell")
+        // 상단 info cell 등록
+        self.tableView.register(InfoCell.self, forCellReuseIdentifier: "info_cell")// 상단 info cell
+        
+        // twitter cell 등록
+        self.tableView.register(TwitterCell.self, forCellReuseIdentifier: "twitter_cell")
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -262,6 +270,8 @@ class MainVC: UITableViewController {
             return 1
         case NaverType.naverKeyword.rawValue:
             return 1
+        case NaverType.twitter.rawValue:
+            return 5
         case NaverType.naverMainNews.rawValue:
             return self.naverMainNews.count
         case NaverType.naverEnterNews.rawValue:
@@ -313,50 +323,64 @@ class MainVC: UITableViewController {
         } else if indexPath.section == NaverType.lowerInfo.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "info_cell") as! InfoCell
             
-//            cell.contentView.layer.borderColor = UIColor.red.cgColor
-//            cell.contentView.layer.borderWidth = 1
-            
+            // InfoCell 초기화
             cell.initCell()
             
             let outerMargin: CGFloat = 10
-            let innerMargin: CGFloat = 20
             let imageSize: CGFloat = 40
             
-            let viewWidth = (self.tableView.frame.width - (outerMargin * 2) - (innerMargin * 2)) / 3
+            let viewWidth = (self.tableView.frame.width - (outerMargin * 2)) / 4
             let viewHeight = Constants.infoHeight
-
-            cell.container.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: viewHeight)
-            cell.leftView.frame = CGRect(x: outerMargin, y: 0, width: viewWidth, height: viewHeight)
-            cell.centerView.frame = CGRect(x: outerMargin + innerMargin + viewWidth, y: 0, width: viewWidth, height: viewHeight)
-            cell.rightView.frame = CGRect(x: outerMargin + (innerMargin * 2) + (viewWidth * 2), y: 0, width: viewWidth, height: viewHeight)
-
-            cell.leftView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
-            cell.centerView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
-            cell.rightView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.94, alpha: 1.00)
             
+            // view 기본 설정
+            cell.infoView.frame = CGRect(x: outerMargin, y: 0, width: self.tableView.frame.width - (outerMargin * 2), height: Constants.infoUpperHeight)
+            cell.container.frame = CGRect(x: outerMargin, y: Constants.infoUpperHeight, width: self.tableView.frame.width - (outerMargin * 2), height: viewHeight)
+            cell.leftView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+            cell.centerView.frame = CGRect(x: viewWidth, y: 0, width: viewWidth, height: viewHeight)
+            cell.centerNView.frame = CGRect(x: (viewWidth * 2), y: 0, width: viewWidth, height: viewHeight)
+            cell.rightView.frame = CGRect(x: (viewWidth * 3), y: 0, width: viewWidth, height: viewHeight)
+            
+            // container view에 아래 설정
+            cell.container.layer.addBorder([.top], color: self.grayColor4, width: 2)
+            cell.container.layer.addBorder([.bottom], color: self.grayColor4, width: 1)
+
+            // icon 이미지 설정
             let weatherImage = self.resizeImage(image: UIImage(named: "iconWeather")!, toTheSize: CGSize(width: imageSize, height: imageSize))
-            let stockImage = self.resizeImage(image: UIImage(named: "iconStock")!, toTheSize: CGSize(width: imageSize, height: imageSize))
-            let tarotImage = self.resizeImage(image: UIImage(named: "iconTarot")!, toTheSize: CGSize(width: imageSize, height: imageSize))
             
             cell.leftImageView.image = weatherImage
-            cell.centerImageView.image = stockImage
-            cell.rightImageView.image = tarotImage
+            cell.centerImageView.image = weatherImage
+            cell.centerNImageView.image = weatherImage
+            cell.rightImageView.image = weatherImage
             cell.leftImageView.contentMode = .scaleAspectFit
             cell.centerImageView.contentMode = .scaleAspectFit
+            cell.centerNImageView.contentMode = .scaleAspectFit
             cell.rightImageView.contentMode = .scaleAspectFit
             
             cell.leftView.addSubview(cell.leftImageView)
             cell.centerView.addSubview(cell.centerImageView)
+            cell.centerNView.addSubview(cell.centerNImageView)
             cell.rightView.addSubview(cell.rightImageView)
             cell.leftView.addSubview(cell.leftLabel)
             cell.centerView.addSubview(cell.centerLabel)
+            cell.centerNView.addSubview(cell.centerNLabel)
             cell.rightView.addSubview(cell.rightLabel)
+            
+            cell.infoView.addSubview(cell.infoLabel)
             cell.container.addSubview(cell.leftView)
             cell.container.addSubview(cell.centerView)
+            cell.container.addSubview(cell.centerNView)
             cell.container.addSubview(cell.rightView)
-
+            
+            cell.contentView.addSubview(cell.infoView)
             cell.contentView.addSubview(cell.container)
             
+            // info 라벨 위치 설정
+            cell.infoLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(cell.infoView)
+                make.left.equalTo(cell.infoView)
+            }
+            
+            // 이미지 위치 설정
             cell.leftImageView.snp.makeConstraints { (make) in
                 make.centerX.equalTo(cell.leftView)
                 make.top.equalTo(cell.leftView).offset(20)
@@ -369,6 +393,12 @@ class MainVC: UITableViewController {
                 make.width.equalTo(imageSize)
                 make.height.equalTo(imageSize)
             }
+            cell.centerNImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.centerNView)
+                make.top.equalTo(cell.centerNView).offset(20)
+                make.width.equalTo(imageSize)
+                make.height.equalTo(imageSize)
+            }
             cell.rightImageView.snp.makeConstraints { (make) in
                 make.centerX.equalTo(cell.rightView)
                 make.top.equalTo(cell.rightView).offset(20)
@@ -376,6 +406,7 @@ class MainVC: UITableViewController {
                 make.height.equalTo(imageSize)
             }
             
+            // 라벨 위치 설정
             cell.leftLabel.snp.makeConstraints { (make) in
                 make.centerX.equalTo(cell.leftView)
                 make.top.equalTo(cell.leftImageView.snp.bottom).offset(5)
@@ -384,11 +415,68 @@ class MainVC: UITableViewController {
                 make.centerX.equalTo(cell.centerView)
                 make.top.equalTo(cell.centerImageView.snp.bottom).offset(5)
             }
+            cell.centerNLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(cell.centerNView)
+                make.top.equalTo(cell.centerNImageView.snp.bottom).offset(5)
+            }
             cell.rightLabel.snp.makeConstraints { (make) in
                 make.centerX.equalTo(cell.rightView)
                 make.top.equalTo(cell.rightImageView.snp.bottom).offset(5)
             }
             
+            return cell
+            
+        } else if indexPath.section == NaverType.twitter.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "twitter_cell") as! TwitterCell
+            
+            // 각 행의 데이터
+            let dataList = self.twitterList[indexPath.row]
+            
+            // 라벨 간 margin 값
+            let innerMargin: CGFloat = 10
+            
+            // 라벨 초기화
+            cell.cellInit(dataList.count)
+            
+            var textContainerWidth: CGFloat = 0
+            for idx in 0..<dataList.count {
+                cell.textLabelList[idx].text = "#\(dataList[idx])"
+                textContainerWidth += cell.textLabelList[idx].frame.width
+                cell.textContainer.addSubview(cell.textLabelList[idx])
+            }
+            
+            cell.contentView.addSubview(cell.textContainer)
+            cell.textContainer.snp.makeConstraints{ (make) in
+                make.center.equalTo(cell.contentView)
+                if dataList.count == 2 {
+                    make.width.equalTo(textContainerWidth + innerMargin)
+                } else if dataList.count == 3 {
+                    make.width.equalTo(textContainerWidth + (innerMargin * 2))
+                }
+                make.width.equalTo(textContainerWidth + innerMargin)
+                make.height.equalTo(Constants.cellHeight)
+            }
+            
+ 
+            for idx in 0..<dataList.count  {
+                cell.textLabelList[idx].snp.makeConstraints{ (make) in
+                    make.centerY.equalTo(cell.contentView)
+                    
+                    if idx == 0 {
+                        make.left.equalTo(cell.textContainer.snp.left)
+                    } else if dataList.count == 2 && idx == 1  {
+                        make.right.equalTo(cell.textContainer.snp.right)
+                    } else if dataList.count == 3 && idx == 1  {
+                        make.left.equalTo(cell.textLabelList[0].snp.right).offset(innerMargin)
+                    } else if dataList.count == 3 && idx == 2 {
+                        make.right.equalTo(cell.textContainer.snp.right)
+                    }
+                }
+            }
+            
+            cell.textContainer.layer.borderColor = UIColor.red.cgColor
+            cell.textContainer.layer.borderWidth = 1
+ 
             return cell
             
         } else if indexPath.section == NaverType.naverKeyword.rawValue {
@@ -397,8 +485,6 @@ class MainVC: UITableViewController {
             // contentview 설정
             cell.contentView.backgroundColor = UIColor.white
             cell.contentView.frame.size.height = Constants.keywordAreaHeight
-//            cell.contentView.layer.borderColor = UIColor.red.cgColor
-//            cell.contentView.layer.borderWidth = 1
             
             // scrollview 설정
             let scrollViewWidth = self.tableView.frame.width - 20
@@ -522,7 +608,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == NaverType.upperInfo.rawValue || indexPath.section == NaverType.lowerInfo.rawValue {
+        if indexPath.section == NaverType.upperInfo.rawValue || indexPath.section == NaverType.lowerInfo.rawValue || indexPath.section == NaverType.twitter.rawValue {
             return nil
         } else {
             return indexPath
@@ -685,7 +771,7 @@ class MainVC: UITableViewController {
             }
         }
         
-        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.twitter.rawValue {
             return nil
         } else {
             return headerView
@@ -694,7 +780,7 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
-        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.naverKeyword.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.naverKeyword.rawValue || section == NaverType.twitter.rawValue {
             footer.backgroundColor = UIColor.white
         } else {
             footer.backgroundColor = self.grayColor1
@@ -704,7 +790,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.twitter.rawValue {
             return CGFloat.leastNonzeroMagnitude
         } else if section == NaverType.naverKeyword.rawValue {
             return Constants.sectionHeight - 35
@@ -727,7 +813,7 @@ class MainVC: UITableViewController {
         if indexPath.section == NaverType.upperInfo.rawValue {
             return Constants.imgHeight
         } else if indexPath.section == NaverType.lowerInfo.rawValue {
-            return Constants.infoHeight
+            return Constants.infoHeight + Constants.infoUpperHeight
         } else if indexPath.section == NaverType.naverKeyword.rawValue  {
             return Constants.keywordAreaHeight
         } else {
