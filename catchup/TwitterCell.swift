@@ -9,13 +9,13 @@
 import UIKit
 
 class TwitterCell: UITableViewCell {
+    @IBOutlet var textContainer: UIView!
     
-    var textContainer: UIView!
-    var textLabel1: UILabel!
-    var textLabel2: UILabel!
-    var textLabel3: UILabel!
+    @IBOutlet var textLabel1: UILabelPadding!
+    @IBOutlet var textLabel2: UILabelPadding!
+    @IBOutlet var textLabel3: UILabelPadding!
     
-    var textLabelList:  Array<UILabel>!
+    var textLabelList:  Array<UILabelPadding>!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,20 +24,6 @@ class TwitterCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-    }
-    
-    func cellInit(_ num: Int) {
-        self.textContainer = UIView()
-        self.textLabel1 = UILabel()
-        self.textLabel2 = UILabel()
-        self.textLabel3 = UILabel()
-        self.textLabelList = [self.textLabel1, self.textLabel2, self.textLabel3]
-        
-        for idx in 0..<num {
-            self.textLabelList[idx].contentMode = .center
-            self.textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 14)
-        }
-        
     }
 
 }

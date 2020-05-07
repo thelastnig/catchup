@@ -35,7 +35,6 @@
 		769E63282408F94800CBF339 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */; };
 		769E632A2408F9D800CBF339 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */; };
 		769E632C2408F9E100CBF339 /* JosefinSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */; };
-		76A718512461405E004DCADB /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A718502461405E004DCADB /* InfoCell.swift */; };
 		76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BD923CC306C00BB6937 /* BoonVC.swift */; };
 		76A94BDC23CC316800BB6937 /* BoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDB23CC316800BB6937 /* BoonCell.swift */; };
 		76A94BDE23CC52BB00BB6937 /* BoonContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */; };
@@ -89,7 +88,6 @@
 		769E63262408F93B00CBF339 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		769E63292408F9D800CBF339 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		769E632B2408F9E100CBF339 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
-		76A718502461405E004DCADB /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
 		76A94BD923CC306C00BB6937 /* BoonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonVC.swift; sourceTree = "<group>"; };
 		76A94BDB23CC316800BB6937 /* BoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonCell.swift; sourceTree = "<group>"; };
 		76A94BDD23CC52BB00BB6937 /* BoonContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoonContentManager.swift; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 				76948D2323C83055009C0F67 /* SettingCell.swift */,
 				76A94BDB23CC316800BB6937 /* BoonCell.swift */,
 				76B0A9712456A33800B778C6 /* ImageCell.swift */,
-				76A718502461405E004DCADB /* InfoCell.swift */,
 				768AD50E24628E74007FF543 /* TwitterCell.swift */,
 			);
 			name = Cell;
@@ -423,7 +420,6 @@
 				763C81F6239E7E2900C93350 /* SWRevealViewController.m in Sources */,
 				76B0A9722456A33800B778C6 /* ImageCell.swift in Sources */,
 				76859B5423C2C0E10066B5CF /* ArticleCell.swift in Sources */,
-				76A718512461405E004DCADB /* InfoCell.swift in Sources */,
 				768BDA352403A9CD0010B71B /* dataLoader.swift in Sources */,
 				76A94BDA23CC306C00BB6937 /* BoonVC.swift in Sources */,
 				7604609823C6DD170022A062 /* MainContentManager.swift in Sources */,

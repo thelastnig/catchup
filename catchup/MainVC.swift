@@ -117,7 +117,14 @@ class MainVC: UITableViewController {
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
-    let twitterList = [["하객룩", "바캉스립", "파우치"], ["귀여운", "지속력갑", "세젤템"], ["여름휴가", "우울할때", "쿨톤인생립"], ["데일리립스틱", "립픽서"], ["에뛰드하우스신상", "입생로랑"]]
+    let twitterList = [[(title: "하객룩", color: false), (title: "바캉스립", color: true), (title: "파우치", color: false)], [(title: "귀여운", color: true), (title: "지속력갑", color: false), (title: "세젤템", color: true)], [(title: "여름휴가", color: false), (title: "우울할때", color: true), (title: "쿨톤인생립", color: false)], [(title: "데일리립스틱", color: false), (title: "립픽서", color: false)], [(title: "에뛰드하우스신상", color: true), (title: "입생로랑", color: false)]]
+    
+//    let twitterColorNum = [1, 2, 1, 0, 1]
+    let twitterColorNum = [0, 1, 3, 3, 4]
+    
+    // color list
+    var twitterColorList = Constants.twitterColorList1
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,12 +144,6 @@ class MainVC: UITableViewController {
         
         // 상단 이미지 cell 등록
         self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
-        
-        // 상단 info cell 등록
-        self.tableView.register(InfoCell.self, forCellReuseIdentifier: "info_cell")// 상단 info cell
-        
-        // twitter cell 등록
-        self.tableView.register(TwitterCell.self, forCellReuseIdentifier: "twitter_cell")
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -321,107 +322,149 @@ class MainVC: UITableViewController {
             return cell
             
         } else if indexPath.section == NaverType.lowerInfo.rawValue {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "info_cell") as! InfoCell
-            
+            let cell = UITableViewCell()
+
             // InfoCell 초기화
-            cell.initCell()
-            
+            let infoView = UIView()
+            let infoLabel = UILabel()
+            let container = UIView()
+            let leftView = UIView()
+            let centerView = UIView()
+            let centerNView = UIView()
+            let rightView = UIView()
+            let leftImageView = UIImageView()
+            let centerImageView = UIImageView()
+            let centerNImageView = UIImageView()
+            let rightImageView = UIImageView()
+            let leftLabel = UILabel()
+            let centerLabel = UILabel()
+            let centerNLabel = UILabel()
+            let rightLabel = UILabel()
+
             let outerMargin: CGFloat = 10
             let imageSize: CGFloat = 40
-            
+
             let viewWidth = (self.tableView.frame.width - (outerMargin * 2)) / 4
             let viewHeight = Constants.infoHeight
-            
+
             // view 기본 설정
-            cell.infoView.frame = CGRect(x: outerMargin, y: 0, width: self.tableView.frame.width - (outerMargin * 2), height: Constants.infoUpperHeight)
-            cell.container.frame = CGRect(x: outerMargin, y: Constants.infoUpperHeight, width: self.tableView.frame.width - (outerMargin * 2), height: viewHeight)
-            cell.leftView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
-            cell.centerView.frame = CGRect(x: viewWidth, y: 0, width: viewWidth, height: viewHeight)
-            cell.centerNView.frame = CGRect(x: (viewWidth * 2), y: 0, width: viewWidth, height: viewHeight)
-            cell.rightView.frame = CGRect(x: (viewWidth * 3), y: 0, width: viewWidth, height: viewHeight)
-            
+            infoView.frame = CGRect(x: outerMargin, y: 0, width: self.tableView.frame.width - (outerMargin * 2), height: Constants.infoUpperHeight)
+            container.frame = CGRect(x: outerMargin, y: Constants.infoUpperHeight, width: self.tableView.frame.width - (outerMargin * 2), height: viewHeight)
+            leftView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+            centerView.frame = CGRect(x: viewWidth, y: 0, width: viewWidth, height: viewHeight)
+            centerNView.frame = CGRect(x: (viewWidth * 2), y: 0, width: viewWidth, height: viewHeight)
+            rightView.frame = CGRect(x: (viewWidth * 3), y: 0, width: viewWidth, height: viewHeight)
+
             // container view에 아래 설정
-            cell.container.layer.addBorder([.top], color: self.grayColor4, width: 2)
-            cell.container.layer.addBorder([.bottom], color: self.grayColor4, width: 1)
+            container.layer.addBorder([.top], color: self.grayColor4, width: 2)
+            container.layer.addBorder([.bottom], color: self.grayColor4, width: 1)
 
             // icon 이미지 설정
             let weatherImage = self.resizeImage(image: UIImage(named: "iconWeather")!, toTheSize: CGSize(width: imageSize, height: imageSize))
-            
-            cell.leftImageView.image = weatherImage
-            cell.centerImageView.image = weatherImage
-            cell.centerNImageView.image = weatherImage
-            cell.rightImageView.image = weatherImage
-            cell.leftImageView.contentMode = .scaleAspectFit
-            cell.centerImageView.contentMode = .scaleAspectFit
-            cell.centerNImageView.contentMode = .scaleAspectFit
-            cell.rightImageView.contentMode = .scaleAspectFit
-            
-            cell.leftView.addSubview(cell.leftImageView)
-            cell.centerView.addSubview(cell.centerImageView)
-            cell.centerNView.addSubview(cell.centerNImageView)
-            cell.rightView.addSubview(cell.rightImageView)
-            cell.leftView.addSubview(cell.leftLabel)
-            cell.centerView.addSubview(cell.centerLabel)
-            cell.centerNView.addSubview(cell.centerNLabel)
-            cell.rightView.addSubview(cell.rightLabel)
-            
-            cell.infoView.addSubview(cell.infoLabel)
-            cell.container.addSubview(cell.leftView)
-            cell.container.addSubview(cell.centerView)
-            cell.container.addSubview(cell.centerNView)
-            cell.container.addSubview(cell.rightView)
-            
-            cell.contentView.addSubview(cell.infoView)
-            cell.contentView.addSubview(cell.container)
-            
+
+            // info 라벨 설정
+            infoLabel.font = UIFont.init(name: Constants.mainFontBold, size: 18)
+            infoLabel.textColor = self.grayColor7
+            infoLabel.textAlignment = .left
+            infoLabel.text = "무료 운세"
+
+            // 아이콘 라벨 설정
+            leftLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
+            centerLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
+            centerNLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
+            rightLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
+
+            leftLabel.textColor = self.grayColor6
+            centerLabel.textColor = self.grayColor6
+            centerNLabel.textColor = self.grayColor6
+            rightLabel.textColor = self.grayColor6
+
+            leftLabel.textAlignment = .center
+            centerLabel.textAlignment = .center
+            centerNLabel.textAlignment = .center
+            rightLabel.textAlignment = .center
+
+            leftLabel.text = "별자리운세"
+            centerLabel.text = "띠별운세"
+            centerNLabel.text = "타로"
+            rightLabel.text = "기타"
+
+            // 아이콘 이미지 설정
+            leftImageView.image = weatherImage
+            centerImageView.image = weatherImage
+            centerNImageView.image = weatherImage
+            rightImageView.image = weatherImage
+            leftImageView.contentMode = .scaleAspectFit
+            centerImageView.contentMode = .scaleAspectFit
+            centerNImageView.contentMode = .scaleAspectFit
+            rightImageView.contentMode = .scaleAspectFit
+
+            leftView.addSubview(leftImageView)
+            centerView.addSubview(centerImageView)
+            centerNView.addSubview(centerNImageView)
+            rightView.addSubview(rightImageView)
+            leftView.addSubview(leftLabel)
+            centerView.addSubview(centerLabel)
+            centerNView.addSubview(centerNLabel)
+            rightView.addSubview(rightLabel)
+
+            infoView.addSubview(infoLabel)
+            container.addSubview(leftView)
+            container.addSubview(centerView)
+            container.addSubview(centerNView)
+            container.addSubview(rightView)
+
+            cell.contentView.addSubview(infoView)
+            cell.contentView.addSubview(container)
+
             // info 라벨 위치 설정
-            cell.infoLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(cell.infoView)
-                make.left.equalTo(cell.infoView)
+            infoLabel.snp.makeConstraints { (make) in
+                make.top.equalTo(infoView)
+                make.left.equalTo(infoView)
             }
-            
+
             // 이미지 위치 설정
-            cell.leftImageView.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.leftView)
-                make.top.equalTo(cell.leftView).offset(20)
+            leftImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(leftView)
+                make.top.equalTo(leftView).offset(20)
                 make.width.equalTo(imageSize)
                 make.height.equalTo(imageSize)
             }
-            cell.centerImageView.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.centerView)
-                make.top.equalTo(cell.centerView).offset(20)
+            centerImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(centerView)
+                make.top.equalTo(centerView).offset(20)
                 make.width.equalTo(imageSize)
                 make.height.equalTo(imageSize)
             }
-            cell.centerNImageView.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.centerNView)
-                make.top.equalTo(cell.centerNView).offset(20)
+            centerNImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(centerNView)
+                make.top.equalTo(centerNView).offset(20)
                 make.width.equalTo(imageSize)
                 make.height.equalTo(imageSize)
             }
-            cell.rightImageView.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.rightView)
-                make.top.equalTo(cell.rightView).offset(20)
+            rightImageView.snp.makeConstraints { (make) in
+                make.centerX.equalTo(rightView)
+                make.top.equalTo(rightView).offset(20)
                 make.width.equalTo(imageSize)
                 make.height.equalTo(imageSize)
             }
-            
+
             // 라벨 위치 설정
-            cell.leftLabel.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.leftView)
-                make.top.equalTo(cell.leftImageView.snp.bottom).offset(5)
+            leftLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(leftView)
+                make.top.equalTo(leftImageView.snp.bottom).offset(5)
             }
-            cell.centerLabel.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.centerView)
-                make.top.equalTo(cell.centerImageView.snp.bottom).offset(5)
+            centerLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(centerView)
+                make.top.equalTo(centerImageView.snp.bottom).offset(5)
             }
-            cell.centerNLabel.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.centerNView)
-                make.top.equalTo(cell.centerNImageView.snp.bottom).offset(5)
+            centerNLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(centerNView)
+                make.top.equalTo(centerNImageView.snp.bottom).offset(5)
             }
-            cell.rightLabel.snp.makeConstraints { (make) in
-                make.centerX.equalTo(cell.rightView)
-                make.top.equalTo(cell.rightImageView.snp.bottom).offset(5)
+            rightLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(rightView)
+                make.top.equalTo(rightImageView.snp.bottom).offset(5)
             }
             
             return cell
@@ -433,15 +476,43 @@ class MainVC: UITableViewController {
             let dataList = self.twitterList[indexPath.row]
             
             // 라벨 간 margin 값
-            let innerMargin: CGFloat = 10
+            let innerMargin: CGFloat = 20
             
-            // 라벨 초기화
-            cell.cellInit(dataList.count)
+            cell.textLabel1.text = ""
+            cell.textLabel2.text = ""
+            cell.textLabel3.text = ""
+            
+            // 라벨 배열에 담기
+            cell.textLabelList = [cell.textLabel1, cell.textLabel2, cell.textLabel3]
             
             var textContainerWidth: CGFloat = 0
+            
+            let firstIndex = self.twitterColorNum[indexPath.row]
+            let slicedColorList = Array(self.twitterColorList[firstIndex...])
+            
+            var colorIndex = 0
+            
             for idx in 0..<dataList.count {
-                cell.textLabelList[idx].text = "#\(dataList[idx])"
-                textContainerWidth += cell.textLabelList[idx].frame.width
+                
+                cell.textLabelList[idx].text = "#\(dataList[idx].title)"
+                cell.textLabelList[idx].contentMode = .center
+                cell.textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 13)
+                
+                if dataList[idx].color {
+                    cell.textLabelList[idx].textColor = UIColor.white
+                    cell.textLabelList[idx].backgroundColor = slicedColorList[colorIndex]
+                    colorIndex += 1
+                } else {
+                    cell.textLabelList[idx].textColor = self.grayColor7
+                    cell.textLabelList[idx].layer.borderWidth = 1
+                    cell.textLabelList[idx].layer.borderColor = self.grayColor4.cgColor
+                }
+                
+                textContainerWidth += cell.textLabelList[idx].intrinsicContentSize.width
+                cell.textContainer.addSubview(cell.textLabelList[idx])
+                
+                cell.textLabelList[idx].layer.cornerRadius = cell.textLabelList[idx].intrinsicContentSize.height / 2
+                cell.textLabelList[idx].layer.masksToBounds = true
                 cell.textContainer.addSubview(cell.textLabelList[idx])
             }
             
@@ -453,11 +524,9 @@ class MainVC: UITableViewController {
                 } else if dataList.count == 3 {
                     make.width.equalTo(textContainerWidth + (innerMargin * 2))
                 }
-                make.width.equalTo(textContainerWidth + innerMargin)
                 make.height.equalTo(Constants.cellHeight)
             }
             
- 
             for idx in 0..<dataList.count  {
                 cell.textLabelList[idx].snp.makeConstraints{ (make) in
                     make.centerY.equalTo(cell.contentView)
@@ -469,13 +538,10 @@ class MainVC: UITableViewController {
                     } else if dataList.count == 3 && idx == 1  {
                         make.left.equalTo(cell.textLabelList[0].snp.right).offset(innerMargin)
                     } else if dataList.count == 3 && idx == 2 {
-                        make.right.equalTo(cell.textContainer.snp.right)
+                        make.left.equalTo(cell.textLabelList[1].snp.right).offset(innerMargin)
                     }
                 }
             }
-            
-            cell.textContainer.layer.borderColor = UIColor.red.cgColor
-            cell.textContainer.layer.borderWidth = 1
  
             return cell
             

@@ -42,4 +42,7 @@ class Constants {
     public static let mainFont = "AppleSDGothicNeo-Regular"
     public static let mainFontBold = "AppleSDGothicNeo-Bold"
     
+    // color group 설정
+    public static let twitterColorList1: Array<UIColor> = [UIColor(red: 0.75, green: 0.15, blue: 0.64, alpha: 1.00), UIColor(red: 1.00, green: 0.00, blue: 0.55, alpha: 1.00), UIColor(red: 1.00, green: 0.05, blue: 0.16, alpha: 1.00), UIColor(red: 0.62, green: 0.40, blue: 0.21, alpha: 1.00), UIColor(red: 1.00, green: 0.27, blue: 0.00, alpha: 1.00)]
+    
 }
