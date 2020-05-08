@@ -98,17 +98,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="article_cell" id="1KD-kn-Z7U" customClass="ArticleCell" customModule="catchup" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="21.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1KD-kn-Z7U" id="eNT-uU-tvm">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="21.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZi-Sp-eRu">
-                                            <rect key="frame" x="10" y="0.0" width="394" height="21.5"/>
+                                            <rect key="frame" x="10" y="0.0" width="394" height="21"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtW-8T-rFN">
-                                                    <rect key="frame" x="15" y="0.0" width="20" height="21.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="20" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="A5M-KV-j5H"/>
                                                     </constraints>
@@ -117,7 +117,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6C4-Xa-y9f">
-                                                    <rect key="frame" x="40" y="0.0" width="344" height="21.5"/>
+                                                    <rect key="frame" x="40" y="0.0" width="344" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -384,50 +384,6 @@
                                     <outlet property="containerView" destination="CEB-LW-Ipk" id="1uO-3x-uzz"/>
                                     <outlet property="labelNum" destination="6U6-z3-sfW" id="ejH-yD-FEs"/>
                                     <outlet property="labelText" destination="R90-TV-R5q" id="jfw-mL-fqI"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="twitter_cell" id="fpU-A7-M49" customClass="TwitterCell" customModule="catchup" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="276.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fpU-A7-M49" id="AMb-gT-rbG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tue-6p-TtF">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nd9-Mg-9Ah" customClass="UILabelPadding" customModule="catchup" customModuleProvider="target">
-                                                    <rect key="frame" x="38" y="15" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhw-qE-1j6" customClass="UILabelPadding" customModule="catchup" customModuleProvider="target">
-                                                    <rect key="frame" x="119" y="15" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPV-nj-dsd" customClass="UILabelPadding" customModule="catchup" customModuleProvider="target">
-                                                    <rect key="frame" x="186" y="14" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        </view>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="textContainer" destination="tue-6p-TtF" id="9UQ-CI-lkv"/>
-                                    <outlet property="textLabel1" destination="nd9-Mg-9Ah" id="PbB-52-Jqi"/>
-                                    <outlet property="textLabel2" destination="lhw-qE-1j6" id="Ics-JN-BND"/>
-                                    <outlet property="textLabel3" destination="XPV-nj-dsd" id="HXI-0I-dO7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -43,6 +43,10 @@ class Constants {
     public static let mainFontBold = "AppleSDGothicNeo-Bold"
     
     // color group 설정
-    public static let twitterColorList1: Array<UIColor> = [UIColor(red: 0.75, green: 0.15, blue: 0.64, alpha: 1.00), UIColor(red: 1.00, green: 0.00, blue: 0.55, alpha: 1.00), UIColor(red: 1.00, green: 0.05, blue: 0.16, alpha: 1.00), UIColor(red: 0.62, green: 0.40, blue: 0.21, alpha: 1.00), UIColor(red: 1.00, green: 0.27, blue: 0.00, alpha: 1.00)]
+    public static let twitterColorListRed: Array<UIColor> = [UIColor(red: 0.75, green: 0.15, blue: 0.64, alpha: 1.00), UIColor(red: 1.00, green: 0.00, blue: 0.55, alpha: 1.00), UIColor(red: 1.00, green: 0.05, blue: 0.16, alpha: 1.00), UIColor(red: 0.62, green: 0.40, blue: 0.21, alpha: 1.00), UIColor(red: 1.00, green: 0.27, blue: 0.00, alpha: 1.00)]
+    
+    public static let twitterColorListGreen: Array<UIColor> = [UIColor(red: 0.99, green: 0.91, blue: 0.15, alpha: 1.00), UIColor(red: 0.24, green: 0.29, blue: 0.54, alpha: 1.00), UIColor(red: 0.15, green: 0.51, blue: 0.56, alpha: 1.00), UIColor(red: 0.21, green: 0.72, blue: 0.47, alpha: 1.00), UIColor(red: 0.71, green: 0.87, blue: 0.17, alpha: 1.00)]
+    
+    public static let twitterColorListBlue: Array<UIColor> = [UIColor(red: 0.62, green: 0.72, blue: 0.80, alpha: 1.00), UIColor(red: 0.24, green: 0.29, blue: 0.54, alpha: 1.00), UIColor(red: 1.00, green: 0.94, blue: 0.88, alpha: 1.00), UIColor(red: 0.06, green: 0.30, blue: 0.51, alpha: 1.00), UIColor(red: 0.04, green: 0.22, blue: 0.38, alpha: 1.00)]
     
 }

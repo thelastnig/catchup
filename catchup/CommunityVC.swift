@@ -244,9 +244,6 @@ class CommunityVC: UITableViewController {
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
-        
-        // 상단 이미지 등록을 cell 위한 등록
-        self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -344,39 +341,43 @@ class CommunityVC: UITableViewController {
         var data: (title: String, url: String, idx: Int)!
         
         if indexPath.section == CommunityType.upperInfo.rawValue {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "image_cell") as! ImageCell
+            let cell = UITableViewCell()
+            
+            let height = Constants.imgHeight
             
             // cell 설정
-            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.imgHeight)
+            cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: height)
+            
+            let imgView = UIImageView()
+            let mainLabel = UILabel()
+            let subLabel = UILabel()
 
-            let communityImage = self.resizeImage(image: UIImage(named: "community_b")!, toTheSize: CGSize(width: self.view.frame.width, height: imgHeight))
+            let communityImage = self.resizeImage(image: UIImage(named: "community_b")!, toTheSize: CGSize(width: self.view.frame.width, height: height))
             
-            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: self.imgHeight))
-            cell.imgView.image = communityImage
-            cell.imgView.contentMode = .scaleAspectFill
-            cell.contentView.addSubview(cell.imgView)
-            
-            cell.mainLabel = UILabel()
-            cell.mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
-            cell.mainLabel.textColor = UIColor.white
-            cell.mainLabel.text = "커뮤니티 인기글"
-            cell.contentView.addSubview(cell.mainLabel)
-            cell.mainLabel.snp.makeConstraints{(make) in
+            imgView.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: height)
+            imgView.image = communityImage
+            imgView.contentMode = .scaleAspectFill
+            cell.contentView.addSubview(imgView)
+
+            mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
+            mainLabel.textColor = UIColor.white
+            mainLabel.text = "커뮤니티 인기글"
+            cell.contentView.addSubview(mainLabel)
+            mainLabel.snp.makeConstraints{(make) in
                 make.left.equalTo(cell.contentView).offset(20)
                 make.bottom.equalTo(cell.contentView).offset(-40)
             }
             
-            cell.subLabel = UILabel()
-            cell.subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
-            cell.subLabel.textColor = UIColor.white
-            cell.subLabel.text = "커뮤티니 실시간 인기글 모음"
-            cell.contentView.addSubview(cell.subLabel)
-            cell.subLabel.snp.makeConstraints{(make) in
+            subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
+            subLabel.textColor = UIColor.white
+            subLabel.text = "커뮤티니 실시간 인기글 모음"
+            cell.contentView.addSubview(subLabel)
+            subLabel.snp.makeConstraints{(make) in
                 make.left.equalTo(cell.contentView).offset(20)
                 make.bottom.equalTo(cell.contentView).offset(-15)
             }
-            return cell
             
+            return cell
         } else {
             switch indexPath.section {
             case CommunityType.ruliweb.rawValue:

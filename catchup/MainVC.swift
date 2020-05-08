@@ -117,14 +117,29 @@ class MainVC: UITableViewController {
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
-    let twitterList = [[(title: "하객룩", color: false), (title: "바캉스립", color: true), (title: "파우치", color: false)], [(title: "귀여운", color: true), (title: "지속력갑", color: false), (title: "세젤템", color: true)], [(title: "여름휴가", color: false), (title: "우울할때", color: true), (title: "쿨톤인생립", color: false)], [(title: "데일리립스틱", color: false), (title: "립픽서", color: false)], [(title: "에뛰드하우스신상", color: true), (title: "입생로랑", color: false)]]
+    let twitterList = [[(title: "하객룩", colorIdx: 0), (title: "바캉스립", colorIdx: 1), (title: "파우치", colorIdx: 0)], [(title: "귀여운", colorIdx: 2), (title: "지속력갑", colorIdx: 0), (title: "세젤템", colorIdx: 3)], [(title: "여름휴가", colorIdx: 0), (title: "우울할때", colorIdx: 4), (title: "쿨톤인생립", colorIdx: 0)], [(title: "데일리립스틱", colorIdx: 0), (title: "립픽서", colorIdx: 0)], [(title: "에뛰드하우스신상", colorIdx: 5), (title: "입생로랑", colorIdx: 0)]]
     
-//    let twitterColorNum = [1, 2, 1, 0, 1]
-    let twitterColorNum = [0, 1, 3, 3, 4]
+    // twitter color list
+    var twitterColorListR = Constants.twitterColorListRed
+    var twitterColorListG = Constants.twitterColorListGreen
+    var twitterColorListB = Constants.twitterColorListBlue
     
-    // color list
-    var twitterColorList = Constants.twitterColorList1
+    // twitter color view
+    var twitterColorRView: UIView!
+    var twitterColorGView: UIView!
+    var twitterColorBView: UIView!
     
+    // twitter color button
+    var twitterColorRBtn: UIButton!
+    var twitterColorGBtn: UIButton!
+    var twitterColorBBtn: UIButton!
+    
+    // twitter color 선택 정보 변수
+    var twitterSelectedColor = 0
+    
+    // twitter button 크기 변수
+    let twitterViewSize: CGFloat = 40
+    let twitterInnerMargin: CGFloat = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,9 +156,6 @@ class MainVC: UITableViewController {
 //                 print(fontName)
 //            }
 //        }
-        
-        // 상단 이미지 cell 등록
-        self.tableView.register(ImageCell.self, forCellReuseIdentifier: "image_cell")
         
         // 순번 및 검색어를 위한 label 생성
         self.keywordLabel01Num = UILabel()
@@ -228,6 +240,18 @@ class MainVC: UITableViewController {
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
+        // twitter color view, button 생성 및 설정
+        self.twitterColorRView = UIView()
+        self.twitterColorGView = UIView()
+        self.twitterColorBView = UIView()
+        self.twitterColorRBtn = UIButton(type: .custom)
+        self.twitterColorGBtn = UIButton(type: .custom)
+        self.twitterColorBBtn = UIButton(type: .custom)
+        
+        self.setTwitterColorBtn(view: self.twitterColorRView, btn: self.twitterColorRBtn, color1: self.twitterColorListR[0], color2: self.twitterColorListR[1], tag: 0)
+        self.setTwitterColorBtn(view: self.twitterColorGView, btn: self.twitterColorGBtn, color1: self.twitterColorListG[1], color2: self.twitterColorListG[4], tag: 1)
+        self.setTwitterColorBtn(view: self.twitterColorBView, btn: self.twitterColorBBtn, color1: self.twitterColorListB[0], color2: self.twitterColorListB[3], tag: 2)
+        
         // 구글 애드몹 달기
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         self.addBannerViewToView(bannerView)
@@ -287,34 +311,38 @@ class MainVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == NaverType.upperInfo.rawValue {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "image_cell") as! ImageCell
+            let cell = UITableViewCell()
+            
             let height = Constants.imgHeight
+            
             // cell 설정
             cell.contentView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: height)
+            
+            let imgView = UIImageView()
+            let mainLabel = UILabel()
+            let subLabel = UILabel()
 
             let mainImage = self.resizeImage(image: UIImage(named: "main_b")!, toTheSize: CGSize(width: self.view.frame.width, height: height))
             
-            cell.imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: height))
-            cell.imgView.image = mainImage
-            cell.imgView.contentMode = .scaleAspectFill
-            cell.contentView.addSubview(cell.imgView)
-            
-            cell.mainLabel = UILabel()
-            cell.mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
-            cell.mainLabel.textColor = UIColor.white
-            cell.mainLabel.text = "실시간 검색어/뉴스"
-            cell.contentView.addSubview(cell.mainLabel)
-            cell.mainLabel.snp.makeConstraints{(make) in
+            imgView.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: height)
+            imgView.image = mainImage
+            imgView.contentMode = .scaleAspectFill
+            cell.contentView.addSubview(imgView)
+
+            mainLabel.font = UIFont.init(name: Constants.mainFontBold, size: 24)
+            mainLabel.textColor = UIColor.white
+            mainLabel.text = "실시간 검색어/뉴스"
+            cell.contentView.addSubview(mainLabel)
+            mainLabel.snp.makeConstraints{(make) in
                 make.left.equalTo(cell.contentView).offset(20)
                 make.bottom.equalTo(cell.contentView).offset(-40)
             }
             
-            cell.subLabel = UILabel()
-            cell.subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
-            cell.subLabel.textColor = UIColor.white
-            cell.subLabel.text = "#키워드 #뉴스 #연예 #스포츠"
-            cell.contentView.addSubview(cell.subLabel)
-            cell.subLabel.snp.makeConstraints{(make) in
+            subLabel.font = UIFont.init(name: Constants.mainFont, size: 14)
+            subLabel.textColor = UIColor.white
+            subLabel.text = "#키워드 #뉴스 #연예 #스포츠"
+            cell.contentView.addSubview(subLabel)
+            subLabel.snp.makeConstraints{(make) in
                 make.left.equalTo(cell.contentView).offset(20)
                 make.bottom.equalTo(cell.contentView).offset(-15)
             }
@@ -420,7 +448,7 @@ class MainVC: UITableViewController {
             // info 라벨 위치 설정
             infoLabel.snp.makeConstraints { (make) in
                 make.top.equalTo(infoView)
-                make.left.equalTo(infoView)
+                make.left.equalTo(infoView).offset(5)
             }
 
             // 이미지 위치 설정
@@ -470,7 +498,7 @@ class MainVC: UITableViewController {
             return cell
             
         } else if indexPath.section == NaverType.twitter.rawValue {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "twitter_cell") as! TwitterCell
+            let cell = UITableViewCell()
             
             // 각 행의 데이터
             let dataList = self.twitterList[indexPath.row]
@@ -478,46 +506,60 @@ class MainVC: UITableViewController {
             // 라벨 간 margin 값
             let innerMargin: CGFloat = 20
             
-            cell.textLabel1.text = ""
-            cell.textLabel2.text = ""
-            cell.textLabel3.text = ""
+            let textContainer = UIView()
+            
+            // 라벨 생성 및 초기화
+            let textLabel1 = UILabelPadding()
+            let textLabel2 = UILabelPadding()
+            let textLabel3 = UILabelPadding()
             
             // 라벨 배열에 담기
-            cell.textLabelList = [cell.textLabel1, cell.textLabel2, cell.textLabel3]
+            let textLabelList:  Array<UILabelPadding> = [textLabel1, textLabel2, textLabel3]
+            
+            var twitterColorList: Array<UIColor>
+            
+            switch self.twitterSelectedColor {
+                case 0:
+                    twitterColorList = self.twitterColorListR
+                case 1:
+                    twitterColorList = self.twitterColorListG
+                case 2:
+                    twitterColorList = self.twitterColorListB
+                default:
+                    twitterColorList = self.twitterColorListR
+            }
+            
+            textLabel1.text = ""
+            textLabel2.text = ""
+            textLabel3.text = ""
             
             var textContainerWidth: CGFloat = 0
             
-            let firstIndex = self.twitterColorNum[indexPath.row]
-            let slicedColorList = Array(self.twitterColorList[firstIndex...])
-            
-            var colorIndex = 0
-            
             for idx in 0..<dataList.count {
                 
-                cell.textLabelList[idx].text = "#\(dataList[idx].title)"
-                cell.textLabelList[idx].contentMode = .center
-                cell.textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 13)
+                textLabelList[idx].text = "#\(dataList[idx].title)"
+                textLabelList[idx].contentMode = .center
+                textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 13)
                 
-                if dataList[idx].color {
-                    cell.textLabelList[idx].textColor = UIColor.white
-                    cell.textLabelList[idx].backgroundColor = slicedColorList[colorIndex]
-                    colorIndex += 1
+                if dataList[idx].colorIdx > 0 {
+                    textLabelList[idx].textColor = UIColor.white
+                    textLabelList[idx].backgroundColor = twitterColorList[dataList[idx].colorIdx - 1]
                 } else {
-                    cell.textLabelList[idx].textColor = self.grayColor7
-                    cell.textLabelList[idx].layer.borderWidth = 1
-                    cell.textLabelList[idx].layer.borderColor = self.grayColor4.cgColor
+                    textLabelList[idx].textColor = self.grayColor7
+                    textLabelList[idx].layer.borderWidth = 1
+                    textLabelList[idx].layer.borderColor = self.grayColor4.cgColor
                 }
                 
-                textContainerWidth += cell.textLabelList[idx].intrinsicContentSize.width
-                cell.textContainer.addSubview(cell.textLabelList[idx])
+                textContainerWidth += textLabelList[idx].intrinsicContentSize.width
+                    textContainer.addSubview(textLabelList[idx])
                 
-                cell.textLabelList[idx].layer.cornerRadius = cell.textLabelList[idx].intrinsicContentSize.height / 2
-                cell.textLabelList[idx].layer.masksToBounds = true
-                cell.textContainer.addSubview(cell.textLabelList[idx])
+                textLabelList[idx].layer.cornerRadius = textLabelList[idx].intrinsicContentSize.height / 2
+                textLabelList[idx].layer.masksToBounds = true
+                textContainer.addSubview(textLabelList[idx])
             }
             
-            cell.contentView.addSubview(cell.textContainer)
-            cell.textContainer.snp.makeConstraints{ (make) in
+            cell.contentView.addSubview(textContainer)
+            textContainer.snp.makeConstraints{ (make) in
                 make.center.equalTo(cell.contentView)
                 if dataList.count == 2 {
                     make.width.equalTo(textContainerWidth + innerMargin)
@@ -528,17 +570,17 @@ class MainVC: UITableViewController {
             }
             
             for idx in 0..<dataList.count  {
-                cell.textLabelList[idx].snp.makeConstraints{ (make) in
+                textLabelList[idx].snp.makeConstraints{ (make) in
                     make.centerY.equalTo(cell.contentView)
                     
                     if idx == 0 {
-                        make.left.equalTo(cell.textContainer.snp.left)
+                        make.left.equalTo(textContainer.snp.left)
                     } else if dataList.count == 2 && idx == 1  {
-                        make.right.equalTo(cell.textContainer.snp.right)
+                        make.right.equalTo(textContainer.snp.right)
                     } else if dataList.count == 3 && idx == 1  {
-                        make.left.equalTo(cell.textLabelList[0].snp.right).offset(innerMargin)
+                        make.left.equalTo(textLabelList[0].snp.right).offset(innerMargin)
                     } else if dataList.count == 3 && idx == 2 {
-                        make.left.equalTo(cell.textLabelList[1].snp.right).offset(innerMargin)
+                        make.left.equalTo(textLabelList[1].snp.right).offset(innerMargin)
                     }
                 }
             }
@@ -764,7 +806,6 @@ class MainVC: UITableViewController {
         case NaverType.naverKeyword.rawValue:
             headerUpperView.backgroundColor = UIColor.clear
             title.text = NaverType.getNaverName(.naverKeyword)()
-            title.textColor = self.grayColor7
             
             rightSubTitle.font = UIFont.init(name: Constants.mainFontBold, size: 12)
             rightSubTitle.textColor = self.grayColor5
@@ -774,7 +815,10 @@ class MainVC: UITableViewController {
             dateFormatter.dateFormat = "H시 m분 기준"
             let dateString = dateFormatter.string(from: date)
             rightSubTitle.text = dateString
-
+        
+        case NaverType.twitter.rawValue:
+            title.text = "트위터 트렌드"
+            
         case NaverType.naverMainNews.rawValue:
             title.text = NaverType.getNaverName(.naverMainNews)()
             subTitle.text = "MAIN NEWS"
@@ -797,19 +841,60 @@ class MainVC: UITableViewController {
         // subTitle view에 letter-spaing 설정
         subTitle.addCharacterSpacing(kernValue: 1.5)
         
-        if section != NaverType.naverKeyword.rawValue {
+        if section == NaverType.naverKeyword.rawValue {
+            headerUpperView.addSubview(common)
+            headerUpperView.addSubview(rightSubTitle)
+        } else if section == NaverType.twitter.rawValue {
+            headerUpperView.addSubview(self.twitterColorRView)
+            headerUpperView.addSubview(self.twitterColorGView)
+            headerUpperView.addSubview(self.twitterColorBView)
+        } else {
+            headerUpperView.addSubview(common)
             headerUpperView.addSubview(subTitle)
             headerUpperView.addSubview(headerImageView)
-        } else {
-            headerUpperView.addSubview(rightSubTitle)
         }
         
-        headerUpperView.addSubview(common)
         headerUpperView.addSubview(title)
         headerView.addSubview(headerUpperMarginView)
         headerView.addSubview(headerUpperView)
         
-        if section != NaverType.naverKeyword.rawValue {
+        if section == NaverType.naverKeyword.rawValue {
+            common.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(5)
+                make.bottom.equalTo(headerUpperView).offset(-12)
+            }
+            title.snp.makeConstraints { (make) in
+                make.left.equalTo(common.snp.right).offset(5)
+                make.bottom.equalTo(headerUpperView).offset(-12)
+            }
+            rightSubTitle.snp.makeConstraints{ (make) in
+                make.right.equalTo(headerUpperView).offset(-5)
+                make.bottom.equalTo(headerUpperView).offset(-12)
+            }
+        } else if section == NaverType.twitter.rawValue {
+            title.snp.makeConstraints { (make) in
+                make.left.equalTo(headerUpperView).offset(5)
+                make.top.equalTo(headerUpperView)
+            }
+            self.twitterColorBView.snp.makeConstraints{ (make) in
+                make.top.equalTo(headerUpperView).offset(5)
+                make.right.equalTo(headerUpperView)
+                make.width.equalTo(self.twitterViewSize)
+                make.height.equalTo(self.twitterViewSize)
+            }
+            self.twitterColorGView.snp.makeConstraints{ (make) in
+                make.top.equalTo(headerUpperView).offset(5)
+                make.right.equalTo(self.twitterColorBView.snp.left).offset(-5)
+                make.width.equalTo(self.twitterViewSize)
+                make.height.equalTo(self.twitterViewSize)
+            }
+            self.twitterColorRView.snp.makeConstraints{ (make) in
+                make.top.equalTo(headerUpperView).offset(5)
+                make.right.equalTo(self.twitterColorGView.snp.left).offset(-5)
+                make.width.equalTo(self.twitterViewSize)
+                make.height.equalTo(self.twitterViewSize)
+            }
+        } else {
             common.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(imageMargin + Constants.sectionHeight)
                 make.top.equalTo(headerUpperView).offset(15)
@@ -822,22 +907,12 @@ class MainVC: UITableViewController {
                 make.left.equalTo(headerUpperView).offset(imageMargin + Constants.sectionHeight)
                 make.top.equalTo(common.snp.bottom).offset(2.5)
             }
-        } else {
-            common.snp.makeConstraints { (make) in
-                make.left.equalTo(headerUpperView).offset(5)
-                make.top.equalTo(headerUpperView)
-            }
-            title.snp.makeConstraints { (make) in
-                make.left.equalTo(common.snp.right).offset(5)
-                make.top.equalTo(headerUpperView)
-            }
-            rightSubTitle.snp.makeConstraints{ (make) in
-                make.right.equalTo(headerUpperView).offset(-5)
-                make.bottom.equalTo(title.snp.bottom)
-            }
         }
         
-        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.twitter.rawValue {
+//        headerUpperView.layer.borderColor = UIColor.red.cgColor
+//        headerUpperView.layer.borderWidth = 1
+        
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
             return nil
         } else {
             return headerView
@@ -856,7 +931,7 @@ class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue || section == NaverType.twitter.rawValue {
+        if section == NaverType.upperInfo.rawValue || section == NaverType.lowerInfo.rawValue {
             return CGFloat.leastNonzeroMagnitude
         } else if section == NaverType.naverKeyword.rawValue {
             return Constants.sectionHeight - 35
@@ -868,6 +943,8 @@ class MainVC: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == NaverType.naverKeyword.rawValue {
             return Constants.sectionFooterMargin * 3
+        } else if section == NaverType.twitter.rawValue {
+            return Constants.sectionFooterMargin * 4
         } else if section == NaverType.naverSportNews.rawValue {
             return Constants.sectionFooterMargin + Constants.cellHeight
         } else {
@@ -990,6 +1067,51 @@ class MainVC: UITableViewController {
                             constant: 0)
         ])
      }
+    // twitter color 버튼 설정
+    func setTwitterColorBtn (view: UIView, btn: UIButton, color1: UIColor, color2: UIColor, tag:Int) {
+        view.tag = tag
+        view.layer.borderWidth = 1
+        if self.twitterSelectedColor == tag {
+            view.layer.borderColor = self.grayColor4.cgColor
+        } else {
+            view.layer.borderColor = UIColor.white.cgColor
+        }
+        view.layer.cornerRadius = self.twitterViewSize / 2
+        
+        btn.tag = tag
+        btn.frame = CGRect(x: self.twitterInnerMargin, y: self.twitterInnerMargin, width: self.twitterViewSize - (self.twitterInnerMargin * 2), height: self.twitterViewSize - (self.twitterInnerMargin * 2))
+        btn.layer.cornerRadius = (self.twitterViewSize - (self.twitterInnerMargin * 2)) / 2
+        btn.layer.masksToBounds = true
+        btn.backgroundColor = color2
+        
+//        let gradient = CAGradientLayer()
+//        gradient.frame = btn.bounds
+//        gradient.startPoint = CGPoint(x: 0, y: 0)
+//        gradient.endPoint = CGPoint(x: 1, y: 1)
+//        gradient.colors = [color1.cgColor, color2.cgColor]
+        
+//        btn.layer.addSublayer(gradient)
+        btn.addTarget(self, action: #selector(onTwitterColorBtnClick(_:)), for: .touchUpInside)
+
+        view.addSubview(btn)
+    }
+    
+    // twitter color button 클릭 시
+    @objc func onTwitterColorBtnClick(_ sender: UIButton) {
+        self.twitterSelectedColor = sender.tag
+        self.twitterColorRView.layer.borderColor = UIColor.white.cgColor
+        self.twitterColorGView.layer.borderColor = UIColor.white.cgColor
+        self.twitterColorBView.layer.borderColor = UIColor.white.cgColor
+        
+        if sender.tag == 0 {
+            self.twitterColorRView.layer.borderColor = self.grayColor4.cgColor
+        } else if sender.tag == 1 {
+            self.twitterColorGView.layer.borderColor = self.grayColor4.cgColor
+        } else if sender.tag == 2 {
+            self.twitterColorBView.layer.borderColor = self.grayColor4.cgColor
+        }
+        self.tableView.reloadData()
+    }
 }
 
 class KeywordGestureRecognizer: UILongPressGestureRecognizer {
