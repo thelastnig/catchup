@@ -129,17 +129,24 @@ class MainVC: UITableViewController {
     var twitterColorGView: UIView!
     var twitterColorBView: UIView!
     
+    // twitter color display
+    var twitterColorDis: UIView!
+    
     // twitter color button
     var twitterColorRBtn: UIButton!
     var twitterColorGBtn: UIButton!
     var twitterColorBBtn: UIButton!
     
+    // twitter color select
+    var twitterColorRImg: UIImageView!
+    var twitterColorGImg: UIImageView!
+    var twitterColorBImg: UIImageView!
+    
     // twitter color 선택 정보 변수
     var twitterSelectedColor = 0
     
     // twitter button 크기 변수
-    let twitterViewSize: CGFloat = 40
-    let twitterInnerMargin: CGFloat = 4
+    let twitterViewSize: CGFloat = 38
 
     // twitter color slide
     var twitterColorSlide: UIView!
@@ -250,17 +257,38 @@ class MainVC: UITableViewController {
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
-        // twitter color view, button 생성 및 설정
+        // twitter color view, button, img, display 생성 및 설정
         self.twitterColorRView = UIView()
         self.twitterColorGView = UIView()
         self.twitterColorBView = UIView()
         self.twitterColorRBtn = UIButton(type: .custom)
         self.twitterColorGBtn = UIButton(type: .custom)
         self.twitterColorBBtn = UIButton(type: .custom)
+        self.twitterColorRImg = UIImageView()
+        self.twitterColorGImg = UIImageView()
+        self.twitterColorBImg = UIImageView()
+        self.twitterColorDis = UIView()
         
+        // twitter color 이미지 설정
+        let iconSelect = UIImage(named: "iconSelect")
+        let iconSelectR = resizeImage(image: iconSelect!, toTheSize: CGSize(width: self.twitterViewSize / 2, height: self.twitterViewSize / 2))
+        self.setTwitterColorImg(view:self.twitterColorRView, imgView: self.twitterColorRImg, img: iconSelectR)
+        self.setTwitterColorImg(view:self.twitterColorGView, imgView: self.twitterColorGImg, img: iconSelectR)
+        self.setTwitterColorImg(view:self.twitterColorBView, imgView: self.twitterColorBImg, img: iconSelectR)
+        
+        // twitter color 버튼 설정
         self.setTwitterColorBtn(view: self.twitterColorRView, btn: self.twitterColorRBtn, color1: self.twitterColorListR[0], color2: self.twitterColorListR[1], tag: 0)
         self.setTwitterColorBtn(view: self.twitterColorGView, btn: self.twitterColorGBtn, color1: self.twitterColorListG[1], color2: self.twitterColorListG[4], tag: 1)
         self.setTwitterColorBtn(view: self.twitterColorBView, btn: self.twitterColorBBtn, color1: self.twitterColorListB[0], color2: self.twitterColorListB[3], tag: 2)
+        
+        // twitter color display 설정
+//        self.twitterColorDis.frame.size = CGSize(width: self.twitterViewSize / 2, height: self.twitterViewSize / 2)
+        self.twitterColorDis.layer.cornerRadius = self.twitterViewSize / 4
+        self.twitterColorDis.layer.masksToBounds = true
+    
+        // 최초 color image, display color 선택
+        self.twitterColorRView.bringSubviewToFront(self.twitterColorRImg)
+        self.twitterColorDis.backgroundColor = self.twitterColorListR[1]
         
         // twitter color slide 생성 및 초기화
         self.twitterColorSlide = UIView()
@@ -272,12 +300,19 @@ class MainVC: UITableViewController {
         self.twitterColorOpenBtn = UIButton(type: .custom)
         self.twitterColorCloseBtn = UIButton(type: .custom)
 
-        self.twitterColorOpenBtn.setTitle("OPEN", for: .normal)
-        self.twitterColorCloseBtn.setTitle("CLOSE", for: .normal)
-        self.twitterColorOpenBtn.setTitleColor(UIColor.black, for: .normal)
-        self.twitterColorCloseBtn.setTitleColor(UIColor.black, for: .normal)
+        self.twitterColorOpenBtn.setTitle("색상 선택", for: .normal)
+        self.twitterColorCloseBtn.setTitle("완료", for: .normal)
+        self.twitterColorOpenBtn.setTitleColor(self.grayColor7, for: .normal)
+        self.twitterColorCloseBtn.setTitleColor(UIColor.systemBlue, for: .normal)
+        self.twitterColorOpenBtn.titleLabel!.font = UIFont.init(name: Constants.mainFont, size: 14)
+        self.twitterColorCloseBtn.titleLabel!.font = UIFont.init(name: Constants.mainFont, size: 14)
         self.twitterColorOpenBtn.addTarget(self, action: #selector(clickColorOpen(_:)), for: .touchUpInside)
         self.twitterColorCloseBtn.addTarget(self, action: #selector(clickColorClose(_:)), for: .touchUpInside)
+        
+//        self.twitterColorOpenBtn.layer.borderColor = UIColor.black.cgColor
+//        self.twitterColorCloseBtn.layer.borderColor = UIColor.black.cgColor
+//        self.twitterColorOpenBtn.layer.borderWidth = 1
+//        self.twitterColorCloseBtn.layer.borderWidth = 1
         
         // 구글 애드몹 달기
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
@@ -851,9 +886,10 @@ class MainVC: UITableViewController {
             
             self.twitterButtonSlide.frame = CGRect(x: 0, y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin)
 
-            self.twitterColorSlide.frame = self.isSlideShowing ? CGRect(x: 0, y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin) : CGRect(x: self.view.frame.width - (Constants.sectionMargin * 2), y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin)
+            self.twitterColorSlide.frame = self.isSlideShowing ? CGRect(x: 0, y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin) : CGRect(x: self.view.frame.width, y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin)
                 
             self.twitterButtonSlide.addSubview(self.twitterColorOpenBtn)
+            self.twitterButtonSlide.addSubview(self.twitterColorDis)
             self.twitterColorSlide.addSubview(self.twitterColorCloseBtn)
             self.twitterColorSlide.addSubview(self.twitterColorRView)
             self.twitterColorSlide.addSubview(self.twitterColorGView)
@@ -922,15 +958,18 @@ class MainVC: UITableViewController {
             }
             self.twitterColorOpenBtn.snp.makeConstraints { (make) in
                 make.right.equalTo(self.twitterButtonSlide)
-                make.top.equalTo(self.twitterButtonSlide)
-                make.width.equalTo(100)
-                make.height.equalTo(25)
+                make.centerY.equalTo(self.twitterButtonSlide)
+            }
+            self.twitterColorDis.snp.makeConstraints { (make) in
+                make.right.equalTo(self.twitterColorOpenBtn.snp.left).offset(-5)
+                make.centerY.equalTo(self.twitterButtonSlide)
+                make.width.equalTo(self.twitterViewSize / 2)
+                make.height.equalTo(self.twitterViewSize / 2)
+
             }
             self.twitterColorCloseBtn.snp.makeConstraints { (make) in
-                make.left.equalTo(self.twitterColorSlide)
-                make.top.equalTo(self.twitterColorSlide)
-                make.width.equalTo(100)
-                make.height.equalTo(25)
+                make.left.equalTo(self.twitterColorSlide).offset(10)
+                make.centerY.equalTo(self.twitterColorSlide)
             }
             self.twitterColorBView.snp.makeConstraints{ (make) in
                 make.top.equalTo(self.twitterColorSlide).offset(5)
@@ -950,6 +989,8 @@ class MainVC: UITableViewController {
                 make.width.equalTo(self.twitterViewSize)
                 make.height.equalTo(self.twitterViewSize)
             }
+            self.twitterColorSlide.layer.addBorder([.bottom], color: self.grayColor4, width: 1)
+            self.twitterColorSlide.layer.addBorder([.top], color: self.grayColor4, width: 1)
         } else {
             common.snp.makeConstraints { (make) in
                 make.left.equalTo(headerUpperView).offset(imageMargin + Constants.sectionHeight)
@@ -1123,27 +1164,13 @@ class MainVC: UITableViewController {
     // twitter color 버튼 설정
     func setTwitterColorBtn (view: UIView, btn: UIButton, color1: UIColor, color2: UIColor, tag:Int) {
         view.tag = tag
-        view.layer.borderWidth = 1
-        if self.twitterSelectedColor == tag {
-            view.layer.borderColor = self.grayColor4.cgColor
-        } else {
-            view.layer.borderColor = UIColor.white.cgColor
-        }
         view.layer.cornerRadius = self.twitterViewSize / 2
         
         btn.tag = tag
-        btn.frame = CGRect(x: self.twitterInnerMargin, y: self.twitterInnerMargin, width: self.twitterViewSize - (self.twitterInnerMargin * 2), height: self.twitterViewSize - (self.twitterInnerMargin * 2))
-        btn.layer.cornerRadius = (self.twitterViewSize - (self.twitterInnerMargin * 2)) / 2
+        btn.frame = CGRect(x: 0, y: 0, width: self.twitterViewSize, height: self.twitterViewSize)
+        btn.layer.cornerRadius = self.twitterViewSize / 2
         btn.layer.masksToBounds = true
         btn.backgroundColor = color2
-        
-//        let gradient = CAGradientLayer()
-//        gradient.frame = btn.bounds
-//        gradient.startPoint = CGPoint(x: 0, y: 0)
-//        gradient.endPoint = CGPoint(x: 1, y: 1)
-//        gradient.colors = [color1.cgColor, color2.cgColor]
-        
-//        btn.layer.addSublayer(gradient)
         btn.addTarget(self, action: #selector(onTwitterColorBtnClick(_:)), for: .touchUpInside)
 
         view.addSubview(btn)
@@ -1152,16 +1179,16 @@ class MainVC: UITableViewController {
     // twitter color button 클릭 시
     @objc func onTwitterColorBtnClick(_ sender: UIButton) {
         self.twitterSelectedColor = sender.tag
-        self.twitterColorRView.layer.borderColor = UIColor.white.cgColor
-        self.twitterColorGView.layer.borderColor = UIColor.white.cgColor
-        self.twitterColorBView.layer.borderColor = UIColor.white.cgColor
+        self.twitterColorRView.sendSubviewToBack(self.twitterColorRImg)
+        self.twitterColorGView.sendSubviewToBack(self.twitterColorGImg)
+        self.twitterColorBView.sendSubviewToBack(self.twitterColorBImg)
         
-        if sender.tag == 0 {
-            self.twitterColorRView.layer.borderColor = self.grayColor4.cgColor
-        } else if sender.tag == 1 {
-            self.twitterColorGView.layer.borderColor = self.grayColor4.cgColor
-        } else if sender.tag == 2 {
-            self.twitterColorBView.layer.borderColor = self.grayColor4.cgColor
+        if sender.tag == 0 { self.twitterColorRView.bringSubviewToFront(self.twitterColorRImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListR[1]
+        } else if sender.tag == 1 { self.twitterColorGView.bringSubviewToFront(self.twitterColorGImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListG[4]
+        } else if sender.tag == 2 { self.twitterColorBView.bringSubviewToFront(self.twitterColorBImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListB[3]
         }
         self.tableView.reloadData()
     }
@@ -1193,9 +1220,18 @@ class MainVC: UITableViewController {
             delay: TimeInterval(0),
             options: options,
             animations: {
-                self.twitterColorSlide.frame = CGRect(x: self.view.frame.width - (Constants.sectionMargin * 2), y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin)
+                self.twitterColorSlide.frame = CGRect(x: self.view.frame.width, y: self.slideHeightMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight - Constants.sectionMargin - self.slideHeightMargin)
             },
             completion: nil)
+    }
+    
+    func setTwitterColorImg(view: UIView, imgView: UIImageView, img: UIImage) {
+        imgView.frame = CGRect(x: 0, y: 0, width: self.twitterViewSize, height: self.twitterViewSize)
+        imgView.layer.cornerRadius = self.twitterViewSize / 2
+        imgView.layer.masksToBounds = true
+        imgView.contentMode = .center
+        imgView.image = img
+        view.addSubview(imgView)
     }
 }
 

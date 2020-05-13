@@ -82,8 +82,8 @@ class TabbarBoonVC: UITabBarController {
         btn.setTitle(title, for: .normal)
         btn.tag = tag
         
-        btn.setTitleColor(self.grayColor7, for: .normal)
-        btn.setTitleColor(self.subColor, for: .selected)
+        btn.setTitleColor(self.grayColor6, for: .normal)
+        btn.setTitleColor(self.grayColor8, for: .selected)
         btn.titleLabel?.font = UIFont.init(name: Constants.mainFont, size: 13)
         btn.setBackgroundColor(.white, for: .selected)
         
@@ -100,9 +100,9 @@ class TabbarBoonVC: UITabBarController {
         self.selectedIndex = sender.tag
         switch sender.tag {
         case self.tabBoonBottomBar.tag:
-            self.tabBoonBottomBar.backgroundColor = self.mainColor
+            self.tabBoonBottomBar.backgroundColor = self.grayColor8
         case self.tabBoonViewBottomBar.tag:
-            self.tabBoonViewBottomBar.backgroundColor = self.mainColor
+            self.tabBoonViewBottomBar.backgroundColor = self.grayColor8
         default:
             ()
         }
