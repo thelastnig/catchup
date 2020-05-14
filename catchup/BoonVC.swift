@@ -105,10 +105,6 @@ class BoonVC: UICollectionViewController {
             cell.frame.size = CGSize(width: 0, height: 0)
             return cell
         } else {
-            // contentView 설정 (외곽선)
-//            cell.contentView.layer.borderWidth = 1
-//            cell.contentView.layer.borderColor = self.grayColor2.cgColor
-            
             // imageView 설정 (위치, 크기)
             let itemWidth = (self.collectionView.frame.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right + 10)) / 2
             let itemHeight = itemWidth * Constants.boonHeightRatio / Constants.boonWidthRatio
@@ -117,6 +113,8 @@ class BoonVC: UICollectionViewController {
             let verticalMargin = itemWidth > 190 ? Constants.boonLabelVerticalMargin : Constants.boonLabelVerticalMarginS
             cell.imageView.frame.size = CGSize(width: itemWidth, height: imageViewHeight)
             cell.imageView.frame.origin = CGPoint(x: 0, y: 0)
+            cell.imageView.layer.borderColor = self.grayColor1.cgColor
+            cell.imageView.layer.borderWidth = 1
             
             // containerView 설정
             cell.containerView.frame.size = CGSize(width: itemWidth, height: itemHeight - imageViewHeight)
@@ -125,10 +123,10 @@ class BoonVC: UICollectionViewController {
             // lableSource 설정
             cell.labelSource.text = "실시간 인기 게시물 \(indexPath.row + 1)"
             cell.labelSource.textColor = self.grayColor6
-            cell.labelSource.font = UIFont.init(name: Constants.mainFont, size: 12)
+            cell.labelSource.font = UIFont.init(name: Constants.mainFont, size: 11)
             cell.labelSource.frame.size.width = itemWidth - (Constants.boonLabelHorizontalMargin * 2)
             cell.labelSource.frame.size.height = 21
-            cell.labelSource.frame.origin = CGPoint(x:Constants.boonLabelHorizontalMargin , y: verticalMargin)
+            cell.labelSource.frame.origin = CGPoint(x:0 , y: verticalMargin)
             
             // lableTitle 설정
             cell.labelTitle.text = data.title
@@ -138,7 +136,7 @@ class BoonVC: UICollectionViewController {
             cell.labelTitle.frame.size.width = itemWidth - (Constants.boonLabelHorizontalMargin * 2)
             cell.labelTitle.frame.size.height = 42
             cell.labelTitle.frame.origin =
-            CGPoint(x:Constants.boonLabelHorizontalMargin , y: cell.labelSource.frame.height + (verticalMargin))
+            CGPoint(x:0 , y: cell.labelSource.frame.height + (verticalMargin))
             
             // 이미지 다운로드 및 배열에 저장
             let path = data.imgUrl

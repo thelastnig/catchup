@@ -407,7 +407,7 @@ class CommunityVC: UITableViewController {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
                 cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
-                cell.labelNum.textColor = self.brownColor
+                cell.labelNum.textColor = self.grayColor5
                 cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
                 cell.labelText.textColor = self.grayColor9
                 
