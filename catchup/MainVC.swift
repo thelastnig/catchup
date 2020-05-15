@@ -751,21 +751,21 @@ class MainVC: UITableViewController {
             cell.labelNum.text = String(indexPath.row + 1)
             cell.labelText.text = data.title
             
-            let lineView = UIView()
-            lineView.backgroundColor = self.grayColor2
-            cell.containerView.addSubview(lineView)
-            lineView.snp.makeConstraints { (make) in
-                make.left.equalTo(cell.containerView).offset(15)
-                make.right.equalTo(cell.containerView).offset(-15)
-                make.top.equalTo(cell.containerView)
-                make.height.equalTo(1)
-            }
-
-            if data.idx != 1 {
-                lineView.backgroundColor = self.grayColor2
-            } else {
-                lineView.backgroundColor = UIColor.white
-            }
+//            let lineView = UIView()
+//            lineView.backgroundColor = self.grayColor2
+//            cell.containerView.addSubview(lineView)
+//            lineView.snp.makeConstraints { (make) in
+//                make.left.equalTo(cell.containerView).offset(15)
+//                make.right.equalTo(cell.containerView).offset(-15)
+//                make.top.equalTo(cell.containerView)
+//                make.height.equalTo(1)
+//            }
+//
+//            if data.idx != 1 {
+//                lineView.backgroundColor = self.grayColor2
+//            } else {
+//                lineView.backgroundColor = UIColor.white
+//            }
             
             return cell
         }
