@@ -170,11 +170,9 @@ class CommunityVC: UITableViewController {
     var toggleClian: Bool = false {
         didSet {
             if toggleClian {
-                toggleLabelClian.text = "접기 ⋀"
-                toggleLabelClian.textColor = self.grayColor6
+                toggleLabelClian.text = "close ⋀"
             } else {
-                toggleLabelClian.text = "더보기 ⋁"
-                toggleLabelClian.textColor = self.mainColor
+                toggleLabelClian.text = "more ⋁"
             }
         }
     }
@@ -184,11 +182,9 @@ class CommunityVC: UITableViewController {
     var toggleFm: Bool = false {
         didSet {
             if toggleFm {
-                toggleLabelFm.text = "접기 ⋀"
-                toggleLabelFm.textColor = self.grayColor6
+                toggleLabelFm.text = "close ⋀"
             } else {
-                toggleLabelFm.text = "더보기 ⋁"
-                toggleLabelFm.textColor = self.mainColor
+                toggleLabelFm.text = "more ⋁"
             }
         }
     }
@@ -224,19 +220,8 @@ class CommunityVC: UITableViewController {
         // self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
         
         // toggleLabel 설정
-        self.toggleLabelClian.text = "더보기 ⋁"
-        self.toggleLabelClian.textAlignment = .center
-        self.toggleLabelClian.textColor = self.mainColor
-        self.toggleLabelClian.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-        self.toggleLabelClian.addCharacterSpacing(kernValue: 1.5)
-        self.toggleLabelClian.isUserInteractionEnabled = true
-        
-        self.toggleLabelFm.text = "더보기 ⋁"
-        self.toggleLabelFm.textAlignment = .center
-        self.toggleLabelFm.textColor = self.mainColor
-        self.toggleLabelFm.font = UIFont.init(name: Constants.mainFontBold, size: 12)
-        self.toggleLabelFm.addCharacterSpacing(kernValue: 1.5)
-        self.toggleLabelFm.isUserInteractionEnabled = true
+        self.setMoreLabel(label: self.toggleLabelClian)
+        self.setMoreLabel(label: self.toggleLabelFm)
         
         // 구글 애드몹 달기
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
@@ -409,28 +394,28 @@ class CommunityVC: UITableViewController {
                 cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
                 cell.labelNum.textColor = self.grayColor5
                 cell.labelText.font = UIFont.init(name: Constants.mainFont, size: 13)
-                cell.labelText.textColor = self.grayColor9
+                cell.labelText.textColor = self.grayColor8
                 
                 cell.contentView.backgroundColor = self.grayColor1
                 
                 cell.labelNum.text = String(indexPath.row + 1)
                 cell.labelText.text = data.title
                 
-                let lineView = UIView()
-                lineView.backgroundColor = self.grayColor2
-                cell.containerView.addSubview(lineView)
-                lineView.snp.makeConstraints { (make) in
-                    make.left.equalTo(cell.containerView).offset(15)
-                    make.right.equalTo(cell.containerView).offset(-15)
-                    make.top.equalTo(cell.containerView)
-                    make.height.equalTo(1)
-                }
-
-                if data.idx != 1 {
-                    lineView.backgroundColor = self.grayColor2
-                } else {
-                    lineView.backgroundColor = UIColor.white
-                }
+//                let lineView = UIView()
+//                lineView.backgroundColor = self.grayColor2
+//                cell.containerView.addSubview(lineView)
+//                lineView.snp.makeConstraints { (make) in
+//                    make.left.equalTo(cell.containerView).offset(15)
+//                    make.right.equalTo(cell.containerView).offset(-15)
+//                    make.top.equalTo(cell.containerView)
+//                    make.height.equalTo(1)
+//                }
+//
+//                if data.idx != 1 {
+//                    lineView.backgroundColor = self.grayColor2
+//                } else {
+//                    lineView.backgroundColor = UIColor.white
+//                }
                 return cell
             }
         }
@@ -747,24 +732,24 @@ class CommunityVC: UITableViewController {
             toggleView.frame = CGRect(x: margin, y: 0, width: width, height: Constants.cellToggleBtnHeight)
             toggleView.backgroundColor = UIColor.white
 
-            let lineView = UIView()
-            lineView.backgroundColor = self.grayColor2
-            toggleView.addSubview(lineView)
-            lineView.snp.makeConstraints { (make) in
-                make.left.equalTo(toggleView).offset(15)
-                make.right.equalTo(toggleView).offset(-15)
-                make.top.equalTo(toggleView)
-                make.height.equalTo(1)
-            }
-            lineView.backgroundColor = self.grayColor2
+//            let lineView = UIView()
+//            lineView.backgroundColor = self.grayColor2
+//            toggleView.addSubview(lineView)
+//            lineView.snp.makeConstraints { (make) in
+//                make.left.equalTo(toggleView).offset(15)
+//                make.right.equalTo(toggleView).offset(-15)
+//                make.top.equalTo(toggleView)
+//                make.height.equalTo(1)
+//            }
+//            lineView.backgroundColor = self.grayColor2
             
             toggleView.addSubview(self.toggleLabelClian)
             
             self.toggleLabelClian.snp.makeConstraints{ (make) in
                 make.centerX.equalTo(toggleView)
-                make.top.equalTo(toggleView).offset(7.5)
+                make.centerY.equalTo(toggleView)
                 make.width.equalTo(Constants.cellToggleBtnWidth)
-                make.height.equalTo(Constants.cellToggleBtnHeight - 15)
+                make.height.equalTo(Constants.cellToggleBtnHeight - 20)
             }
             self.toggleLabelClian.tag = section
             
@@ -782,23 +767,23 @@ class CommunityVC: UITableViewController {
             toggleView.frame = CGRect(x: margin, y: 0, width: width, height: Constants.cellToggleBtnHeight)
             toggleView.backgroundColor = UIColor.white
 
-            let lineView = UIView()
-            lineView.backgroundColor = self.grayColor2
-            toggleView.addSubview(lineView)
-            lineView.snp.makeConstraints { (make) in
-                make.left.equalTo(toggleView).offset(15)
-                make.right.equalTo(toggleView).offset(-15)
-                make.top.equalTo(toggleView)
-                make.height.equalTo(1)
-            }
-            lineView.backgroundColor = self.grayColor2
+//            let lineView = UIView()
+//            lineView.backgroundColor = self.grayColor2
+//            toggleView.addSubview(lineView)
+//            lineView.snp.makeConstraints { (make) in
+//                make.left.equalTo(toggleView).offset(15)
+//                make.right.equalTo(toggleView).offset(-15)
+//                make.top.equalTo(toggleView)
+//                make.height.equalTo(1)
+//            }
+//            lineView.backgroundColor = self.grayColor2
             
             toggleView.addSubview(self.toggleLabelFm)
             toggleLabelFm.snp.makeConstraints{ (make) in
                 make.centerX.equalTo(toggleView)
-                make.top.equalTo(toggleView).offset(7.5)
+                make.centerY.equalTo(toggleView)
                 make.width.equalTo(Constants.cellToggleBtnWidth)
-                make.height.equalTo(Constants.cellToggleBtnHeight - 15)
+                make.height.equalTo(Constants.cellToggleBtnHeight - 20)
             }
             
             self.toggleLabelFm.tag = section
@@ -1014,6 +999,20 @@ class CommunityVC: UITableViewController {
                 }
             }
         self.tableView.endUpdates()
+    }
+    
+    // more button 설정 함수
+    func setMoreLabel(label: UILabel) {
+        label.text = "more ⋁"
+        label.textAlignment = .center
+        label.textColor = UIColor.white
+        label.font = UIFont.init(name: Constants.mainFontBold, size: 13)
+        label.isUserInteractionEnabled = true
+        label.backgroundColor = self.grayColor9
+        label.layer.cornerRadius = (Constants.cellToggleBtnHeight - 20) / 2
+        label.layer.masksToBounds = true
+//        label.addCharacterSpacing(kernValue: 1.5)
+        
     }
                 
     // 구글 애드몹 배너 설정 메소드
