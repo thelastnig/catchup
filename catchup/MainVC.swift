@@ -114,10 +114,15 @@ class MainVC: UITableViewController {
         return list
     }()
     
+    lazy var twitterTrends: [[(title: String, url: String, isColor: Bool, colorIdx: Int)]] = {
+        var list = [[(String, String, Bool, Int)]]()
+        return list
+    }()
+    
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
-    let twitterList = [[(title: "하객룩", colorIdx: 0), (title: "바캉스립", colorIdx: 1), (title: "파우치", colorIdx: 0)], [(title: "귀여운", colorIdx: 2), (title: "지속력갑", colorIdx: 0), (title: "세젤템", colorIdx: 3)], [(title: "여름휴가", colorIdx: 0), (title: "우울할때", colorIdx: 4), (title: "쿨톤인생립", colorIdx: 0)], [(title: "데일리립스틱", colorIdx: 0), (title: "립픽서", colorIdx: 0)], [(title: "에뛰드하우스신상", colorIdx: 5), (title: "입생로랑", colorIdx: 0)]]
+//    let twitterList = [[(title: "하객룩", colorIdx: 0), (title: "바캉스립", colorIdx: 1), (title: "파우치", colorIdx: 0)], [(title: "귀여운", colorIdx: 2), (title: "지속력갑", colorIdx: 0), (title: "세젤템", colorIdx: 3)], [(title: "여름휴가", colorIdx: 0), (title: "우울할때", colorIdx: 4), (title: "쿨톤인생립", colorIdx: 0)], [(title: "데일리립스틱", colorIdx: 0), (title: "립픽서", colorIdx: 0)], [(title: "에뛰드하우스신상", colorIdx: 5), (title: "입생로랑", colorIdx: 0)]]
     
     // twitter color list
     var twitterColorListR = Constants.twitterColorListRed
@@ -244,6 +249,8 @@ class MainVC: UITableViewController {
         ]
         
         self.getContents()
+        print("----------- 3 ------------")
+        print(self.twitterTrends)
         
         // 당겨서 새로고침
         self.refreshControl = UIRefreshControl()
@@ -303,11 +310,6 @@ class MainVC: UITableViewController {
         self.setSliderBtn(btn: self.twitterColorOpenBtn, title: "색상 선택", isOpen: true)
         self.setSliderBtn(btn: self.twitterColorCloseBtn, title: "완료", isOpen: false)
         
-//        self.twitterColorOpenBtn.layer.borderColor = UIColor.black.cgColor
-//        self.twitterColorCloseBtn.layer.borderColor = UIColor.black.cgColor
-//        self.twitterColorOpenBtn.layer.borderWidth = 1
-//        self.twitterColorCloseBtn.layer.borderWidth = 1
-        
         // 구글 애드몹 달기
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         self.addBannerViewToView(bannerView)
@@ -352,7 +354,7 @@ class MainVC: UITableViewController {
         case NaverType.naverKeyword.rawValue:
             return 1
         case NaverType.twitter.rawValue:
-            return 5
+            return self.twitterTrends.count
         case NaverType.naverMainNews.rawValue:
             return self.naverMainNews.count
         case NaverType.naverEnterNews.rawValue:
@@ -557,8 +559,8 @@ class MainVC: UITableViewController {
             let cell = UITableViewCell()
             
             // 각 행의 데이터
-            let dataList = self.twitterList[indexPath.row]
-            
+            let dataList = self.twitterTrends[indexPath.row]
+
             // 라벨 간 margin 값
             let innerMargin: CGFloat = 20
             
@@ -597,9 +599,13 @@ class MainVC: UITableViewController {
                 textLabelList[idx].contentMode = .center
                 textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 13)
                 
-                if dataList[idx].colorIdx > 0 {
-                    textLabelList[idx].textColor = UIColor.white
-                    textLabelList[idx].backgroundColor = twitterColorList[dataList[idx].colorIdx - 1]
+                if dataList[idx].isColor {
+                    if (twitterSelectedColor == 1 && dataList[idx].colorIdx == 0) || (twitterSelectedColor == 2 && dataList[idx].colorIdx == 2) {
+                        textLabelList[idx].textColor = self.grayColor7
+                    } else {
+                        textLabelList[idx].textColor = UIColor.white
+                    }
+                    textLabelList[idx].backgroundColor = twitterColorList[dataList[idx].colorIdx]
                 } else {
                     textLabelList[idx].textColor = self.grayColor7
                     textLabelList[idx].layer.borderWidth = 1
@@ -1075,6 +1081,11 @@ class MainVC: UITableViewController {
         }
         webContentManager.getNaverSportsNews {
             self.naverSportsNews = webContentManager.naverSportsNews
+            self.tableView.reloadData()
+        }
+        webContentManager.getTwitterTrends {
+            self.twitterTrends = webContentManager.twitterTrends
+            print(webContentManager.twitterTrends)
             self.tableView.reloadData()
         }
     }

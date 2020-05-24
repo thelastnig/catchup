@@ -33,6 +33,11 @@ class MainContentManager {
         return list
     }()
     
+    lazy var twitterTrends: [[(title: String, url: String, isColor: Bool, colorIdx: Int)]] = {
+        var list = [[(String, String, Bool, Int)]]()
+        return list
+    }()
+    
     var remoteConfig: RemoteConfig!
     
     let url_prefix = "https://scorpii.shop/korean/"
@@ -131,6 +136,36 @@ class MainContentManager {
                     let title = data["title"]
                     let url = data["link"]
                     self.naverSportsNews.append((title as! String, url as! String, i))
+                }
+                completion?()
+            }
+        }
+    }
+    
+    // 트위터 트렌드 호츨 함수
+    func getTwitterTrends(completion: (() -> Void)? = nil) {
+        
+        let url = url_prefix + "twitter"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+                
+                for item in items {
+                    var trendList: [(title: String, url: String, isColor: Bool, colorIdx: Int)] = []
+                    let trends = item as! NSArray
+                    for trend in trends {
+                        let data = trend as! NSDictionary
+                        let title = data["name"]
+                        let url = data["url"]
+                        let isColor = data["color"]
+                        let colorIdx = data["colorIdx"]
+                        trendList.append((title: title as! String, url: url as! String, isColor: isColor as! Bool, colorIdx: colorIdx as! Int))
+                    }
+                    self.twitterTrends.append(trendList)
                 }
                 completion?()
             }
