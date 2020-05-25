@@ -122,8 +122,6 @@ class MainVC: UITableViewController {
     // 구글 애드몹 배너 객체 선언
     var bannerView: GADBannerView!
     
-//    let twitterList = [[(title: "하객룩", colorIdx: 0), (title: "바캉스립", colorIdx: 1), (title: "파우치", colorIdx: 0)], [(title: "귀여운", colorIdx: 2), (title: "지속력갑", colorIdx: 0), (title: "세젤템", colorIdx: 3)], [(title: "여름휴가", colorIdx: 0), (title: "우울할때", colorIdx: 4), (title: "쿨톤인생립", colorIdx: 0)], [(title: "데일리립스틱", colorIdx: 0), (title: "립픽서", colorIdx: 0)], [(title: "에뛰드하우스신상", colorIdx: 5), (title: "입생로랑", colorIdx: 0)]]
-    
     // twitter color list
     var twitterColorListR = Constants.twitterColorListRed
     var twitterColorListG = Constants.twitterColorListGreen
@@ -249,8 +247,6 @@ class MainVC: UITableViewController {
         ]
         
         self.getContents()
-        print("----------- 3 ------------")
-        print(self.twitterTrends)
         
         // 당겨서 새로고침
         self.refreshControl = UIRefreshControl()
@@ -370,6 +366,7 @@ class MainVC: UITableViewController {
         
         if indexPath.section == NaverType.upperInfo.rawValue {
             let cell = UITableViewCell()
+            cell.selectionStyle = .none;
             
             let height = Constants.imgHeight
             
@@ -409,6 +406,7 @@ class MainVC: UITableViewController {
             
         } else if indexPath.section == NaverType.lowerInfo.rawValue {
             let cell = UITableViewCell()
+            cell.selectionStyle = .none;
 
             // InfoCell 초기화
             let infoView = UIView()
@@ -557,9 +555,12 @@ class MainVC: UITableViewController {
             
         } else if indexPath.section == NaverType.twitter.rawValue {
             let cell = UITableViewCell()
+            cell.selectionStyle = .none;
             
             // 각 행의 데이터
-            let dataList = self.twitterTrends[indexPath.row]
+            var dataList = self.twitterTrends[indexPath.row]
+            
+            dataList.shuffle()
 
             // 라벨 간 margin 값
             let innerMargin: CGFloat = 20
@@ -570,6 +571,14 @@ class MainVC: UITableViewController {
             let textLabel1 = UILabelPadding()
             let textLabel2 = UILabelPadding()
             let textLabel3 = UILabelPadding()
+            
+            textLabel1.isUserInteractionEnabled = true
+            textLabel2.isUserInteractionEnabled = true
+            textLabel3.isUserInteractionEnabled = true
+            
+            textLabel1.text = ""
+            textLabel2.text = ""
+            textLabel3.text = ""
             
             // 라벨 배열에 담기
             let textLabelList:  Array<UILabelPadding> = [textLabel1, textLabel2, textLabel3]
@@ -587,10 +596,6 @@ class MainVC: UITableViewController {
                     twitterColorList = self.twitterColorListR
             }
             
-            textLabel1.text = ""
-            textLabel2.text = ""
-            textLabel3.text = ""
-            
             var textContainerWidth: CGFloat = 0
             
             for idx in 0..<dataList.count {
@@ -598,6 +603,11 @@ class MainVC: UITableViewController {
                 textLabelList[idx].text = "#\(dataList[idx].title)"
                 textLabelList[idx].contentMode = .center
                 textLabelList[idx].font = UIFont.init(name: Constants.mainFont, size: 13)
+                
+                // tap gesture 설정
+                let gesture = TrendGestureRecognizer(target: self, action: #selector(clickTrend(_:)))
+                gesture.url = dataList[idx].url
+                textLabelList[idx].addGestureRecognizer(gesture)
                 
                 if dataList[idx].isColor {
                     if (twitterSelectedColor == 1 && dataList[idx].colorIdx == 0) || (twitterSelectedColor == 2 && dataList[idx].colorIdx == 2) {
@@ -1085,7 +1095,6 @@ class MainVC: UITableViewController {
         }
         webContentManager.getTwitterTrends {
             self.twitterTrends = webContentManager.twitterTrends
-            print(webContentManager.twitterTrends)
             self.tableView.reloadData()
         }
     }
@@ -1246,8 +1255,36 @@ class MainVC: UITableViewController {
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
     }
+    
+    // twitter trend 클릭 시 작동하는 함수
+    @objc func clickTrend(_ gesture: TrendGestureRecognizer) {
+        guard let fullUrl = gesture.url else { return }
+        let trend = fullUrl.split(separator: "=")[1]
+        let appURL = URL(string: "twitter://search?q=\(trend)")!
+        let webURL = URL(string: "\(fullUrl)")!
+
+        if UIApplication.shared.canOpenURL(appURL) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(appURL)
+            } else {
+                UIApplication.shared.openURL(appURL)
+            }
+        } else {
+            // safariViewController 생성 및 설정
+            let config = SFSafariViewController.Configuration()
+            config.barCollapsingEnabled = false
+            let safariViewController = SFSafariViewController(url: webURL, configuration: config)
+            safariViewController.dismissButtonStyle = .close
+            
+            self.navigationController?.present(safariViewController, animated: true, completion: nil)
+        }
+    }
 }
 
 class KeywordGestureRecognizer: UILongPressGestureRecognizer {
     var index: Int!
+}
+
+class TrendGestureRecognizer: UITapGestureRecognizer {
+    var url: String!
 }
