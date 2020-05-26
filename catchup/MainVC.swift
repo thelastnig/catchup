@@ -260,6 +260,10 @@ class MainVC: UITableViewController {
         // 테이블뷰의 셀 별 라인 제거
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
+        // twitter color 정보 불러오기
+        let ud = UserDefaults.standard
+        twitterSelectedColor = ud.integer(forKey: "twitterColor")
+
         // twitter color view, button, img, display 생성 및 설정
         self.twitterColorRView = UIView()
         self.twitterColorGView = UIView()
@@ -289,8 +293,15 @@ class MainVC: UITableViewController {
         self.twitterColorDis.layer.masksToBounds = true
     
         // 최초 color image, display color 선택
-        self.twitterColorRView.bringSubviewToFront(self.twitterColorRImg)
-        self.twitterColorDis.backgroundColor = self.twitterColorListR[1]
+        if twitterSelectedColor == 0 { self.twitterColorRView.bringSubviewToFront(self.twitterColorRImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListR[1]
+        } else if twitterSelectedColor == 1 { self.twitterColorGView.bringSubviewToFront(self.twitterColorGImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListG[4]
+        } else if twitterSelectedColor == 2 { self.twitterColorBView.bringSubviewToFront(self.twitterColorBImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListB[3]
+        } else { self.twitterColorRView.bringSubviewToFront(self.twitterColorRImg)
+            self.twitterColorDis.backgroundColor = self.twitterColorListR[1]
+        }
         
         // twitter color slide 생성 및 초기화
         self.twitterColorSlide = UIView()
@@ -1169,6 +1180,7 @@ class MainVC: UITableViewController {
                             constant: 0)
         ])
      }
+    
     // twitter color 버튼 설정
     func setTwitterColorBtn (view: UIView, btn: UIButton, color1: UIColor, color2: UIColor, tag:Int) {
         view.tag = tag
@@ -1198,6 +1210,10 @@ class MainVC: UITableViewController {
         } else if sender.tag == 2 { self.twitterColorBView.bringSubviewToFront(self.twitterColorBImg)
             self.twitterColorDis.backgroundColor = self.twitterColorListB[3]
         }
+
+        let ud = UserDefaults.standard
+        ud.set(sender.tag, forKey: "twitterColor")
+        ud.synchronize()
         self.tableView.reloadData()
     }
     

@@ -160,9 +160,9 @@ class CommunityVC: UITableViewController {
     }()
     
     // section 접기/펼치기를 위한 Dictionary 생성
-    var toggleDict: Dictionary<Int, Bool> = [
-        0: true, 1: true, 2: true, 3: true, 4: true,
-        5: true, 6: true, 7: true, 8: true, 9: true
+    var toggleDict: Dictionary<String, Bool> = [
+        "0": true, "1": true, "2": true, "3": true, "4": true,
+        "5": true, "6": true, "7": true, "8": true, "9": true
     ]
     
     let toggleLabelClian = UILabel()
@@ -223,6 +223,16 @@ class CommunityVC: UITableViewController {
         self.setMoreLabel(label: self.toggleLabelClian)
         self.setMoreLabel(label: self.toggleLabelFm)
         
+        // toggle 정보 불러오기
+        let ud = UserDefaults.standard
+        if let udData = ud.dictionary(forKey: "communityToggle") {
+            toggleDict = udData as! Dictionary<String, Bool>
+            print(toggleDict)
+        } else {
+            ud.set(toggleDict, forKey: "communityToggle")
+            ud.synchronize()
+        }
+        
         // 구글 애드몹 달기
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         self.addBannerViewToView(bannerView)
@@ -256,31 +266,31 @@ class CommunityVC: UITableViewController {
         case CommunityType.upperInfo.rawValue:
             return 1
         case CommunityType.ruliweb.rawValue:
-            if toggleDict[CommunityType.ruliweb.rawValue]! {
+            if toggleDict[String(CommunityType.ruliweb.rawValue)]! {
                 return self.ruliwebContents.count
             } else {
                 return 1
             }
         case CommunityType.nate.rawValue:
-            if toggleDict[CommunityType.nate.rawValue]! {
+            if toggleDict[String(CommunityType.nate.rawValue)]! {
                 return self.nateContents.count
             } else {
                 return 1
             }
         case CommunityType.ilbe.rawValue:
-            if toggleDict[CommunityType.ilbe.rawValue]! {
+            if toggleDict[String(CommunityType.ilbe.rawValue)]! {
                 return self.ilbeContents.count
             } else {
                 return 1
             }
         case CommunityType.ppomppu.rawValue:
-            if toggleDict[CommunityType.ppomppu.rawValue]! {
+            if toggleDict[String(CommunityType.ppomppu.rawValue)]! {
                 return self.ppomppuContents.count
             } else {
                 return 1
             }
         case CommunityType.clien.rawValue:
-            if toggleDict[CommunityType.clien.rawValue]! {
+            if toggleDict[String(CommunityType.clien.rawValue)]! {
                 if self.toggleClian {
                     return self.clienContents.count
                 } else {
@@ -290,7 +300,7 @@ class CommunityVC: UITableViewController {
                 return 1
             }
         case CommunityType.fm.rawValue:
-            if toggleDict[CommunityType.fm.rawValue]! {
+            if toggleDict[String(CommunityType.fm.rawValue)]! {
                 if self.toggleFm {
                     return self.fmContents.count
                 } else {
@@ -300,19 +310,19 @@ class CommunityVC: UITableViewController {
                 return 1
             }
         case CommunityType.instiz.rawValue:
-            if toggleDict[CommunityType.instiz.rawValue]! {
+            if toggleDict[String(CommunityType.instiz.rawValue)]! {
                 return self.instizContents.count
             } else {
                 return 1
             }
         case CommunityType.cook.rawValue:
-            if toggleDict[CommunityType.cook.rawValue]! {
+            if toggleDict[String(CommunityType.cook.rawValue)]! {
                 return self.cookContents.count
             } else {
                 return 1
             }
         case CommunityType.namu.rawValue:
-            if toggleDict[CommunityType.namu.rawValue]! {
+            if toggleDict[String(CommunityType.namu.rawValue)]! {
                 return self.namuContents.count
             } else {
                 return 1
@@ -387,7 +397,7 @@ class CommunityVC: UITableViewController {
                 ()
             }
             
-            if self.toggleDict[indexPath.section] == false {
+            if self.toggleDict[String(indexPath.section)] == false {
                 return UITableViewCell()
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
@@ -424,7 +434,7 @@ class CommunityVC: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView()
-        if self.toggleDict[section]! {
+        if self.toggleDict[String(section)]! {
             headerView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: Constants.sectionHeight)
         } else {
             headerView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (Constants.sectionHeight / 2))
@@ -438,7 +448,7 @@ class CommunityVC: UITableViewController {
         
         // header의 main view 설정
         let headerUpperView = UIView()
-        if self.toggleDict[section]! {
+        if self.toggleDict[String(section)]! {
             headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: Constants.sectionHeight)
         } else {
             headerUpperView.frame = CGRect(x: Constants.sectionMargin, y: Constants.sectionMargin, width: self.view.frame.width - (Constants.sectionMargin * 2), height: (Constants.sectionHeight - (Constants.sectionMargin * 2)) / 2)
@@ -457,7 +467,7 @@ class CommunityVC: UITableViewController {
         
         // 접기/펼치기 버튼 생성 및 설정
         let toggleBtn = UIImageView()
-        let windowIcon = self.toggleDict[section]! ? UIImage(named: "iconMinimize") : UIImage(named: "iconRestore")
+        let windowIcon = self.toggleDict[String(section)]! ? UIImage(named: "iconMinimize") : UIImage(named: "iconRestore")
         let newWindowIcon = resizeImage(image: windowIcon!, toTheSize: CGSize(width: 20, height: 20))
         toggleBtn.isUserInteractionEnabled = true
         toggleBtn.image = newWindowIcon
@@ -472,7 +482,7 @@ class CommunityVC: UITableViewController {
         
         // toggleLabelHeader 설정
         let toggleLabelHeader = UILabel()
-        toggleLabelHeader.text = self.toggleDict[section]! ? "숨기기" : "펼치기"
+        toggleLabelHeader.text = self.toggleDict[String(section)]! ? "숨기기" : "펼치기"
         toggleLabelHeader.textColor = self.grayColor5
         toggleLabelHeader.contentMode = .right
         toggleLabelHeader.addCharacterSpacing(kernValue: 1.5)
@@ -497,7 +507,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.cook.rawValue]! {            let title = UILabel()
+            if self.toggleDict[String(CommunityType.cook.rawValue)]! {            let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -520,7 +530,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.ilbe.rawValue]! {            let title = UILabel()
+            if self.toggleDict[String(CommunityType.ilbe.rawValue)]! {            let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -543,7 +553,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.instiz.rawValue]! {          let title = UILabel()
+            if self.toggleDict[String(CommunityType.instiz.rawValue)]! {          let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -566,7 +576,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.ruliweb.rawValue]! {         let title = UILabel()
+            if self.toggleDict[String(CommunityType.ruliweb.rawValue)]! {         let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -589,7 +599,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.clien.rawValue]! {           let title = UILabel()
+            if self.toggleDict[String(CommunityType.clien.rawValue)]! {           let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -612,7 +622,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.namu.rawValue]! {            let title = UILabel()
+            if self.toggleDict[String(CommunityType.namu.rawValue)]! {            let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -635,7 +645,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.ppomppu.rawValue]! {         let title = UILabel()
+            if self.toggleDict[String(CommunityType.ppomppu.rawValue)]! {         let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -658,7 +668,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.nate.rawValue]! {            let title = UILabel()
+            if self.toggleDict[String(CommunityType.nate.rawValue)]! {            let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -681,7 +691,7 @@ class CommunityVC: UITableViewController {
             toggleLabelHeader.addGestureRecognizer(tapGesture2)
             
             // title label 생성 및 설정
-            if self.toggleDict[CommunityType.fm.rawValue]! {            let title = UILabel()
+            if self.toggleDict[String(CommunityType.fm.rawValue)]! {            let title = UILabel()
                 title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
                 title.textColor = self.grayColor7
                 title.textAlignment = .left
@@ -723,7 +733,7 @@ class CommunityVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UIView()
-        if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty && self.toggleDict[CommunityType.clien.rawValue]! {
+        if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty && self.toggleDict[String(CommunityType.clien.rawValue)]! {
             // 접기/펼치기를 위한 버튼 생성
             footer.frame.size.width = self.tableView.frame.width
             let toggleView = UIView()
@@ -757,7 +767,7 @@ class CommunityVC: UITableViewController {
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
             self.toggleLabelClian.addGestureRecognizer(tapGesture)
-        } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty && self.toggleDict[CommunityType.fm.rawValue]! {
+        } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty && self.toggleDict[String(CommunityType.fm.rawValue)]! {
             
             // 접기/펼치기를 위한 버튼 생성
             footer.frame.size.width = self.tableView.frame.width
@@ -804,7 +814,7 @@ class CommunityVC: UITableViewController {
         if section == CommunityType.upperInfo.rawValue {
             return CGFloat.leastNonzeroMagnitude
         } else {
-            if self.toggleDict[section]! {
+            if self.toggleDict[String(section)]! {
                 return sectionHeight
             } else {
                 return Constants.sectionHeight / 2
@@ -817,7 +827,7 @@ class CommunityVC: UITableViewController {
         if section == CommunityType.upperInfo.rawValue {
             return sectionHeight
         } else {
-            if toggleDict[section] == false {
+            if toggleDict[String(section)] == false {
                 return CGFloat.leastNonzeroMagnitude
             } else {
                 if section == CommunityType.clien.rawValue && !self.clienContents.isEmpty {
@@ -836,7 +846,7 @@ class CommunityVC: UITableViewController {
         if indexPath.section == CommunityType.upperInfo.rawValue {
             return self.imgHeight
         } else {
-            if toggleDict[indexPath.section] == false {
+            if toggleDict[String(indexPath.section)] == false {
                 return 0
             } else {
                 return Constants.cellHeight
@@ -957,12 +967,20 @@ class CommunityVC: UITableViewController {
     
     @objc func toggleSection(_ sender: UITapGestureRecognizer) {
         let tag = (sender.view?.tag)!
+        let ud = UserDefaults.standard
+        var tempDict = ud.dictionary(forKey: "communityToggle") as! Dictionary<String, Bool>
         
-        if toggleDict[tag]! {
-            toggleDict[tag] = false
+        if toggleDict[String(tag)]! {
+            toggleDict[String(tag)] = false
+            tempDict[String(tag)] = false
+            
         } else {
-            toggleDict[tag] = true
+            toggleDict[String(tag)] = true
+            tempDict[String(tag)] = true
         }
+        
+        ud.set(tempDict, forKey: "communityToggle")
+        ud.synchronize()
 
         self.tableView.reloadSections(NSIndexSet(index: tag) as IndexSet, with: UITableView.RowAnimation.automatic)
     }
