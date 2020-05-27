@@ -160,6 +160,30 @@ class MainVC: UITableViewController {
     var isSlideShowing = false
     let slideHeightMargin: CGFloat = 25
     let slideTime = 0.3
+    
+    // fortune url
+    let fortuneList = [
+        "zodiac": [
+            "name": "별자리운세",
+            "url": "https://www.google.com",
+            "image": ""
+        ],
+        "cZodiac": [
+            "name": "띠별운세",
+            "url": "https://www.google.com",
+            "image": ""
+        ],
+        "saju": [
+            "name": "무료사주",
+            "url": "http://m.niceunse.com/sub.html?menu=사주",
+            "image": ""
+        ],
+        "tarot": [
+            "name": "타로",
+            "url": "https://www.google.com",
+            "image": ""
+        ],
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -340,6 +364,7 @@ class MainVC: UITableViewController {
         let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
+        self.view.bringSubviewToFront(self.bannerView)
     }
     
     @objc func willEnterForeground() {
@@ -456,7 +481,7 @@ class MainVC: UITableViewController {
 
             // icon 이미지 설정
             let weatherImage = self.resizeImage(image: UIImage(named: "iconWeather")!, toTheSize: CGSize(width: imageSize, height: imageSize))
-
+            
             // info 라벨 설정
             infoLabel.font = UIFont.init(name: Constants.mainFontBold, size: 18)
             infoLabel.textColor = self.grayColor7
@@ -464,44 +489,10 @@ class MainVC: UITableViewController {
             infoLabel.text = "무료 운세"
 
             // 아이콘 라벨 설정
-            leftLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
-            centerLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
-            centerNLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
-            rightLabel.font = UIFont.init(name: Constants.mainFont, size: 12)
-
-            leftLabel.textColor = self.grayColor6
-            centerLabel.textColor = self.grayColor6
-            centerNLabel.textColor = self.grayColor6
-            rightLabel.textColor = self.grayColor6
-
-            leftLabel.textAlignment = .center
-            centerLabel.textAlignment = .center
-            centerNLabel.textAlignment = .center
-            rightLabel.textAlignment = .center
-
-            leftLabel.text = "별자리운세"
-            centerLabel.text = "띠별운세"
-            centerNLabel.text = "타로"
-            rightLabel.text = "기타"
-
-            // 아이콘 이미지 설정
-            leftImageView.image = weatherImage
-            centerImageView.image = weatherImage
-            centerNImageView.image = weatherImage
-            rightImageView.image = weatherImage
-            leftImageView.contentMode = .scaleAspectFit
-            centerImageView.contentMode = .scaleAspectFit
-            centerNImageView.contentMode = .scaleAspectFit
-            rightImageView.contentMode = .scaleAspectFit
-
-            leftView.addSubview(leftImageView)
-            centerView.addSubview(centerImageView)
-            centerNView.addSubview(centerNImageView)
-            rightView.addSubview(rightImageView)
-            leftView.addSubview(leftLabel)
-            centerView.addSubview(centerLabel)
-            centerNView.addSubview(centerNLabel)
-            rightView.addSubview(rightLabel)
+            self.setFortuneIcon(view: leftView, label: leftLabel, image: weatherImage, imageView: leftImageView, text: self.fortuneList["zodiac"]!["name"]!, type: "zodiac")
+            self.setFortuneIcon(view: centerView, label: centerLabel, image: weatherImage, imageView: centerImageView, text: self.fortuneList["cZodiac"]!["name"]!, type: "cZodiac")
+            self.setFortuneIcon(view: centerNView, label: centerNLabel, image: weatherImage, imageView: centerNImageView, text: self.fortuneList["saju"]!["name"]!, type: "saju")
+            self.setFortuneIcon(view: rightView, label: rightLabel, image: weatherImage, imageView: rightImageView, text: self.fortuneList["tarot"]!["name"]!, type: "tarot")
 
             infoView.addSubview(infoLabel)
             container.addSubview(leftView)
@@ -1156,30 +1147,6 @@ class MainVC: UITableViewController {
             }
         }
     }
-            
-    // 구글 애드몹 배너 설정 메소드
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(bannerView)
-//        self.view.bringSubviewToFront(bannerView)
-        self.view.insertSubview(bannerView, aboveSubview: tableView)
-        self.view.addConstraints(
-        [NSLayoutConstraint(item: bannerView,
-                            attribute: .bottom,
-                            relatedBy: .equal,
-                            toItem: bottomLayoutGuide,
-                            attribute: .top,
-                            multiplier: 1,
-                            constant: 0),
-         NSLayoutConstraint(item: bannerView,
-                            attribute: .centerX,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .centerX,
-                            multiplier: 1,
-                            constant: 0)
-        ])
-     }
     
     // twitter color 버튼 설정
     func setTwitterColorBtn (view: UIView, btn: UIButton, color1: UIColor, color2: UIColor, tag:Int) {
@@ -1295,6 +1262,63 @@ class MainVC: UITableViewController {
             self.navigationController?.present(safariViewController, animated: true, completion: nil)
         }
     }
+    
+    // fortune icon 설정
+    func setFortuneIcon(view: UIView, label: UILabel, image: UIImage, imageView: UIImageView, text: String, type: String ) {
+        label.font = UIFont.init(name: Constants.mainFont, size: 12)
+        label.textColor = self.grayColor6
+        label.textAlignment = .center
+        label.text = text
+
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+
+        view.addSubview(imageView)
+        view.addSubview(label)
+        
+        // tap gesture 설정
+        let gesture = TrendGestureRecognizer(target: self, action: #selector(clickFortune(_:)))
+        let rawUrl = self.fortuneList[type]!["url"]!
+        let encodedUrl = rawUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        gesture.url = encodedUrl
+        view.addGestureRecognizer(gesture)
+    }
+    
+    // fortune icon 클릭 시
+    @objc func clickFortune(_ gesture: TrendGestureRecognizer) {
+        guard let url = gesture.url else { return }
+        let webUrl = URL(string: url)!
+
+        // safariViewController 생성 및 설정
+        let config = SFSafariViewController.Configuration()
+        config.barCollapsingEnabled = false
+        let safariViewController = SFSafariViewController(url: webUrl, configuration: config)
+        safariViewController.dismissButtonStyle = .close
+
+        self.navigationController?.present(safariViewController, animated: true, completion: nil)
+    }
+                
+    // 구글 애드몹 배너 설정 메소드
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.insertSubview(bannerView, aboveSubview: tableView)
+        self.view.addConstraints(
+        [NSLayoutConstraint(item: bannerView,
+                            attribute: .bottom,
+                            relatedBy: .equal,
+                            toItem: bottomLayoutGuide,
+                            attribute: .top,
+                            multiplier: 1,
+                            constant: 0),
+         NSLayoutConstraint(item: bannerView,
+                            attribute: .centerX,
+                            relatedBy: .equal,
+                            toItem: view,
+                            attribute: .centerX,
+                            multiplier: 1,
+                            constant: 0)
+        ])
+     }
 }
 
 class KeywordGestureRecognizer: UILongPressGestureRecognizer {

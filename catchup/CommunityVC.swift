@@ -227,7 +227,6 @@ class CommunityVC: UITableViewController {
         let ud = UserDefaults.standard
         if let udData = ud.dictionary(forKey: "communityToggle") {
             toggleDict = udData as! Dictionary<String, Bool>
-            print(toggleDict)
         } else {
             ud.set(toggleDict, forKey: "communityToggle")
             ud.synchronize()
@@ -251,6 +250,7 @@ class CommunityVC: UITableViewController {
         let margin = Constants.csTabbarHeight + self.upperHeight
         self.view.frame.origin.y = margin
         self.view.frame.size.height = screen.size.height - margin
+        self.view.bringSubviewToFront(self.bannerView)
     }
     
     // MARK: - Table view data source
@@ -267,63 +267,99 @@ class CommunityVC: UITableViewController {
             return 1
         case CommunityType.ruliweb.rawValue:
             if toggleDict[String(CommunityType.ruliweb.rawValue)]! {
-                return self.ruliwebContents.count
+                if self.ruliwebContents.count == 0 {
+                    return 1
+                } else {
+                    return self.ruliwebContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.nate.rawValue:
             if toggleDict[String(CommunityType.nate.rawValue)]! {
-                return self.nateContents.count
+                if self.nateContents.count == 0 {
+                    return 1
+                } else {
+                    return self.nateContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.ilbe.rawValue:
             if toggleDict[String(CommunityType.ilbe.rawValue)]! {
-                return self.ilbeContents.count
+                if self.ilbeContents.count == 0 {
+                    return 1
+                } else {
+                    return self.ilbeContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.ppomppu.rawValue:
             if toggleDict[String(CommunityType.ppomppu.rawValue)]! {
-                return self.ppomppuContents.count
+                if self.ppomppuContents.count == 0 {
+                    return 1
+                } else {
+                    return self.ppomppuContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.clien.rawValue:
             if toggleDict[String(CommunityType.clien.rawValue)]! {
-                if self.toggleClian {
-                    return self.clienContents.count
+                if self.clienContents.count == 0 {
+                    return 1
                 } else {
-                    return self.clienContents.count / 2
+                    if self.toggleClian {
+                        return self.clienContents.count
+                    } else {
+                        return self.clienContents.count / 2
+                    }
                 }
             } else {
                 return 1
             }
         case CommunityType.fm.rawValue:
             if toggleDict[String(CommunityType.fm.rawValue)]! {
-                if self.toggleFm {
-                    return self.fmContents.count
+                if self.fmContents.count == 0 {
+                    return 1
                 } else {
-                    return self.fmContents.count / 2
+                    if self.toggleFm {
+                        return self.fmContents.count
+                    } else {
+                        return self.fmContents.count / 2
+                    }
                 }
             } else {
                 return 1
             }
         case CommunityType.instiz.rawValue:
             if toggleDict[String(CommunityType.instiz.rawValue)]! {
-                return self.instizContents.count
+                if self.instizContents.count == 0 {
+                    return 1
+                } else {
+                    return self.instizContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.cook.rawValue:
             if toggleDict[String(CommunityType.cook.rawValue)]! {
-                return self.cookContents.count
+                if self.cookContents.count == 0{
+                    return 1
+                } else {
+                    return self.cookContents.count
+                }
             } else {
                 return 1
             }
         case CommunityType.namu.rawValue:
             if toggleDict[String(CommunityType.namu.rawValue)]! {
-                return self.namuContents.count
+                if self.namuContents.count == 0 {
+                    return 1
+                } else {
+                    return self.namuContents.count
+                }
             } else {
                 return 1
             }
@@ -374,32 +410,41 @@ class CommunityVC: UITableViewController {
             
             return cell
         } else {
-            switch indexPath.section {
-            case CommunityType.ruliweb.rawValue:
-                data = self.ruliwebContents[indexPath.row]
-            case CommunityType.nate.rawValue:
-                data = self.nateContents[indexPath.row]
-            case CommunityType.ilbe.rawValue:
-                data = self.ilbeContents[indexPath.row]
-            case CommunityType.ppomppu.rawValue:
-                data = self.ppomppuContents[indexPath.row]
-            case CommunityType.clien.rawValue:
-                data = self.clienContents[indexPath.row]
-            case CommunityType.fm.rawValue:
-                data = self.fmContents[indexPath.row]
-            case CommunityType.instiz.rawValue:
-                data = self.instizContents[indexPath.row]
-            case CommunityType.cook.rawValue:
-                data = self.cookContents[indexPath.row]
-            case CommunityType.namu.rawValue:
-                data = self.namuContents[indexPath.row]
-            default:
-                ()
-            }
-            
             if self.toggleDict[String(indexPath.section)] == false {
                 return UITableViewCell()
             } else {
+                switch indexPath.section {
+                case CommunityType.ruliweb.rawValue:
+                    if self.ruliwebContents.count == 0 { return UITableViewCell() }
+                    data = self.ruliwebContents[indexPath.row]
+                case CommunityType.nate.rawValue:
+                    if self.nateContents.count == 0 { return UITableViewCell() }
+                    data = self.nateContents[indexPath.row]
+                case CommunityType.ilbe.rawValue:
+                    if self.ilbeContents.count == 0 { return UITableViewCell() }
+                    data = self.ilbeContents[indexPath.row]
+                case CommunityType.ppomppu.rawValue:
+                    if self.ppomppuContents.count == 0 { return UITableViewCell() }
+                    data = self.ppomppuContents[indexPath.row]
+                case CommunityType.clien.rawValue:
+                    if self.clienContents.count == 0 { return UITableViewCell() }
+                    data = self.clienContents[indexPath.row]
+                case CommunityType.fm.rawValue:
+                    if self.fmContents.count == 0 { return UITableViewCell() }
+                    data = self.fmContents[indexPath.row]
+                case CommunityType.instiz.rawValue:
+                    if self.instizContents.count == 0 { return UITableViewCell() }
+                    data = self.instizContents[indexPath.row]
+                case CommunityType.cook.rawValue:
+                    if self.cookContents.count == 0 { return UITableViewCell() }
+                    data = self.cookContents[indexPath.row]
+                case CommunityType.namu.rawValue:
+                    if self.namuContents.count == 0 { return UITableViewCell() }
+                    data = self.namuContents[indexPath.row]
+                default:
+                    ()
+                }
+                
                 let cell = tableView.dequeueReusableCell(withIdentifier: "article_cell") as! ArticleCell
                 cell.labelNum.font = UIFont.init(name: Constants.mainFontBold, size: 13)
                 cell.labelNum.textColor = self.grayColor5
@@ -410,22 +455,7 @@ class CommunityVC: UITableViewController {
                 
                 cell.labelNum.text = String(indexPath.row + 1)
                 cell.labelText.text = data.title
-                
-//                let lineView = UIView()
-//                lineView.backgroundColor = self.grayColor2
-//                cell.containerView.addSubview(lineView)
-//                lineView.snp.makeConstraints { (make) in
-//                    make.left.equalTo(cell.containerView).offset(15)
-//                    make.right.equalTo(cell.containerView).offset(-15)
-//                    make.top.equalTo(cell.containerView)
-//                    make.height.equalTo(1)
-//                }
-//
-//                if data.idx != 1 {
-//                    lineView.backgroundColor = self.grayColor2
-//                } else {
-//                    lineView.backgroundColor = UIColor.white
-//                }
+
                 return cell
             }
         }
@@ -497,212 +527,23 @@ class CommunityVC: UITableViewController {
         
         switch section {
         case CommunityType.cook.rawValue:
-            circle.textColor = self.orangeColor7
-            subTitle.text = CommunityType.getCommunityName(.cook)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.cook.rawValue)]! {            let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.cook)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.orangeColor7, textEn: CommunityType.getCommunityName(.cook)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.cook)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.cook.rawValue), superView: headerUpperView)
         case CommunityType.ilbe.rawValue:
-            circle.textColor = self.yellowColor7
-            subTitle.text = CommunityType.getCommunityName(.ilbe)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.ilbe.rawValue)]! {            let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.ilbe)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.yellowColor7, textEn: CommunityType.getCommunityName(.ilbe)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.ilbe)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.ilbe.rawValue), superView: headerUpperView)
         case CommunityType.instiz.rawValue:
-            circle.textColor = self.cyanColor7
-            subTitle.text = CommunityType.getCommunityName(.instiz)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.instiz.rawValue)]! {          let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.instiz)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.cyanColor7, textEn: CommunityType.getCommunityName(.instiz)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.instiz)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.instiz.rawValue), superView: headerUpperView)
         case CommunityType.ruliweb.rawValue:
-            circle.textColor = self.subColor
-            subTitle.text = CommunityType.getCommunityName(.ruliweb)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.ruliweb.rawValue)]! {         let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.ruliweb)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.subColor, textEn: CommunityType.getCommunityName(.ruliweb)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.ruliweb)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.ruliweb.rawValue), superView: headerUpperView)
         case CommunityType.clien.rawValue:
-            circle.textColor = self.grapeColor7
-            subTitle.text = CommunityType.getCommunityName(.clien)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.clien.rawValue)]! {           let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.clien)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.grapeColor7, textEn: CommunityType.getCommunityName(.clien)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.clien)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.clien.rawValue), superView: headerUpperView)
         case CommunityType.namu.rawValue:
-            circle.textColor = self.limeColor7
-            subTitle.text = CommunityType.getCommunityName(.namu)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.namu.rawValue)]! {            let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.namu)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.limeColor7, textEn: CommunityType.getCommunityName(.namu)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.namu)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.namu.rawValue), superView: headerUpperView)
         case CommunityType.ppomppu.rawValue:
-            circle.textColor = self.greenColor7
-            subTitle.text = CommunityType.getCommunityName(.ppomppu)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.ppomppu.rawValue)]! {         let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.ppomppu)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.greenColor7, textEn: CommunityType.getCommunityName(.ppomppu)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.ppomppu)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.ppomppu.rawValue), superView: headerUpperView)
         case CommunityType.nate.rawValue:
-            circle.textColor = self.pinkColor7
-            subTitle.text = CommunityType.getCommunityName(.nate)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.nate.rawValue)]! {            let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.nate)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.pinkColor7, textEn: CommunityType.getCommunityName(.nate)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.nate)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.nate.rawValue), superView: headerUpperView)
         case CommunityType.fm.rawValue:
-            circle.textColor = self.violetColor7
-            subTitle.text = CommunityType.getCommunityName(.fm)().uppercased()
-            
-            // UITapGestureRecognizer 설정
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            toggleBtn.addGestureRecognizer(tapGesture)
-            toggleLabelHeader.addGestureRecognizer(tapGesture2)
-            
-            // title label 생성 및 설정
-            if self.toggleDict[String(CommunityType.fm.rawValue)]! {            let title = UILabel()
-                title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
-                title.textColor = self.grayColor7
-                title.textAlignment = .left
-                title.text = CommunityType.getCommunityKoreanName(.fm)()
-                title.addCharacterSpacing(kernValue: 1.5)
-                headerUpperView.addSubview(title)
-                title.snp.makeConstraints { (make) in
-                    make.left.equalTo(headerUpperView).offset(20)
-                    make.bottom.equalTo(headerUpperView).offset(-(10 + (Constants.sectionMargin) * 2))
-                }
-            }
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.violetColor7, textEn: CommunityType.getCommunityName(.fm)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.fm)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.fm.rawValue), superView: headerUpperView)
         default:
             ()
         }
@@ -849,7 +690,35 @@ class CommunityVC: UITableViewController {
             if toggleDict[String(indexPath.section)] == false {
                 return 0
             } else {
-                return Constants.cellHeight
+                var dataCount = 0
+                switch indexPath.section {
+                case CommunityType.ruliweb.rawValue:
+                    dataCount = self.ruliwebContents.count
+                case CommunityType.nate.rawValue:
+                    dataCount = self.nateContents.count
+                case CommunityType.ilbe.rawValue:
+                    dataCount = self.ilbeContents.count
+                case CommunityType.ppomppu.rawValue:
+                    dataCount = self.ppomppuContents.count
+                case CommunityType.clien.rawValue:
+                    dataCount = self.clienContents.count
+                case CommunityType.fm.rawValue:
+                    dataCount = self.fmContents.count
+                case CommunityType.instiz.rawValue:
+                    dataCount = self.instizContents.count
+                case CommunityType.cook.rawValue:
+                    dataCount = self.cookContents.count
+                case CommunityType.namu.rawValue:
+                    dataCount = self.namuContents.count
+                default:
+                    dataCount = 0
+                }
+                
+                if dataCount == 0 {
+                    return 0
+                } else {
+                    return Constants.cellHeight
+                }
             }
         }
     }
@@ -966,10 +835,11 @@ class CommunityVC: UITableViewController {
     }
     
     @objc func toggleSection(_ sender: UITapGestureRecognizer) {
+   
         let tag = (sender.view?.tag)!
         let ud = UserDefaults.standard
         var tempDict = ud.dictionary(forKey: "communityToggle") as! Dictionary<String, Bool>
-        
+
         if toggleDict[String(tag)]! {
             toggleDict[String(tag)] = false
             tempDict[String(tag)] = false
@@ -978,10 +848,8 @@ class CommunityVC: UITableViewController {
             toggleDict[String(tag)] = true
             tempDict[String(tag)] = true
         }
-        
         ud.set(tempDict, forKey: "communityToggle")
         ud.synchronize()
-
         self.tableView.reloadSections(NSIndexSet(index: tag) as IndexSet, with: UITableView.RowAnimation.automatic)
     }
     
@@ -1032,12 +900,37 @@ class CommunityVC: UITableViewController {
 //        label.addCharacterSpacing(kernValue: 1.5)
         
     }
+    
+    // header view 설정
+    func setHeaderView(circle: UILabel, subTitle: UILabel, color: UIColor, textEn: String, textKo: String, btn: UIImageView, labelHeader: UILabel, rawValue: String, superView: UIView ) {
+        circle.textColor = color
+        subTitle.text = textEn
+        
+        // UITapGestureRecognizer 설정
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+        btn.addGestureRecognizer(tapGesture)
+        labelHeader.addGestureRecognizer(tapGesture2)
+        
+        // title label 생성 및 설정
+        if self.toggleDict[rawValue]! {
+            let title = UILabel()
+            title.font = UIFont.init(name: Constants.mainFontBold, size: 17)
+            title.textColor = self.grayColor7
+            title.textAlignment = .left
+            title.text = textKo
+            title.addCharacterSpacing(kernValue: 1.5)
+            superView.addSubview(title)
+            title.snp.makeConstraints { (make) in
+                make.left.equalTo(superView).offset(20)
+                make.bottom.equalTo(superView).offset(-(10 + (Constants.sectionMargin) * 2))
+            }
+        }
+    }
                 
     // 구글 애드몹 배너 설정 메소드
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(bannerView)
-//        self.view.bringSubviewToFront(bannerView)
         self.view.insertSubview(bannerView, at: self.view.subviews.count)
         self.view.addConstraints(
         [NSLayoutConstraint(item: bannerView,
