@@ -651,12 +651,11 @@ class CommunityVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let sectionHeight: CGFloat = Constants.sectionHeight
         if section == CommunityType.upperInfo.rawValue {
             return CGFloat.leastNonzeroMagnitude
         } else {
             if self.toggleDict[String(section)]! {
-                return sectionHeight
+                return Constants.sectionHeight
             } else {
                 return Constants.sectionHeight / 2
             }
@@ -677,7 +676,12 @@ class CommunityVC: UITableViewController {
                     return sectionHeight + Constants.cellToggleBtnHeight
                 }
                 else {
-                    return sectionHeight
+                    // 마지막 section에서 높이 추가
+                    if section == CommunityType.namu.rawValue {
+                        return sectionHeight + Constants.cellHeight
+                    } else {
+                        return sectionHeight
+                    }
                 }
             }
         }
@@ -685,7 +689,9 @@ class CommunityVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == CommunityType.upperInfo.rawValue {
-            return self.imgHeight
+            return Constants.imgHeight
+
+            
         } else {
             if toggleDict[String(indexPath.section)] == false {
                 return 0
@@ -931,7 +937,7 @@ class CommunityVC: UITableViewController {
     // 구글 애드몹 배너 설정 메소드
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.insertSubview(bannerView, at: self.view.subviews.count)
+        self.view.insertSubview(bannerView, aboveSubview: tableView)
         self.view.addConstraints(
         [NSLayoutConstraint(item: bannerView,
                             attribute: .bottom,

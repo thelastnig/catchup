@@ -279,7 +279,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func onReloadButtonClick(_ sender: UIButton) {
-        let indexPath = IndexPath(row: 0, section: 0)
         if self.selectedIndex == 0 {
             let naviVC = self.selectedViewController as! UINavigationController
             let mainVC = naviVC.viewControllers.first as! MainVC

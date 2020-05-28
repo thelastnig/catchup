@@ -165,6 +165,7 @@ class MainContentManager {
                         let colorIdx = data["colorIdx"]
                         trendList.append((title: title as! String, url: url as! String, isColor: isColor as! Bool, colorIdx: colorIdx as! Int))
                     }
+                    trendList.shuffle()
                     self.twitterTrends.append(trendList)
                 }
                 completion?()

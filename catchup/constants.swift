@@ -31,8 +31,6 @@ class Constants {
     public static let csBoonTabbarHeight: CGFloat = 40
     
     // font 설정
-//    public static let mainFont = "12LotteMartDreamMedium"
-//    public static let mainFontBold = "12LotteMartDreamBold"
     public static let mainFontLight = "12LotteMartDreamLight"
     public static let subFont = "NanumBarunGothic"
     

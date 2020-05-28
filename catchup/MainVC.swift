@@ -561,8 +561,6 @@ class MainVC: UITableViewController {
             
             // 각 행의 데이터
             var dataList = self.twitterTrends[indexPath.row]
-            
-            dataList.shuffle()
 
             // 라벨 간 margin 값
             let innerMargin: CGFloat = 20
