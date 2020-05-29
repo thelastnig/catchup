@@ -131,10 +131,17 @@ class BoonViewVC: UICollectionViewController {
 
             let task = URLSession.shared.dataTask(with: URL(string: path)!) {
                 data, response, error in
-                let imageData = data!
+                guard
+                    let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                    let data = data, error == nil
+                    else { return }
+                let imageData = data
+                let imgIndex = indexPath.row
 
                 DispatchQueue.main.async {
-                    cell.imageView.image = UIImage(data: imageData)
+                    if (imgIndex == indexPath.row) {
+                        cell.imageView.image = UIImage(data: imageData)
+                    }
                 }
             }
             task.resume()

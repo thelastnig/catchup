@@ -91,6 +91,11 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
         var list = [(String, String, Int)]()
         return list
     }()
+    
+    lazy var theqooContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -275,6 +280,9 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             communityVC.ppomppuContents = self.ppomppuContents
             communityVC.nateContents = self.nateContents
             communityVC.fmContents = self.fmContents
+            communityVC.bullpenContents = self.bullpenContents
+            communityVC.theqooContents = self.theqooContents
+            
         }
     }
     
@@ -352,6 +360,12 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             }
             communityWebContentManager.getFmContents {
                 self.fmContents = communityWebContentManager.fmContents
+            }
+            communityWebContentManager.getBullpenContents {
+                self.bullpenContents = communityWebContentManager.bullpenContents
+            }
+            communityWebContentManager.getTheqooContents {
+                self.theqooContents = communityWebContentManager.theqooContents
             }
         }
     }

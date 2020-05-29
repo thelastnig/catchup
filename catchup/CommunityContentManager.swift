@@ -62,6 +62,11 @@ class CommunityContentManager {
         return list
     }()
     
+    lazy var theqooContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
+    
     let url_prefix = "https://scorpii.shop/korean/"
     
     // functions regarding API
@@ -309,6 +314,31 @@ class CommunityContentManager {
                     let title = data["title"]
                     let url = data["link"]
                     self.fmContents.append((title as! String, url as! String, i))
+                }
+                completion?()
+            }
+        }
+    }
+    
+    // theqoo 인기 게시물 호출 함수
+    func getTheqooContents(completion: (() -> Void)? = nil) {
+
+        let url = url_prefix + "theqoo"
+        let call = Alamofire.request(url)
+        
+        call.responseJSON { response in
+            guard let html = response.result.value as? NSDictionary else { return }
+            let status = html["status"] as! String
+            if status == "success" {
+                let items = html["data"] as! NSArray
+
+                var i: Int = 0
+                for item in items {
+                    i = i + 1
+                    let data = item as! NSDictionary
+                    let title = data["title"]
+                    let url = data["link"]
+                    self.theqooContents.append((title as! String, url as! String, i))
                 }
                 completion?()
             }

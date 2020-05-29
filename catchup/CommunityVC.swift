@@ -15,10 +15,11 @@ public enum CommunityType: Int {
     case upperInfo
     case ruliweb
     case nate
-    case ilbe
+    case bullpen
     case ppomppu
     case clien
     case fm
+    case theqoo
     case instiz
     case cook
     case namu
@@ -31,8 +32,8 @@ public enum CommunityType: Int {
             return ""
         case .cook:
             return "82cook"
-        case .ilbe:
-            return "Ilbe"
+        case .bullpen:
+            return "Bullpen"
         case .instiz:
             return "Instiz"
         case .ruliweb:
@@ -47,6 +48,8 @@ public enum CommunityType: Int {
             return "Nate"
         case .fm:
             return "FM Korea"
+        case .theqoo:
+            return "Theqoo"
         case .count:
             return ""
         }
@@ -58,8 +61,8 @@ public enum CommunityType: Int {
             return ""
         case .cook:
             return "82cook"
-        case .ilbe:
-            return "일간베스트"
+        case .bullpen:
+            return "불펜"
         case .instiz:
             return "인스티즈"
         case .ruliweb:
@@ -74,6 +77,8 @@ public enum CommunityType: Int {
             return "네이트"
         case .fm:
             return "FM Korea"
+        case .theqoo:
+            return "더쿠"
         case .count:
             return ""
         }
@@ -85,8 +90,8 @@ public enum CommunityType: Int {
             return ""
         case .cook:
             return "cook"
-        case .ilbe:
-            return "ilbe"
+        case .bullpen:
+            return "bullpen"
         case .instiz:
             return "instiz"
         case .ruliweb:
@@ -101,6 +106,8 @@ public enum CommunityType: Int {
             return "nate"
         case .fm:
             return "fm"
+        case .theqoo:
+            return "theqoo"
         case .count:
             return ""
         }
@@ -159,10 +166,16 @@ class CommunityVC: UITableViewController {
         return list
     }()
     
+    lazy var theqooContents: [(title: String, url: String, idx: Int)] = {
+        var list = [(String, String, Int)]()
+        return list
+    }()
+    
     // section 접기/펼치기를 위한 Dictionary 생성
     var toggleDict: Dictionary<String, Bool> = [
         "0": true, "1": true, "2": true, "3": true, "4": true,
-        "5": true, "6": true, "7": true, "8": true, "9": true
+        "5": true, "6": true, "7": true, "8": true, "9": true,
+        "10": true
     ]
     
     let toggleLabelClian = UILabel()
@@ -185,6 +198,18 @@ class CommunityVC: UITableViewController {
                 toggleLabelFm.text = "close ⋀"
             } else {
                 toggleLabelFm.text = "more ⋁"
+            }
+        }
+    }
+    
+    let toggleLabelTheqoo = UILabel()
+    
+    var toggleTheqoo: Bool = false {
+        didSet {
+            if toggleTheqoo {
+                toggleLabelTheqoo.text = "close ⋀"
+            } else {
+                toggleLabelTheqoo.text = "more ⋁"
             }
         }
     }
@@ -222,6 +247,7 @@ class CommunityVC: UITableViewController {
         // toggleLabel 설정
         self.setMoreLabel(label: self.toggleLabelClian)
         self.setMoreLabel(label: self.toggleLabelFm)
+        self.setMoreLabel(label: self.toggleLabelTheqoo)
         
         // toggle 정보 불러오기
         let ud = UserDefaults.standard
@@ -285,12 +311,12 @@ class CommunityVC: UITableViewController {
             } else {
                 return 1
             }
-        case CommunityType.ilbe.rawValue:
-            if toggleDict[String(CommunityType.ilbe.rawValue)]! {
-                if self.ilbeContents.count == 0 {
+        case CommunityType.bullpen.rawValue:
+            if toggleDict[String(CommunityType.bullpen.rawValue)]! {
+                if self.bullpenContents.count == 0 {
                     return 1
                 } else {
-                    return self.ilbeContents.count
+                    return self.bullpenContents.count
                 }
             } else {
                 return 1
@@ -328,6 +354,20 @@ class CommunityVC: UITableViewController {
                         return self.fmContents.count
                     } else {
                         return self.fmContents.count / 2
+                    }
+                }
+            } else {
+                return 1
+            }
+        case CommunityType.theqoo.rawValue:
+            if toggleDict[String(CommunityType.theqoo.rawValue)]! {
+                if self.theqooContents.count == 0 {
+                    return 1
+                } else {
+                    if self.toggleTheqoo {
+                        return self.theqooContents.count
+                    } else {
+                        return self.theqooContents.count / 2
                     }
                 }
             } else {
@@ -420,9 +460,9 @@ class CommunityVC: UITableViewController {
                 case CommunityType.nate.rawValue:
                     if self.nateContents.count == 0 { return UITableViewCell() }
                     data = self.nateContents[indexPath.row]
-                case CommunityType.ilbe.rawValue:
-                    if self.ilbeContents.count == 0 { return UITableViewCell() }
-                    data = self.ilbeContents[indexPath.row]
+                case CommunityType.bullpen.rawValue:
+                    if self.bullpenContents.count == 0 { return UITableViewCell() }
+                    data = self.bullpenContents[indexPath.row]
                 case CommunityType.ppomppu.rawValue:
                     if self.ppomppuContents.count == 0 { return UITableViewCell() }
                     data = self.ppomppuContents[indexPath.row]
@@ -432,6 +472,9 @@ class CommunityVC: UITableViewController {
                 case CommunityType.fm.rawValue:
                     if self.fmContents.count == 0 { return UITableViewCell() }
                     data = self.fmContents[indexPath.row]
+                case CommunityType.theqoo.rawValue:
+                    if self.theqooContents.count == 0 { return UITableViewCell() }
+                    data = self.theqooContents[indexPath.row]
                 case CommunityType.instiz.rawValue:
                     if self.instizContents.count == 0 { return UITableViewCell() }
                     data = self.instizContents[indexPath.row]
@@ -528,8 +571,8 @@ class CommunityVC: UITableViewController {
         switch section {
         case CommunityType.cook.rawValue:
             self.setHeaderView(circle: circle, subTitle: subTitle, color: self.orangeColor7, textEn: CommunityType.getCommunityName(.cook)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.cook)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.cook.rawValue), superView: headerUpperView)
-        case CommunityType.ilbe.rawValue:
-            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.yellowColor7, textEn: CommunityType.getCommunityName(.ilbe)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.ilbe)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.ilbe.rawValue), superView: headerUpperView)
+        case CommunityType.bullpen.rawValue:
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.yellowColor7, textEn: CommunityType.getCommunityName(.bullpen)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.bullpen)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.bullpen.rawValue), superView: headerUpperView)
         case CommunityType.instiz.rawValue:
             self.setHeaderView(circle: circle, subTitle: subTitle, color: self.cyanColor7, textEn: CommunityType.getCommunityName(.instiz)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.instiz)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.instiz.rawValue), superView: headerUpperView)
         case CommunityType.ruliweb.rawValue:
@@ -544,6 +587,8 @@ class CommunityVC: UITableViewController {
             self.setHeaderView(circle: circle, subTitle: subTitle, color: self.pinkColor7, textEn: CommunityType.getCommunityName(.nate)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.nate)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.nate.rawValue), superView: headerUpperView)
         case CommunityType.fm.rawValue:
             self.setHeaderView(circle: circle, subTitle: subTitle, color: self.violetColor7, textEn: CommunityType.getCommunityName(.fm)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.fm)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.fm.rawValue), superView: headerUpperView)
+        case CommunityType.theqoo.rawValue:
+            self.setHeaderView(circle: circle, subTitle: subTitle, color: self.violetColor7, textEn: CommunityType.getCommunityName(.theqoo)().uppercased(), textKo: CommunityType.getCommunityKoreanName(.theqoo)(), btn: toggleBtn, labelHeader: toggleLabelHeader, rawValue: String(CommunityType.theqoo.rawValue), superView: headerUpperView)
         default:
             ()
         }
@@ -582,17 +627,6 @@ class CommunityVC: UITableViewController {
             let width = footer.frame.size.width - (margin * 2)
             toggleView.frame = CGRect(x: margin, y: 0, width: width, height: Constants.cellToggleBtnHeight)
             toggleView.backgroundColor = UIColor.white
-
-//            let lineView = UIView()
-//            lineView.backgroundColor = self.grayColor2
-//            toggleView.addSubview(lineView)
-//            lineView.snp.makeConstraints { (make) in
-//                make.left.equalTo(toggleView).offset(15)
-//                make.right.equalTo(toggleView).offset(-15)
-//                make.top.equalTo(toggleView)
-//                make.height.equalTo(1)
-//            }
-//            lineView.backgroundColor = self.grayColor2
             
             toggleView.addSubview(self.toggleLabelClian)
             
@@ -617,17 +651,6 @@ class CommunityVC: UITableViewController {
             let width = footer.frame.size.width - (margin * 2)
             toggleView.frame = CGRect(x: margin, y: 0, width: width, height: Constants.cellToggleBtnHeight)
             toggleView.backgroundColor = UIColor.white
-
-//            let lineView = UIView()
-//            lineView.backgroundColor = self.grayColor2
-//            toggleView.addSubview(lineView)
-//            lineView.snp.makeConstraints { (make) in
-//                make.left.equalTo(toggleView).offset(15)
-//                make.right.equalTo(toggleView).offset(-15)
-//                make.top.equalTo(toggleView)
-//                make.height.equalTo(1)
-//            }
-//            lineView.backgroundColor = self.grayColor2
             
             toggleView.addSubview(self.toggleLabelFm)
             toggleLabelFm.snp.makeConstraints{ (make) in
@@ -642,6 +665,29 @@ class CommunityVC: UITableViewController {
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
             self.toggleLabelFm.addGestureRecognizer(tapGesture)
+        } else if section == CommunityType.theqoo.rawValue && !self.theqooContents.isEmpty && self.toggleDict[String(CommunityType.theqoo.rawValue)]! {
+            
+            // 접기/펼치기를 위한 버튼 생성
+            footer.frame.size.width = self.tableView.frame.width
+            let toggleView = UIView()
+            let margin: CGFloat = 10
+            let width = footer.frame.size.width - (margin * 2)
+            toggleView.frame = CGRect(x: margin, y: 0, width: width, height: Constants.cellToggleBtnHeight)
+            toggleView.backgroundColor = UIColor.white
+            
+            toggleView.addSubview(self.toggleLabelTheqoo)
+            toggleLabelTheqoo.snp.makeConstraints{ (make) in
+                make.centerX.equalTo(toggleView)
+                make.centerY.equalTo(toggleView)
+                make.width.equalTo(Constants.cellToggleBtnWidth)
+                make.height.equalTo(Constants.cellToggleBtnHeight - 20)
+            }
+            
+            self.toggleLabelTheqoo.tag = section
+            footer.addSubview(toggleView)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleCell(_:)))
+            self.toggleLabelTheqoo.addGestureRecognizer(tapGesture)
         } else {
            
         }
@@ -674,6 +720,8 @@ class CommunityVC: UITableViewController {
                     return sectionHeight + Constants.cellToggleBtnHeight
                 } else if section == CommunityType.fm.rawValue && !self.fmContents.isEmpty {
                     return sectionHeight + Constants.cellToggleBtnHeight
+                } else if section == CommunityType.theqoo.rawValue && !self.theqooContents.isEmpty {
+                    return sectionHeight + Constants.cellToggleBtnHeight
                 }
                 else {
                     // 마지막 section에서 높이 추가
@@ -702,8 +750,8 @@ class CommunityVC: UITableViewController {
                     dataCount = self.ruliwebContents.count
                 case CommunityType.nate.rawValue:
                     dataCount = self.nateContents.count
-                case CommunityType.ilbe.rawValue:
-                    dataCount = self.ilbeContents.count
+                case CommunityType.bullpen.rawValue:
+                    dataCount = self.bullpenContents.count
                 case CommunityType.ppomppu.rawValue:
                     dataCount = self.ppomppuContents.count
                 case CommunityType.clien.rawValue:
@@ -716,6 +764,8 @@ class CommunityVC: UITableViewController {
                     dataCount = self.cookContents.count
                 case CommunityType.namu.rawValue:
                     dataCount = self.namuContents.count
+                case CommunityType.theqoo.rawValue:
+                    dataCount = self.theqooContents.count
                 default:
                     dataCount = 0
                 }
@@ -745,8 +795,8 @@ class CommunityVC: UITableViewController {
         switch indexPath.section {
         case CommunityType.cook.rawValue:
             url = self.cookContents[indexPath.row].url
-        case CommunityType.ilbe.rawValue:
-            url = self.ilbeContents[indexPath.row].url
+        case CommunityType.bullpen.rawValue:
+            url = self.bullpenContents[indexPath.row].url
         case CommunityType.instiz.rawValue:
             url = self.instizContents[indexPath.row].url
         case CommunityType.ruliweb.rawValue:
@@ -761,6 +811,8 @@ class CommunityVC: UITableViewController {
             url = self.nateContents[indexPath.row].url
         case CommunityType.fm.rawValue:
             url = self.fmContents[indexPath.row].url
+        case CommunityType.theqoo.rawValue:
+            url = self.theqooContents[indexPath.row].url
         default:
             ()
         }
@@ -780,12 +832,10 @@ class CommunityVC: UITableViewController {
             self.cookContents = webContentManager.cookContents
             self.tableView.reloadData()
         }
-        /*
         webContentManager.getBullpenContents {
             self.bullpenContents = webContentManager.bullpenContents
             self.tableView.reloadData()
         }
-        */
         webContentManager.getIlbeContents {
             self.ilbeContents = webContentManager.ilbeContents
             self.tableView.reloadData()
@@ -816,6 +866,10 @@ class CommunityVC: UITableViewController {
         }
         webContentManager.getFmContents {
             self.fmContents = webContentManager.fmContents
+            self.tableView.reloadData()
+        }
+        webContentManager.getTheqooContents {
+            self.theqooContents = webContentManager.theqooContents
             self.tableView.reloadData()
         }
     }
@@ -871,6 +925,10 @@ class CommunityVC: UITableViewController {
             last = self.fmContents.count
             half = last / 2
             self.toggleFm = !(self.toggleFm)
+        } else if section == CommunityType.theqoo.rawValue {
+            last = self.theqooContents.count
+            half = last / 2
+            self.toggleTheqoo = !(self.toggleTheqoo)
         }
         let indexPaths = (half..<last).map{
             i in return IndexPath(item: i, section: section)
@@ -885,6 +943,12 @@ class CommunityVC: UITableViewController {
                 }
             } else if section == CommunityType.fm.rawValue {
                 if self.toggleFm{
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                } else {
+                    self.tableView.deleteRows(at: indexPaths, with: .automatic)
+                }
+            } else if section == CommunityType.theqoo.rawValue {
+                if self.toggleTheqoo{
                     self.tableView.insertRows(at: indexPaths, with: .automatic)
                 } else {
                     self.tableView.deleteRows(at: indexPaths, with: .automatic)
