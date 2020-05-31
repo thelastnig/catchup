@@ -8,7 +8,11 @@ extension UIViewController {
     // upper area height를 위한 연산 프로퍼티
     var statusHeight: CGFloat {
         get {
-            return UIApplication.shared.statusBarFrame.size.height
+            if #available(iOS 13.0, *) {
+                return self.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            } else {
+                return UIApplication.shared.statusBarFrame.size.height
+            }
         }
     }
     
