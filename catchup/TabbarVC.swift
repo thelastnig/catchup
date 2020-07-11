@@ -282,7 +282,6 @@ class TabbarVC: UITabBarController, UITabBarControllerDelegate {
             communityVC.fmContents = self.fmContents
             communityVC.bullpenContents = self.bullpenContents
             communityVC.theqooContents = self.theqooContents
-            
         }
     }
     

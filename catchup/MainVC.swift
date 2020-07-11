@@ -563,7 +563,7 @@ class MainVC: UITableViewController {
             let dataList = self.twitterTrends[indexPath.row]
 
             // 라벨 간 margin 값
-            let innerMargin: CGFloat = 20
+            let innerMargin: CGFloat = 15
             
             let textContainer = UIView()
             
@@ -1241,7 +1241,7 @@ class MainVC: UITableViewController {
     @objc func clickTrend(_ gesture: TrendGestureRecognizer) {
         guard let fullUrl = gesture.url else { return }
         let trend = fullUrl.split(separator: "=")[1]
-        let appURL = URL(string: "twitter://search?q=\(trend)")!
+        let appURL = URL(string: "twitter://search?query=\(trend)")!
         let webURL = URL(string: "\(fullUrl)")!
 
         if UIApplication.shared.canOpenURL(appURL) {
